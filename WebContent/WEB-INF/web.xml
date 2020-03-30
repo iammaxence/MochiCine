@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<display-name>MochiCine</display-name>
+  
+  <servlet>
+	    <servlet-name>Register</servlet-name>
+	    <servlet-class>servlet.Register</servlet-class>
+ 	</servlet>
+ 	
+  <servlet>
+      <servlet-name>Login</servlet-name>
+      <servlet-class>servlet.Login</servlet-class>
+  </servlet>
+  
+  <servlet>
+      <servlet-name>Logout</servlet-name>
+      <servlet-class>servlet.Logout</servlet-class>
+  </servlet>
+  
+  <servlet>
+      <servlet-name>AddFavoris</servlet-name>
+      <servlet-class>servlet.AddFavoris</servlet-class>
+  </servlet>
+  
+  <servlet>
+      <servlet-name>DeleteFavoris</servlet-name>
+      <servlet-class>servlet.DeleteFavoris</servlet-class>
+  </servlet>
+  
+  <servlet>
+      <servlet-name>AddComment</servlet-name>
+      <servlet-class>servlet.AddComment</servlet-class>
+  </servlet>
+  
+  <servlet>
+      <servlet-name>DeleteComment</servlet-name>
+      <servlet-class>servlet.DeleteComment</servlet-class>
+  </servlet>
+  
+  <servlet>
+      <servlet-name>ListComment</servlet-name>
+      <servlet-class>servlet.ListComment</servlet-class>
+  </servlet>
+  
+  <servlet>
+      <servlet-name>ListFavoris</servlet-name>
+      <servlet-class>servlet.ListFavoris</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>Register</servlet-name>
+    <url-pattern>/Register</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>Login</servlet-name>
+    <url-pattern>/User/Login</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/User/Logout</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>AddFavoris</servlet-name>
+    <url-pattern>/Favoris/Add</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>DeleteFavoris</servlet-name>
+    <url-pattern>/Favoris/Delete</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>AddComment</servlet-name>
+    <url-pattern>/Comment/Add</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>DeleteComment</servlet-name>
+    <url-pattern>/Comment/Delete</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ListComment</servlet-name>
+    <url-pattern>/Comment/List</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ListFavoris</servlet-name>
+    <url-pattern>/Favoris/List</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
