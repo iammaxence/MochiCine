@@ -22,7 +22,7 @@ public class Register extends HttpServlet{
 			String login = request.getParameter("login");
 	        String mdp = request.getParameter("mdp");
 	        
-	        JSONObject res = services.Enregistrement.register(login, mdp);
+	        JSONObject res = services.Enregistrement.createUser(login, mdp);
 	        reponse.setContentType("text/json");
 	        PrintWriter out = reponse.getWriter();
 	        out.println(res);
