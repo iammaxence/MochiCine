@@ -3,10 +3,10 @@ package database;
 
 public class DBStatic {
 	public static String mysql_host="localhost";
-	public static String mysql_db="Brunet_Lin"; //changer ici
+	public static String mysql_db="test"; //changer ici
 	public static String mysql_username="root";
 	public static String mysql_password="root";
-	public static boolean mysql_pooling=true; 
+	public static boolean mysql_pooling=false; 
 //	public static boolean mysql_pooling=false; 
 	//EXPORT -> mettre a true
 	//pooling true -> on utilise Datasource qui fait la connection automatique donc pas local

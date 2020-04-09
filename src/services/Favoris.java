@@ -2,6 +2,8 @@ package services;
 
 import org.json.JSONObject;
 
+import tools.CheckTools;
+
 public class Favoris {
 	
 	
@@ -16,7 +18,11 @@ public class Favoris {
 	}
 	
 	public static JSONObject ListFavoris(String login) {
-		return null;
+		
+		if(CheckTools.checkUser(login)) {
+			
+		}
+		return new JSONObject();
 		
 	}
 	
