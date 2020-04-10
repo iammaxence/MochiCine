@@ -32,7 +32,7 @@ public class Auth {
 		}
 	}
 	
-	public static JSONObject login(String login) {
+	public static JSONObject login(String login, String mdp) {
 		try {
 			
 			//Set key_log à 0 pour une deconnexion et 1 pour une connexion

@@ -12,8 +12,8 @@ public class Authentification {
 		if (login.equals(""))
 			return ErrorJSON.serviceRefused("Logout: Argument Null", -1);
 		
-		if(CheckTools.checkUser(login)) 
-			return Auth.login(login);
+		if(CheckTools.checkUser(login) && CheckTools.checkPasswd(login,mdp)) 
+			return Auth.login(login,mdp);
 			
 		return ErrorJSON.serviceRefused("Logout : "+login+" is not a register", -2); 
 	}
