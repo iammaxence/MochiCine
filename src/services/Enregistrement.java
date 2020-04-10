@@ -6,7 +6,6 @@ import tools.ErrorJSON;
 import tools.CheckTools;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -25,10 +24,13 @@ public class Enregistrement {
 			return ErrorJSON.serviceRefused("Register: Pseudo "+login+" already existe", -2);
 		}
 		
-		//InsertUser
+		return insertUser(login, mdp);
+	}
+	
+	private static JSONObject insertUser(String login, String mdp) {
 		try {
 			Connection c = Database.getMySQLConnection();
-			String query="insert into user values(DEFAULT, '"+login+"','"+mdp+"')";
+			String query="INSERT INTO user values('"+login+"','"+mdp+"','"+1+"')";
 			Statement st = c.createStatement();
 			int rs= st.executeUpdate(query);
 			
@@ -41,7 +43,7 @@ public class Enregistrement {
 			
 		} catch ( SQLException e) {
 			e.printStackTrace();
-			return ErrorJSON.serviceRefused("Failed Register", -4);
+			return ErrorJSON.serviceRefused("Failed Register", 4);
 		}
 	}
 }

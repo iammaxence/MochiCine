@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import database.Database;
+import services.Enregistrement;
+import tools.CheckTools;
 
 public class TestRegister {
 
@@ -12,28 +14,32 @@ public class TestRegister {
 		
 		
 		
-		String login = "max";
-		String mdp = "bg2";
+		String login = "bob";
+		String mdp = "mdp";
 		
-		try {
-			//Class.forName("com.mysql.jdbc.Driver"); 
-			Connection c = Database.getMySQLConnection();
-			String query="INSERT INTO user values('"+login+"','"+mdp+"')";
-			Statement st = c.createStatement();
-			int rs= st.executeUpdate(query);
-			
-			st.close();
-			c.close();
-			
-			if(rs==0)
-				System.out.println("ERROR");
-			else
-				System.out.println("OK");
-			
-		} catch ( SQLException e) {
-			e.printStackTrace();
-			System.out.println("EXCEPTION");
-		}
+		System.out.println(CheckTools.checkUser(login));
+		
+		Enregistrement.createUser("lilie", "mdp");
+//		
+//		try {
+//			//Class.forName("com.mysql.jdbc.Driver"); 
+//			Connection c = Database.getMySQLConnection();
+//			String query="INSERT INTO user values('"+login+"','"+mdp+"','"+0+"')";
+//			Statement st = c.createStatement();
+//			int rs= st.executeUpdate(query);
+//			
+//			st.close();
+//			c.close();
+//			
+//			if(rs==0)
+//				System.out.println("ERROR");
+//			else
+//				System.out.println("OK");
+//			
+//		} catch ( SQLException e) {
+//			e.printStackTrace();
+//			System.out.println("EXCEPTION");
+//		}
 //		boolean res = false;
 //		try {		
 //			Connection c = Database.getMySQLConnection();

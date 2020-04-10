@@ -11,7 +11,7 @@ public class CheckTools {
 	
 	
 	public static boolean checkUser(String login) {
-
+		boolean result = false;
 		try {
 			
 			//Class.forName("com.mysql.jdbc.Driver"); 
@@ -20,18 +20,16 @@ public class CheckTools {
 			Statement st = c.createStatement();
 			ResultSet res= st.executeQuery(query);
 			
+			if(res.next())
+				result=true;
+			
 			st.close();
 			c.close();
-			
-			if(res.next())
-				return true;
 			
 
 		} catch ( SQLException e) {
 			e.printStackTrace();
-			System.out.println("EXCEPTION");
 		}
-		
-		return false;
+		return result;
 	}
 }
