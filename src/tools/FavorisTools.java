@@ -6,6 +6,7 @@ import org.bson.Document;
 import org.json.JSONObject;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
 import database.Database;
@@ -44,4 +45,27 @@ public class FavorisTools {
 		
 		return ErrorJSON.serviceAccepted();
 	}
+	
+	
+	public static JSONObject deleteFavoris(String login, String titre) {   
+		try {
+	        MongoDatabase c = Database.getMongoConnection();
+	        MongoCollection <Document> coll = c.getCollection("Favoris");
+	        
+	        Document filter = new Document("_id", login);
+	        Document delete = new Document("favoris", titre);
+	        Document update = new Document("$pull",  delete);
+	        
+	        coll.updateOne(filter,update);
+	        
+	        MongoCursor<Document> cursor = coll.find(filter).iterator();
+	         
+	        if(cursor.hasNext()) 
+	            return ErrorJSON.serviceAccepted();
+	        return ErrorJSON.serviceRefused("deleteComment: all the message has been deleted", 2000);
+		}finally {
+			 Database.MongoClose();
+		}
+        
+    }
 }
