@@ -21,7 +21,15 @@ public class Commentaires {
 	}
 	
 	public static JSONObject deleteComment(String user,String titre,int idCom) { 
-		return null;
+		if(user.equals("") || titre.equals("") || commentaire.equals(""))
+			return ErrorJSON.serviceRefused("deleteComment : Argument Null", -1);
+		
+		if(!CheckTools.checkUser(user)) {
+			return ErrorJSON.serviceRefused("deleteComment: Pseudo "+user+" do not exist", -2);
+		}
+		
+		CommentsTools.hasTitre(titre);
+		return CommentsTools.deleteComment(titre, user, commentaire);
 		
 	}
 	
