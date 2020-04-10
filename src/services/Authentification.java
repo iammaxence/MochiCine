@@ -9,8 +9,13 @@ import tools.ErrorJSON;
 public class Authentification {
 	
 	public static JSONObject login(String login,String mdp) {
-		return null;
+		if (login.equals(""))
+			return ErrorJSON.serviceRefused("Logout: Argument Null", -1);
 		
+		if(CheckTools.checkUser(login)) 
+			return Auth.login(login);
+			
+		return ErrorJSON.serviceRefused("Logout : "+login+" is not a register", -2); 
 	}
 	
 	public static JSONObject logout(String login) {
