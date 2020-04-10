@@ -30,6 +30,24 @@ public class CommentsTools {
 		return ErrorJSON.serviceAccepted();
 	}
 	
+	public static JSONObject deleteComment(String titre, String login, String comment) {   
+	        MongoDatabase c = Database.getMongoConnection();
+	        MongoCollection <Document> coll = c.getCollection("commentaire");
+	        
+			Document filter = new Document();
+			filter.append("_id", titre);
+		
+			Document commentaire = new Document("_id", login);
+			commentaire.append("commentaire" , comment);
+			Document update = new Document("$pull", new Document("comments", commentaire ));
+			coll.updateOne(filter, update); 
+			
+			Database.MongoClose();
+			
+			return ErrorJSON.serviceAccepted();
+        
+    }
+	
 	/**
 	 * Verifie si le titre existe dans la base de donnée sinon le créer
 	 * @param titre

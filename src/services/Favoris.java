@@ -31,7 +31,7 @@ public class Favoris {
 		}
 		
 		
-		return null;
+		return FavorisTools.deleteFavoris(login, titre);
 		
 	}
 	
