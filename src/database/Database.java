@@ -7,10 +7,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException; 
 import javax.sql.DataSource;
 
-import org.bson.Document;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 public class Database {
@@ -53,25 +51,16 @@ public class Database {
 	 * @return MongoDatabase
 	 */
 	public static MongoDatabase getMongoConnection() {
-		MongoClient mongo = MongoClients.create("mongodb://localhost:27017");
-		MongoDatabase db = mongo.getDatabase(DBStatic.mysql_db);
+		mongo = MongoClients.create("mongodb://localhost:27017");
+		MongoDatabase db = mongo.getDatabase(DBStatic.mongodb_db);
 		return db;
 	}
 	
 	
-//	public static MongoCollection <Document> getMongocollection(String table) {
-//		MongoDatabase mDB= mongo.getDatabase(DBStatic.mongodb_db);
-//		return  mDB.getCollection(table);
-//	}
-//	public static void MongoOpen() {
-//		mongo=MongoClients.create(DBStatic.mongodb_host);
-//	}
-//	public static void MongoClose() {
-//		mongo.close();
-//	}
-//
-//	public static MongoCollection<Document> createCountersCollection() {
-//		MongoDatabase mDB= mongo.getDatabase(DBStatic.mongodb_db);
-//		return  mDB.getCollection("counter");
-//	}
+	public static void MongoClose() {
+		mongo.close();
+	}
+	
+
+
 }
