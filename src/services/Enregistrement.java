@@ -3,6 +3,7 @@ package services;
 import org.json.JSONObject;
 
 import tools.ErrorJSON;
+import tools.FavorisTools;
 import tools.CheckTools;
 
 import java.sql.Connection;
@@ -24,6 +25,7 @@ public class Enregistrement {
 			return ErrorJSON.serviceRefused("Register: Pseudo "+login+" already existe", -2);
 		}
 		
+		FavorisTools.createFavoris(login);
 		return insertUser(login, mdp);
 	}
 	

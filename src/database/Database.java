@@ -45,19 +45,33 @@ public class Database {
 		return(database.getConnection()); 
 		} 
 	}
-	public static MongoCollection <Document> getMongocollection(String table) {
-		MongoDatabase mDB= mongo.getDatabase(DBStatic.mongodb_db);
-		return  mDB.getCollection(table);
+	
+	
+	
+	/**
+	 * Connection à Mongo
+	 * @return MongoDatabase
+	 */
+	public static MongoDatabase getMongoConnection() {
+		MongoClient mongo = MongoClients.create("mongodb://localhost:27017");
+		MongoDatabase db = mongo.getDatabase(DBStatic.mysql_db);
+		return db;
 	}
-	public static void MongoOpen() {
-		mongo=MongoClients.create(DBStatic.mongodb_host);
-	}
-	public static void MongoClose() {
-		mongo.close();
-	}
-
-	public static MongoCollection<Document> createCountersCollection() {
-		MongoDatabase mDB= mongo.getDatabase(DBStatic.mongodb_db);
-		return  mDB.getCollection("counter");
-	}
+	
+	
+//	public static MongoCollection <Document> getMongocollection(String table) {
+//		MongoDatabase mDB= mongo.getDatabase(DBStatic.mongodb_db);
+//		return  mDB.getCollection(table);
+//	}
+//	public static void MongoOpen() {
+//		mongo=MongoClients.create(DBStatic.mongodb_host);
+//	}
+//	public static void MongoClose() {
+//		mongo.close();
+//	}
+//
+//	public static MongoCollection<Document> createCountersCollection() {
+//		MongoDatabase mDB= mongo.getDatabase(DBStatic.mongodb_db);
+//		return  mDB.getCollection("counter");
+//	}
 }

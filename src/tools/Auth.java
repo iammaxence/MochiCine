@@ -53,4 +53,7 @@ public class Auth {
 			return ErrorJSON.serviceRefused("Logout : error sql", -3);
 		}
 	}
+	
+	
+	
 }
