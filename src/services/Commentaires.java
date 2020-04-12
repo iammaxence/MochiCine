@@ -21,7 +21,7 @@ public class Commentaires {
 	}
 	
 	public static JSONObject deleteComment(String user,String titre,int idCom) { 
-		if(user.equals("") || titre.equals("") || commentaire.equals(""))
+		if(user.equals("") || titre.equals(""))
 			return ErrorJSON.serviceRefused("deleteComment : Argument Null", -1);
 		
 		if(!CheckTools.checkUser(user)) {
@@ -29,12 +29,17 @@ public class Commentaires {
 		}
 		
 		CommentsTools.hasTitre(titre);
-		return CommentsTools.deleteComment(titre, user, commentaire);
+		return CommentsTools.deleteComment(titre, user, idCom);
 		
 	}
 	
-	public static JSONObject listeComment(String titre) {
-		return null;
+	public static JSONObject listeComment(String titre,String login) {
+		
+		if(titre.equals("")) {
+			return ErrorJSON.serviceRefused("listComment : Argument Null", -1);
+		}
+		
+		return CommentsTools.getComment(titre, login);
 		
 	}
 	

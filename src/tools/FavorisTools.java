@@ -3,20 +3,19 @@ package tools;
 import java.util.ArrayList;
 
 import org.bson.Document;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.util.JSON;
 
 import database.Database;
 
 public class FavorisTools {
 	
 	
-	private static void getFavoris(String login) {
-		
-	}
 
 	public static void createFavoris(String login) {
 		MongoDatabase c = Database.getMongoConnection();
@@ -44,6 +43,31 @@ public class FavorisTools {
 		Database.MongoClose();
 		
 		return ErrorJSON.serviceAccepted();
+	}
+	
+	public static JSONObject getFavoris(String login) {
+		MongoDatabase c = Database.getMongoConnection();
+		MongoCollection <Document> coll = c.getCollection("Favoris");
+		
+		Document filter = new Document("_id", login);
+		
+        MongoCursor<Document> cursor = coll.find(filter).iterator();
+        JSONObject res= new JSONObject();
+        
+        while(cursor.hasNext()) {
+        	Document o=cursor.next();
+        	try {
+				res.put("favoris", o.get("favoris"));
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+        System.out.println(res);
+		
+		Database.MongoClose();
+		
+		return res;
 	}
 	
 	

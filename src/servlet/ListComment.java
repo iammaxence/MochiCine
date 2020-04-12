@@ -20,8 +20,9 @@ public class ListComment extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
 			
 	        String titre= request.getParameter("titre");
+	        String login=request.getParameter("login");
 	        
-	        JSONObject res = services.Commentaires.listeComment(titre);
+	        JSONObject res = services.Commentaires.listeComment(titre,login);
 	        reponse.setContentType("text/json");
 	        PrintWriter out = reponse.getWriter();
 	        out.println(res);
