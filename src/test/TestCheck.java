@@ -4,6 +4,7 @@ import tools.CheckTools;
 
 public class TestCheck {
 	public static void main(String[] args) {
-		CheckTools.checkUser("lamenace");
+		boolean res = CheckTools.checkUser("lamenace");
+		System.out.println(res);
 	}
 }

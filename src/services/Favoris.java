@@ -36,11 +36,15 @@ public class Favoris {
 	}
 	
 	public static JSONObject ListFavoris(String login) {
-		
-		if(CheckTools.checkUser(login)) {
-			
+		if(login.equals("")) {
+			return ErrorJSON.serviceRefused("ListFavoris: Argument Null", -1);
 		}
-		return new JSONObject();
+		
+		if(!CheckTools.checkUser(login)) {
+			return ErrorJSON.serviceRefused("ListFavoris: Pseudo "+login+" do not exist", -2);
+		}
+		
+		return FavorisTools.getFavoris(login);
 		
 	}
 	
