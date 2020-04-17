@@ -3,6 +3,7 @@ import Accueil from './Accueil';
 import Profil from './Profil';
 import Login from './Login';
 import DescriptionPage from './DescriptionPage';
+import axios from 'axios';
 
 
 class MainPage extends React.Component {
@@ -13,29 +14,34 @@ class MainPage extends React.Component {
     //all the bind
     this.setLogin = this.setLogin.bind(this);
     this.setLogout = this.setLogout.bind(this);
-    this.getRegisterPage = this.getRegisterPage.bind(this);
     this.getLoginPage = this.getLoginPage.bind(this);
     this.getAccueilPage = this.getAccueilPage.bind(this);
     this.getProfilPage = this.getProfilPage.bind(this);
     
   }
 
+  setLogout(){
+    console.log("Logout : " + this.state.login);
+    if(this.state.isConnected === true ){
+      const url= new URLSearchParams();
+      url.append("login", this.state.login);
+      axios.get("http://localhost:8080/MochiCine/User/Logout?"+url).then(res=> this.result(res));
+    }
+  }
+
+  result(rep){
+    console.log(rep.data);
+    if(rep.data["code"]){
+        this.setState ({statut: "error", textError: rep.data["message"]});
+        window.confirm(this.state.textError);
+    }else{
+        console.log("result : OK");
+        this.setState({pagecourante: "Accueil", login: "", isConnected: false});
+    }
+  }
+
   setLogin(login){
     this.setState({pagecourante: "Profil", login:login, isConnected: true});
-  }
-
-  setLogout(){
-
-    /* Axios Servlet Logout 
-      -----------------------   A FAIRE
-    */
-
-    this.setState({pagecourante: "Accueil", login: "", isConnected: false});
-  }
-
-  //Envoie la page d'inscription
-  getRegisterPage(){
-    this.setState({pagecourante: "Register"});
   }
 
   //Envoie la page de login
@@ -62,11 +68,12 @@ class MainPage extends React.Component {
     if(this.state.pagecourante === "Profil" && this.state.isConnected === true){
       page = 
       <Profil 
-        isConnected={this.state.isConnected} login={this.state.login}/>;
-
-
-    }else if(this.state.pagecourante === "Register"){
-      page = "<Register />";
+        isConnected={this.state.isConnected} 
+        login={this.state.login}
+        getLoginPage={this.getLoginPage}
+        getProfilPage={this.getProfilPage}
+        getAccueilPage={this.getAccueilPage} 
+        setLogout={this.setLogout}/>;
 
 
     }else if(this.state.pagecourante === "Accueil"){
@@ -82,8 +89,7 @@ class MainPage extends React.Component {
     }else if(this.state.pagecourante === "Login"){
       page = 
       <Login 
-        setLogin={this.state.setLogin} 
-        getRegisterPage={this.getRegisterPage} 
+        setLogin={this.setLogin}  
         getAccueilPage={this.getAccueilPage}/>;
 
 

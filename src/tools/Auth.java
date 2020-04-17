@@ -21,15 +21,16 @@ public class Auth {
 				
 			st.close();
 			c.close();
-
-			if(res == 0 )
+			
+			if(res == 1 )
 				return ErrorJSON.serviceAccepted();
-			return ErrorJSON.serviceRefused("Logout : error sql", -4);
+			
 
 		} catch ( SQLException e) {
 			e.printStackTrace();
 			return ErrorJSON.serviceRefused("Logout : error sql", -3);
 		}
+		return ErrorJSON.serviceRefused("Logout : non trouver", -4);
 	}
 	
 	public static JSONObject login(String login, String mdp) {
@@ -43,15 +44,16 @@ public class Auth {
 				
 			st.close();
 			c.close();
-
-			if(res == 0 )
+			
+			if(res == 1)
 				return ErrorJSON.serviceAccepted();
-			return ErrorJSON.serviceRefused("Logout : error sql", -4);
+			
 
 		} catch ( SQLException e) {
 			e.printStackTrace();
-			return ErrorJSON.serviceRefused("Logout : error sql", -3);
+			return ErrorJSON.serviceRefused("Login : exception sql", -3);
 		}
+		return ErrorJSON.serviceRefused("Login : non trouver", -4);
 	}
 	
 	

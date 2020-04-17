@@ -8,13 +8,22 @@ class Login extends React.Component {
         this.login = React.createRef();
         this.mdp = React.createRef();
 
-        this.sendregister = this.sendregister.bind(this);
+        this.requestRegister = this.requestRegister.bind(this);
         this.sendaccueil = this.sendaccueil.bind(this);
-        this.requestCreateUser = this.requestCreateUser.bind(this);
+        this.requestLogin = this.requestLogin.bind(this);
+        this.result = this.result.bind(this);
     }
 
-    sendregister = () => {
-        this.props.getRegisterPage();
+    requestRegister = () => {
+        console.log("createUser : " + this.login.current.value +" ; " + this.mdp.current.value);
+        /** appel en POST au SERVER */
+        const test ={ login: this.login.current.value, mdp: this.mdp.current.value }
+        const url = {};
+        let mylogin = this.login.current.value
+        url["login"] = this.login.current.value;
+        let mymdp = this.mdp.current.value
+        url["mdp"] = this.mdp.current.value;
+        axios.post("http://localhost:8080/MochiCine/Register", test).then(res=> this.result(res));
     }
 
     sendaccueil = () => {
@@ -22,8 +31,8 @@ class Login extends React.Component {
     }
 
 
-    requestCreateUser = () => {
-        console.log("createUser : " + this.login.current.value +" ; " + this.mdp.current.value);
+    requestLogin = () => {
+        console.log("Login : " + this.login.current.value +" ; " + this.mdp.current.value);
         const url= new URLSearchParams();
         url.append("login", this.login.current.value);
         url.append("mdp", this.mdp.current.value);
@@ -36,7 +45,7 @@ class Login extends React.Component {
             this.setState ({statut: "error", textError: rep.data["message"]});
             window.confirm(this.state.textError);
         }else{
-            console.log("createUser : OK");
+            console.log("result : OK");
             this.props.setLogin(this.login.current.value);
         }
     }
@@ -49,7 +58,7 @@ class Login extends React.Component {
                     <div className="user_card">
                         <h1 className="text-center" onClick={this.sendaccueil} >MochiCine</h1>
                         <div className="d-flex justify-content-center form_container">
-                            <form>
+                            <form method="POST">
                                 <div className="input-group mb-3">
                                     <div className="input-group-append">
                                         <span className="input-group-text"><i className="fas fa-user"></i></span>
@@ -63,9 +72,9 @@ class Login extends React.Component {
                                     <input type="password" name="" className="form-control input_pass" placeholder="password" ref={this.mdp} required/>
                                 </div>
                                 <div className="d-flex justify-content-center mt-3 login_container">
-                                    <button type="button" className="btn btn-dark" onClick={this.requestCreateUser} >Login</button>
+                                    <button type="button" className="btn btn-dark" onClick={this.requestLogin} >Login</button>
                                     &nbsp; &nbsp;
-                                    <button className="btn btn-outline-dark" type="button" onClick={this.sendregister}>Register</button>
+                                    <button className="btn btn-outline-dark" type="submit" onClick={this.requestRegister}>Register</button>
                                 </div>
                             </form>
                         </div>

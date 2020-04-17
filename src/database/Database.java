@@ -31,18 +31,24 @@ public class Database {
 	} 
 	
 	public static Connection getMySQLConnection() throws SQLException { 
-		
-		if (DBStatic.mysql_pooling==false) { 
-			return(DriverManager.getConnection("jdbc:mysql://" + DBStatic.mysql_host + "/" + DBStatic.mysql_db, DBStatic.mysql_username, DBStatic.mysql_password));
-		} 
-		else { 
-			
-			if (database==null) { 
-				database=new Database("jdbc/db"); 
-		} 
-		return(database.getConnection()); 
-		} 
-	}
+        
+        if (DBStatic.mysql_pooling==false) { 
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (ClassNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return(DriverManager.getConnection("jdbc:mysql://"+DBStatic.mysql_host+"/"+DBStatic.mysql_db, DBStatic.mysql_username, DBStatic.mysql_password));
+        } 
+        else { 
+            
+            if (database==null) { 
+                database=new Database("jdbc/db"); 
+        } 
+        return(database.getConnection()); 
+        } 
+    }
 	
 	
 	

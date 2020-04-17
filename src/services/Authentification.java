@@ -8,7 +8,7 @@ import tools.ErrorJSON;
 
 public class Authentification {
 	
-	public static JSONObject login(String login,String mdp) {
+	public static JSONObject login(String login, String mdp) {
 		if (login.equals("") || mdp.equals(""))
 			return ErrorJSON.serviceRefused("Login: Argument Null", -1);
 		
