@@ -19,7 +19,7 @@ public class TestRegister {
 		
 		System.out.println(CheckTools.checkUser(login));
 		
-		Enregistrement.createUser("lilie", "mdp");
+		Enregistrement.createUser("bob", "mdp");
 //		
 //		try {
 //			//Class.forName("com.mysql.jdbc.Driver"); 
