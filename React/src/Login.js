@@ -17,13 +17,17 @@ class Login extends React.Component {
     requestRegister = () => {
         console.log("createUser : " + this.login.current.value +" ; " + this.mdp.current.value);
         /** appel en POST au SERVER */
-        const test ={ login: this.login.current.value, mdp: this.mdp.current.value }
-        const url = {};
+        //const test ={ login: this.login.current.value, mdp: this.mdp.current.value }
+        
         let mylogin = this.login.current.value
-        url["login"] = this.login.current.value;
+       
         let mymdp = this.mdp.current.value
-        url["mdp"] = this.mdp.current.value;
-        axios.post("http://localhost:8080/MochiCine/Register", test).then(res=> this.result(res));
+       
+
+        const url = new URLSearchParams();
+        url.append('login',mylogin);
+        url.append('mdp',mymdp);
+        axios.post("http://localhost:8080/MochiCine/Register", url).then(res=> this.result(res));
     }
 
     sendaccueil = () => {
@@ -74,7 +78,7 @@ class Login extends React.Component {
                                 <div className="d-flex justify-content-center mt-3 login_container">
                                     <button type="button" className="btn btn-dark" onClick={this.requestLogin} >Login</button>
                                     &nbsp; &nbsp;
-                                    <button className="btn btn-outline-dark" type="submit" onClick={this.requestRegister}>Register</button>
+                                    <button className="btn btn-outline-dark" type="button" onClick={this.requestRegister}>Register</button>
                                 </div>
                             </form>
                         </div>

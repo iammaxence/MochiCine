@@ -1,6 +1,4 @@
 /CORSFilter.class
-/services/
-/test/
-/tools/
-/database/
 /servlet/
+/services/
+/database/
