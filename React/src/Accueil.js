@@ -1,5 +1,6 @@
 import React from 'react';
 import NavBar from './NavBar';
+import ListComponent from './ListComponent'
 
 class Accueil extends React.Component {
 
@@ -17,12 +18,13 @@ class Accueil extends React.Component {
                 getSearchPage={this.props.getSearchPage}/>
 
 
-                <div className="container-fluid text-center">    
-                <div className="row content">
-                    <div className="col-sm-2 sidenav bg-secondary text-white">
+                <div className="container_page container-fluid text-center">    
+                <div className="row">
+                    <div className="col-3 sidenav bg-secondary text-dark">
                       <h2>Actualité</h2>
+                      <ListComponent pagecourante={this.props.pagecourante} login={this.props.login} />
                     </div>
-                    <div className="col-sm-8 text-left"> 
+                    <div className="col-7 text-center"> 
                         <h1>Calendrier</h1>
                     </div>
                 </div>

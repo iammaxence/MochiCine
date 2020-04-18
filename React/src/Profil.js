@@ -14,8 +14,18 @@ class Profil extends React.Component {
                 getProfilPage={this.props.getProfilPage}
                 getAccueilPage={this.props.getAccueilPage} />
 
-
-              <h2>Profil Page</h2>
+              <div className="container-fluid text-center">  
+              &nbsp;  
+                <div className="row content">
+                    <div className="col-sm-3 sidenav text-dark text-center">
+                      <h2>Favoris</h2>
+                    </div>
+                    <div className="col-sm-7 text-center"> 
+                      <h2>Profil Page</h2>
+                    </div>
+                </div>
+              </div>
+              
             </div>
             
           );

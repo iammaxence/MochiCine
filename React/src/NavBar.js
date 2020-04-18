@@ -42,7 +42,7 @@ class NavBar extends React.Component {
         }
         return(
             <nav className="navbar navbar-light bg-dark justify-content-between">
-                <a className="navbar-brand text-light" onClick={this.sendaccueil}> MochiCine </a>
+                <a className="navbar-brand text-light" onClick={this.sendaccueil} > MochiCine </a>
                 <form className="form-inline">
                     <input className="form-control mr-sm-2" type="search" placeholder="Search" id="recherche" aria-label="Search"/>
                     <button className="btn btn-outline-success my-2 my-sm-0" onClick={this.sendSearch} type="button" >Search</button>

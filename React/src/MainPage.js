@@ -89,6 +89,7 @@ class MainPage extends React.Component {
       page = 
       <Accueil 
         isConnected={this.state.isConnected}
+        login={this.state.login}
         getLoginPage={this.getLoginPage}
         getProfilPage={this.getProfilPage}
         getAccueilPage={this.getAccueilPage} 

@@ -57,7 +57,8 @@ class Login extends React.Component {
 
     render(){
           return(
-            <div className="container h-100">
+            <div className="PageLogin">
+            <div className="container">
                 <div className="d-flex justify-content-center h-100">
                     <div className="user_card">
                         <h1 className="text-center" onClick={this.sendaccueil} >MochiCine</h1>
@@ -84,6 +85,7 @@ class Login extends React.Component {
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
           );
     }
