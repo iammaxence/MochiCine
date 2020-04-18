@@ -216,7 +216,7 @@ public class ApiTools {
 	
 	public static JSONObject recherche(String key,String keyword) throws IOException {
 		JSONObject retour= new JSONObject();
-		
+		JSONArray myarray=new JSONArray();
 		
 		//On effectue un appel à l'api externe
 		URL url = new URL("https://api.themoviedb.org/3/search/multi?api_key="+key+"&language=fr-FR&query="+keyword+"&page=1&include_adult=false"); //On récupère seulement une partie pour l'affichage
@@ -241,8 +241,29 @@ public class ApiTools {
 
 		}
 		in.close();
+		// On cast notre réponse String -> JSONArray 
+		
 		try {
-			retour.put("data",listedelarecherche.get("results"));
+			myarray=(JSONArray) listedelarecherche.get("results");
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		JSONArray newArray=new JSONArray();
+		for(int i=0;i<myarray.length();i++) {
+			try {
+				JSONObject jo=(JSONObject)myarray.get(i); //String -> JSONObject
+				newArray.put(jo);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		try {
+			retour.put("data",newArray);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

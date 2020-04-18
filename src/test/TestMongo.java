@@ -12,5 +12,6 @@ public class TestMongo {
 		//CommentsTools.hasTitre("alice au pays des merveilles");
 		//CommentsTools.addComment("alice au pays des merveilles", "bob", "de la frappe");
 		//CommentsTools.getComment("alice au pays des merveilles", "bob");
+		//CommentsTools.deleteComment("alice au pays des merveilles", "alice", 1);
 	}
 }
