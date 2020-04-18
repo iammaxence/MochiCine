@@ -6,6 +6,7 @@ class NavBar extends React.Component {
       this.sendaccueil=this.sendaccueil.bind(this);
       this.sendprofil=this.sendprofil.bind(this);
       this.sendlogin=this.sendlogin.bind(this);
+      this.sendSearch=this.sendSearch.bind(this);
     }
 
     sendaccueil = () => {
@@ -18,6 +19,11 @@ class NavBar extends React.Component {
 
     sendlogin = () => {
         this.props.getLoginPage();
+    }
+
+    //---------Ajout-----------
+    sendSearch = () => {
+        this.props.getSearchPage(document.getElementById("recherche").value);
     }
     
     render(){
@@ -38,8 +44,8 @@ class NavBar extends React.Component {
             <nav className="navbar navbar-light bg-dark justify-content-between">
                 <a className="navbar-brand text-light" onClick={this.sendaccueil}> MochiCine </a>
                 <form className="form-inline">
-                    <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    <input className="form-control mr-sm-2" type="search" placeholder="Search" id="recherche" aria-label="Search"/>
+                    <button className="btn btn-outline-success my-2 my-sm-0" onClick={this.sendSearch} type="button" >Search</button>
                 </form>
                 {option}
             </nav>

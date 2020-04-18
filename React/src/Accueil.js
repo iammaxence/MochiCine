@@ -13,7 +13,8 @@ class Accueil extends React.Component {
                 getLoginPage={this.props.getLoginPage}
                 setLogout={this.props.setLogout}
                 getProfilPage={this.props.getProfilPage}
-                getAccueilPage={this.props.getAccueilPage} />
+                getAccueilPage={this.props.getAccueilPage} 
+                getSearchPage={this.props.getSearchPage}/>
 
 
                 <div className="container-fluid text-center">    

@@ -47,6 +47,10 @@
       <servlet-name>ListFavoris</servlet-name>
       <servlet-class>servlet.ListFavoris</servlet-class>
   </servlet>
+  <servlet>
+      <servlet-name>Search</servlet-name>
+      <servlet-class>servlet.Search</servlet-class>
+  </servlet>
   
   <servlet-mapping>
     <servlet-name>Register</servlet-name>
@@ -91,6 +95,11 @@
   <servlet-mapping>
     <servlet-name>ListFavoris</servlet-name>
     <url-pattern>/Favoris/List</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>Search</servlet-name>
+    <url-pattern>/Search</url-pattern>
   </servlet-mapping>
 
   <filter>

@@ -4,12 +4,13 @@ import Profil from './Profil';
 import Login from './Login';
 import DescriptionPage from './DescriptionPage';
 import axios from 'axios';
+import SearchPage from './SearchPage';
 
 
 class MainPage extends React.Component {
   constructor(props){
     super(props);
-    this.state= {pagecourante: "Accueil", isConnected: false, login: ""};
+    this.state= {pagecourante: "Accueil", isConnected: false, login: "", keyword: ""};
   
     //all the bind
     this.setLogin = this.setLogin.bind(this);
@@ -17,8 +18,11 @@ class MainPage extends React.Component {
     this.getLoginPage = this.getLoginPage.bind(this);
     this.getAccueilPage = this.getAccueilPage.bind(this);
     this.getProfilPage = this.getProfilPage.bind(this);
+    this.getSearchPage= this.getSearchPage.bind(this);
     
   }
+
+  
 
   setLogout(){
     console.log("Logout : " + this.state.login);
@@ -58,7 +62,11 @@ class MainPage extends React.Component {
   getProfilPage(){
     this.setState({pagecourante: "Profil"});
   }
- 
+  
+  getSearchPage(keywordvalue){
+    this.setState({pagecourante: "SearchPage", keyword: keywordvalue});
+    console.log(this.state.keyword);
+  }
 
 
 
@@ -73,7 +81,8 @@ class MainPage extends React.Component {
         getLoginPage={this.getLoginPage}
         getProfilPage={this.getProfilPage}
         getAccueilPage={this.getAccueilPage} 
-        setLogout={this.setLogout}/>;
+        setLogout={this.setLogout}
+        getSearchPage={this.props.getSearchPage}/>;
 
 
     }else if(this.state.pagecourante === "Accueil"){
@@ -83,7 +92,8 @@ class MainPage extends React.Component {
         getLoginPage={this.getLoginPage}
         getProfilPage={this.getProfilPage}
         getAccueilPage={this.getAccueilPage} 
-        setLogout={this.setLogout}/> ;
+        setLogout={this.setLogout}
+        getSearchPage={this.getSearchPage}/> ;
 
 
     }else if(this.state.pagecourante === "Login"){
@@ -96,6 +106,18 @@ class MainPage extends React.Component {
     }else if(this.state.pagecourante === "DescriptionPage"){
       page = 
         <DescriptionPage  isConnected={this.state.isConnected} />;
+    }
+    else if(this.state.pagecourante === "SearchPage"){
+      page=
+        <SearchPage
+          isConnected={this.state.isConnected} 
+          login={this.state.login}
+          getLoginPage={this.getLoginPage}
+          getProfilPage={this.getProfilPage}
+          getAccueilPage={this.getAccueilPage} 
+          setLogout={this.setLogout}
+          getSearchPage={this.getSearchPage}
+          keyword={this.state.keyword} />
     }
 
     return(page);
