@@ -11,7 +11,7 @@ class MainPage extends React.Component {
   constructor(props){
     super(props);
     this.state= {pagecourante: "Accueil", isConnected: false, login: "", keyword: ""};
-  
+    
     //all the bind
     this.setLogin = this.setLogin.bind(this);
     this.setLogout = this.setLogout.bind(this);
@@ -65,7 +65,7 @@ class MainPage extends React.Component {
   
   getSearchPage(keywordvalue){
     this.setState({pagecourante: "SearchPage", keyword: keywordvalue});
-    console.log(this.state.keyword);
+    //console.log(this.state.keyword);
   }
 
 
