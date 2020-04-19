@@ -47,6 +47,17 @@
       <servlet-name>ListFavoris</servlet-name>
       <servlet-class>servlet.ListFavoris</servlet-class>
   </servlet>
+  
+  <servlet>
+	  <servlet-name>SerieOfTheWeek</servlet-name>
+	  <servlet-class>servlet.SerieOfTheWeek</servlet-class>
+ </servlet>
+ 
+ <servlet>
+	 <servlet-name>FilmsOnAir</servlet-name>
+	 <servlet-class>servlet.FilmsOnAir</servlet-class>
+ </servlet>
+  
   <servlet>
       <servlet-name>Search</servlet-name>
       <servlet-class>servlet.Search</servlet-class>
@@ -95,6 +106,16 @@
   <servlet-mapping>
     <servlet-name>ListFavoris</servlet-name>
     <url-pattern>/Favoris/List</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+	<servlet-name>SerieOfTheWeek</servlet-name>
+	<url-pattern>/SerieOfTheWeek</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+	<servlet-name>FilmsOnAir</servlet-name>
+	<url-pattern>/FilmsOnAir</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
