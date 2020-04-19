@@ -38,9 +38,19 @@
       <servlet-class>servlet.DeleteComment</servlet-class>
   </servlet>
   
+   <servlet>
+      <servlet-name>AddMessage</servlet-name>
+      <servlet-class>servlet.AddMessage</servlet-class>
+  </servlet>
+  
   <servlet>
-      <servlet-name>ListComment</servlet-name>
-      <servlet-class>servlet.ListComment</servlet-class>
+      <servlet-name>DeleteComment</servlet-name>
+      <servlet-class>servlet.DeleteMessage</servlet-class>
+  </servlet>
+  
+  <servlet>
+      <servlet-name>ListMessages</servlet-name>
+      <servlet-class>servlet.ListMessages</servlet-class>
   </servlet>
   
   <servlet>
@@ -99,8 +109,18 @@
   </servlet-mapping>
   
   <servlet-mapping>
-    <servlet-name>ListComment</servlet-name>
-    <url-pattern>/Comment/List</url-pattern>
+    <servlet-name>AddMessage</servlet-name>
+    <url-pattern>/Message/Add</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>DeleteMessage</servlet-name>
+    <url-pattern>/Message/Delete</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ListMessages</servlet-name>
+    <url-pattern>/Message/List</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>

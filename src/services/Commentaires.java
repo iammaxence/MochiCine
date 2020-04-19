@@ -8,39 +8,25 @@ import tools.ErrorJSON;
 
 public class Commentaires {
 	
-	public static JSONObject addComment(String user, String titre,String commentaire) { 
-		if(user.equals("") || titre.equals("") || commentaire.equals(""))
+	public static JSONObject addComment(String user, String id_message,String commentaire) { 
+		if(user.equals("") || id_message.equals("") || commentaire.equals(""))
 			return ErrorJSON.serviceRefused("AddComment : Argument Null", -1);
 		
 		if(!CheckTools.checkUser(user)) {
 			return ErrorJSON.serviceRefused("AddComment: Pseudo "+user+" do not exist", -2);
-		}
-		
-		CommentsTools.hasTitre(titre);
-		return CommentsTools.addComment(titre, user, commentaire);
+		}	
+
+		return CommentsTools.addComment(id_message, user, commentaire);
 	}
 	
-	public static JSONObject deleteComment(String user,String titre,int idCom) { 
-		if(user.equals("") || titre.equals(""))
+	public static JSONObject deleteComment(String idCom, String id_message) { 
+		if(idCom.equals("") || id_message.equals(""))
 			return ErrorJSON.serviceRefused("deleteComment : Argument Null", -1);
-		
-		if(!CheckTools.checkUser(user)) {
-			return ErrorJSON.serviceRefused("deleteComment: Pseudo "+user+" do not exist", -2);
-		}
-		
-		CommentsTools.hasTitre(titre);
-		return CommentsTools.deleteComment(titre, user, idCom);
+		if(CommentsTools.commentExist(id_message, idCom))
+			return CommentsTools.deleteComment(id_message, idCom);
+		return ErrorJSON.serviceRefused("DeleteComment: not exist", -2);
 		
 	}
 	
-	public static JSONObject listeComment(String titre,String login) {
-		
-		if(titre.equals("")) {
-			return ErrorJSON.serviceRefused("listComment : Argument Null", -1);
-		}
-		
-		return CommentsTools.getComment(titre, login);
-		
-	}
 	
 }

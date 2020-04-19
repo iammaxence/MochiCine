@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-public class ListComment extends HttpServlet{
+public class ListMessages extends HttpServlet{
 	
 	/**
 	 * 
@@ -18,11 +18,9 @@ public class ListComment extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
-			
 	        String titre= request.getParameter("titre");
-	        String login=request.getParameter("login");
 	        
-	        JSONObject res = services.Commentaires.listeComment(titre,login);
+	        JSONObject res = services.Messages.getlistMessages(titre);
 	        reponse.setContentType("text/json");
 	        PrintWriter out = reponse.getWriter();
 	        out.println(res);

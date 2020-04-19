@@ -19,14 +19,11 @@ public class DeleteComment extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
-			
-			String login = request.getParameter("login");
-			String titre = request.getParameter("titre");
-	        String idCom = request.getParameter("comId"); //id
-	       	int id = Integer.parseInt(idCom);
+			String id_message = request.getParameter("id_message");
+	        String idCom = request.getParameter("idCom"); 
 	        
 	        
-	        JSONObject res = services.Commentaires.deleteComment(login,titre, id);
+	        JSONObject res = services.Commentaires.deleteComment(idCom, id_message);
 	        reponse.setContentType("text/json");
 	        PrintWriter out = reponse.getWriter();
 	        out.println(res);

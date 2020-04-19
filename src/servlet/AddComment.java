@@ -20,10 +20,10 @@ public class AddComment extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
 			
 			String user = request.getParameter("user");
-			String titre = request.getParameter("titre");
-	        String commentaire = request.getParameter("comment"); //comment : {id, comment}
+			String id_message = request.getParameter("id_message");
+	        String commentaire = request.getParameter("comment"); 
 	        
-	        JSONObject res = services.Commentaires.addComment(user, titre, commentaire);
+	        JSONObject res = services.Commentaires.addComment(user, id_message, commentaire);
 	        reponse.setContentType("text/json");
 	        PrintWriter out = reponse.getWriter();
 	        out.println(res);
