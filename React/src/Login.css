@@ -21,12 +21,16 @@ html, body, #root{
 
 .container_page, .row, .col-3{
     height: 100%;
-	overflow: hidden;
+    padding-top: 0.5%;
+    overflow: auto;
     margin-bottom: -9999px;
 	padding-bottom: 9999px;
 }
 
-
+ul {
+    margin: 5%;
+    width: 95%;
+}
 
 
 

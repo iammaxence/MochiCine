@@ -1,12 +1,13 @@
 import React from 'react';
 import NavBar from './NavBar';
+import ListFavoris from './ListFavoris';
 
 class Profil extends React.Component {
 
   
     render(){
           return(
-            <div className= "PageProfil">
+            <div className= "PageProfil text-center">
               <NavBar 
                 isConnected={this.props.isConnected} 
                 getLoginPage={this.props.getLoginPage}
@@ -14,17 +15,9 @@ class Profil extends React.Component {
                 getProfilPage={this.props.getProfilPage}
                 getAccueilPage={this.props.getAccueilPage} />
 
-              <div className="container-fluid text-center">  
-              &nbsp;  
-                <div className="row content">
-                    <div className="col-sm-3 sidenav text-dark text-center">
-                      <h2>Favoris</h2>
-                    </div>
-                    <div className="col-sm-7 text-center"> 
-                      <h2>Profil Page</h2>
-                    </div>
-                </div>
-              </div>
+              <h2>Favoris</h2>
+              <ListFavoris  login={this.props.login} />
+
               
             </div>
             

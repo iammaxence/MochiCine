@@ -67,7 +67,7 @@ class Calendrier extends Component{
             const note=(ex.vote_average*5)/10;
                 return(
                     
-                    <div className="bloc rounded-lg"> 
+                    <div className="bloc rounded-lg" key={ex.id} > 
                         <img src={"https://image.tmdb.org/t/p/w500/"+ex.backdrop_path} alt={"pic_of_"+ex.name} width="100%" height="150"/>
                         <div className="stars">
                             <StarRatings rating={note} starRatedColor="yellow" numberOfStars={5} name='rating' starDimension="20px"starSpacing="1px">
@@ -92,7 +92,7 @@ class Calendrier extends Component{
             if(ex.backdrop_path!==null && ex.backdrop_path!==undefined){
                 return(
                     
-                    <div className="bloc rounded-lg"> 
+                    <div className="bloc rounded-lg" key={ex.id}> 
                         <img src={"https://image.tmdb.org/t/p/w500/"+ex.backdrop_path} alt={"pic_of_"+ex.title} width="100%" height="150"/>
                         <div className="stars">
                             <StarRatings rating={note} starRatedColor="yellow" numberOfStars={5} name='rating' starDimension="20px"starSpacing="1px">

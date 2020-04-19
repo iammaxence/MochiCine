@@ -16,6 +16,60 @@ import org.json.JSONObject;
 
 public class ApiTools {
 	
+	/**
+	 *  Recupere les descriptifs des ids pour les movies ou les series
+	 * @param ids Arraylist of id
+	 * @param type soit tv ou movie
+	 * @return
+	 */
+	public static JSONObject getIDs(ArrayList<Integer> ids, String type) {
+		//Pour chaque id (represantant une serie), on récupère les informations qui nous intéressent
+		JSONArray listeseries=new JSONArray();
+		for(Integer id : ids) {
+			try {
+				//On effectue un appel à l'API externe
+
+				URL url = new URL("https://api.themoviedb.org/3/"+type+"/"+id+"?api_key=a3be1be132d237a0716cc27bdae1b2f0&language=en-US");
+				HttpURLConnection con = (HttpURLConnection)url.openConnection();
+				con.setRequestMethod("GET");
+				con.setRequestProperty("Content-Type", "application/json");
+
+				//On récupère la réponse, si le status est valide, on continue
+				int status = con.getResponseCode();
+				if(status != 200)
+					return ErrorJSON.serviceRefused("Can't find tv show with id", -2);
+				
+				//On récupère la réponse envoyé par l'API
+				BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+				String inputLine;
+				JSONObject laserie= new JSONObject();
+				
+				while ((inputLine = in.readLine()) != null) {
+					try {
+						laserie=new JSONObject(inputLine);
+						listeseries.put(laserie);
+
+					} catch (JSONException e) {
+						System.out.println("Error: readline id series (ApiTools.java");
+					}
+				}
+				in.close();
+			}catch(IOException e) {
+				return ErrorJSON.serviceRefused("Problème HttpURLConnection ApiTools", -4);
+			}
+			
+		}
+
+
+		try {
+			return new JSONObject().put("data", listeseries);
+		} catch (JSONException e) {
+			
+			System.out.println("Error: Ajout listeseries à échoué (ApiTools.java)");
+		}
+		return ErrorJSON.serviceRefused("Problème requete ApiTools", -3);
+	}
+	
 	
 	/**
 	 * Renvoie la liste des séries de la semaine
@@ -89,7 +143,7 @@ public class ApiTools {
 	 * @throws IOException
 	 */
 
-	private static JSONObject moreInfosSeries(ArrayList<Integer> ids) throws IOException {
+	public static JSONObject moreInfosSeries(ArrayList<Integer> ids) throws IOException {
 
 
 		//Pour chaque id (represantant une serie), on récupère les informations qui nous intéressent
@@ -119,6 +173,9 @@ public class ApiTools {
 
 					//Parsing de la date du dernier épisode sortie cette semaine
 					String s = laserie.getString("last_air_date");
+					if(s.equals("null")) { //Cas où les admins ont oublié de mettre une date
+                        continue;
+                    }
 					//System.out.println("--- "+s+" ---");
 					String[] sep = s.split("-");
 					Integer[] date= {Integer.parseInt(sep[0]),Integer.parseInt(sep[1]),Integer.parseInt(sep[2])};

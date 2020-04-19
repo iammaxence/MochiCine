@@ -22,13 +22,14 @@ public class FavorisTools {
 		
 		Document q = new Document();
 		q.append("_id", login);
-		q.append("favoris", new ArrayList<String>());
+		q.append("series", new ArrayList<Integer>());
+		q.append("movies", new ArrayList<Integer>());
 		coll.insertOne(q);
 		
 		Database.MongoClose();
 	}
 
-	public static JSONObject addFavoris(String login, String titre) {
+	public static JSONObject addFavoris(String login, Integer id_favoris, boolean isSerie) {
 		MongoDatabase c = Database.getMongoConnection();
 		MongoCollection <Document> coll = c.getCollection("Favoris");
 		
@@ -36,7 +37,12 @@ public class FavorisTools {
 		filter.append("_id", login);
 	
 		Document update = new Document();
-		update.append("$push", new Document("favoris", titre));
+		if(isSerie) {
+			update.append("$push", new Document("series", id_favoris));
+		}else {
+			update.append("$push", new Document("movies", id_favoris));
+		}
+			
 		coll.updateOne(filter, update); 
 		
 		Database.MongoClose();
@@ -56,7 +62,8 @@ public class FavorisTools {
         while(cursor.hasNext()) {
         	Document o=cursor.next();
         	try {
-				res.put("favoris", o.get("favoris"));
+				res.put("series", o.get("series"));
+				res.put("movies", o.get("movies"));
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -70,13 +77,19 @@ public class FavorisTools {
 	}
 	
 	
-	public static JSONObject deleteFavoris(String login, String titre) {   
+	public static JSONObject deleteFavoris(String login, Integer id_favoris, boolean isSerie) {   
 		try {
 	        MongoDatabase c = Database.getMongoConnection();
 	        MongoCollection <Document> coll = c.getCollection("Favoris");
 	        
 	        Document filter = new Document("_id", login);
-	        Document delete = new Document("favoris", titre);
+	        Document delete;
+	        //Choix entre series ou movies
+	        if(isSerie) {
+	        	delete = new Document("series", id_favoris);
+			}else {
+				delete = new Document("movies", id_favoris);
+			}
 	        Document update = new Document("$pull",  delete);
 	        
 	        coll.updateOne(filter,update);

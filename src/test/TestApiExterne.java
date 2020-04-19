@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import org.json.JSONObject;
+
 import tools.ApiTools;
 
 public class TestApiExterne {
@@ -16,19 +18,31 @@ public class TestApiExterne {
 //			ids.add(va);
 //		
 //		try {
-//			ApiTools.moreInfosSeries(ids);
+//			JSONObject res = ApiTools.moreInfosSeries(ids);
+//			System.out.println(res);
 //		} catch (IOException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 	
-		try {
-			ApiTools.recherche("a3be1be132d237a0716cc27bdae1b2f0", "avengers");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			ApiTools.recherche("a3be1be132d237a0716cc27bdae1b2f0", "avengers");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
+		//https://api.themoviedb.org/3/movie/{movie_id}?api_key=<<api_key>>&language=en-US
+		
+		
+		
+//		Integer[] v= {63247};
+//		ArrayList<Integer> ids= new ArrayList<Integer>();
+//		for(Integer va : v)
+//			ids.add(va);
+//		
+//		JSONObject res = ApiTools.getIDs(ids, "tv");
+//		System.out.println(res);
 
 	}
 
