@@ -13,9 +13,19 @@ import java.sql.Statement;
 import database.Database;
 
 
+/**
+ * Service assurant la creation de nouveaux compte utilisateur
+ * @author
+ *
+ */
 public class Enregistrement {
 	
-	
+	/**
+	 * Cree un nouveaux compte et appelle la methode d'insertion.
+	 * @param login
+	 * @param mdp
+	 * @return
+	 */
 	public static JSONObject createUser(String login, String mdp) {
 		if(login.equals("") || mdp.equals("")) {
 			return ErrorJSON.serviceRefused("Register: Argument Null", -1);
@@ -29,6 +39,12 @@ public class Enregistrement {
 		return insertUser(login, mdp);
 	}
 	
+	/**
+	 * Insert les information d'un nouvel utilisateur dans la base de donee.
+	 * @param login
+	 * @param mdp
+	 * @return
+	 */
 	private static JSONObject insertUser(String login, String mdp) {
 		try {
 			Connection c = Database.getMySQLConnection();

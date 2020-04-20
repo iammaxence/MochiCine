@@ -1,25 +1,34 @@
 package test;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 
-import database.Database;
 import services.Enregistrement;
 import tools.CheckTools;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.json.JSONObject;
+import org.junit.Test;
+
 public class TestRegister {
 
-	public static void main(String[] args) {
-		
-		
-		
-		String login = "bob";
+	
+	
+	@Test
+	public void testCreateUser() {
+		System.out.println("teste Create User");
+		String login = "franck";
 		String mdp = "mdp";
+		if(CheckTools.checkUser(login)) {
+			assertTrue(true);
+		}else {
+			JSONObject res = Enregistrement.createUser(login, mdp);
+			assertEquals("{}", res.toString());
+		}
 		
-		System.out.println(CheckTools.checkUser(login));
 		
-		Enregistrement.createUser("bob", "mdp");
+	}
+}
 //		
 //		try {
 //			//Class.forName("com.mysql.jdbc.Driver"); 
@@ -62,6 +71,3 @@ public class TestRegister {
 		
 //		JSONObject reponse = services.Register.createUser("bob", "mdp");
 //		System.out.println(reponse);
-	}
-
-}

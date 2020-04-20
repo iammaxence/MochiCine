@@ -10,9 +10,20 @@ import tools.CheckTools;
 import tools.ErrorJSON;
 import tools.FavorisTools;
 
+/**
+ * Service assurant l'ajout, la suppression et l'acces au favoris d'un utilisateur
+ * @author 
+ *
+ */
 public class Favoris {
 	
-	
+	/**
+	 * Appelle l'outil FavorisTools pour realiser l'ajout d'un film ou d'une serie aux favoris d'un utilisateur.
+	 * @param login
+	 * @param id_favoris
+	 * @param isSerie
+	 * @return
+	 */
 	public static JSONObject addFavoris(String login, Integer id_favoris, String isSerie) {
 		if(login.equals("") || id_favoris < 0) {
 			return ErrorJSON.serviceRefused("deleteFavoris: Argument Null", -1);
@@ -25,6 +36,13 @@ public class Favoris {
 		return FavorisTools.addFavoris(login, id_favoris, new Boolean(isSerie));
 	}
 	
+	/**
+	 * Appelle l'outil FavorisTools pour realiser la suppression d'un film ou d'une serie des favoris d'un utilisateur.
+	 * @param login
+	 * @param id_favoris
+	 * @param isSerie
+	 * @return
+	 */
 	public static JSONObject deleteFavoris(String login, Integer id_favoris, String isSerie) {
 		if(login.equals("") || id_favoris < 0) {
 			return ErrorJSON.serviceRefused("deleteFavoris: Argument Null", -1);
@@ -39,7 +57,11 @@ public class Favoris {
 		
 	}
 	
-	
+	/**
+	 * Appelle l'outil FavorisTools pour recuperer la liste des favoris d'un utilisateur.
+	 * @param login
+	 * @return
+	 */
 	public static JSONObject ListFavoris(String login) {
 		if(login.equals("")) {
 			return ErrorJSON.serviceRefused("ListFavoris: Argument Null", -1);
@@ -57,7 +79,7 @@ public class Favoris {
 	}
 	
 	/**
-	 * Recupere tout les informations de la liste des favoris de l'utilisateur
+	 * Recupere tout les informations de la liste des favoris de l'utilisateur.
 	 * @param fav
 	 * @return JSONObject final
 	 */
