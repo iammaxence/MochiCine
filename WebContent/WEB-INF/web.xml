@@ -6,7 +6,7 @@
   <servlet>
 	    <servlet-name>Register</servlet-name>
 	    <servlet-class>servlet.Register</servlet-class>
- 	</servlet>
+  </servlet>
  	
   <servlet>
       <servlet-name>Login</servlet-name>
@@ -38,13 +38,13 @@
       <servlet-class>servlet.DeleteComment</servlet-class>
   </servlet>
   
-   <servlet>
+  <servlet>
       <servlet-name>AddMessage</servlet-name>
       <servlet-class>servlet.AddMessage</servlet-class>
   </servlet>
   
   <servlet>
-      <servlet-name>DeleteComment</servlet-name>
+      <servlet-name>DeleteMessage</servlet-name>
       <servlet-class>servlet.DeleteMessage</servlet-class>
   </servlet>
   
@@ -61,12 +61,12 @@
   <servlet>
 	  <servlet-name>SerieOfTheWeek</servlet-name>
 	  <servlet-class>servlet.SerieOfTheWeek</servlet-class>
- </servlet>
+  </servlet>
  
- <servlet>
+  <servlet>
 	 <servlet-name>FilmsOnAir</servlet-name>
 	 <servlet-class>servlet.FilmsOnAir</servlet-class>
- </servlet>
+  </servlet>
   
   <servlet>
       <servlet-name>Search</servlet-name>
