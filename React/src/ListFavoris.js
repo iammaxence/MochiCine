@@ -20,7 +20,8 @@ class ListFavoris extends React.Component {
             this.setState ({statut: "error", textError: rep.data["message"]});
             window.confirm(this.state.textError);
         }else{
-            this.setState({series: rep.data["data"], movies: rep.data["movie"]});
+            let films =rep.data["movie"];
+            this.setState({series: rep.data["data"], movies: films[0]});
         } 
     }
 
@@ -28,55 +29,112 @@ class ListFavoris extends React.Component {
         alert("Ici on affiche la description OU on renvoie vers une page html");
     }
 
+    formatDate(string){
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(string).toLocaleDateString([],options);
+    }
+
+    deleteFavoris(id, nb, index){
+        const url = new URLSearchParams();
+        url.append('login', this.props.login);
+        url.append('titre', id);
+        (nb === 0)? url.append('isSerie', "false"): url.append('isSerie', 'true');
+        axios.get('http://localhost:8080/MochiCine/Favoris/Delete?'+url).then(response => this.result(response, nb, index));
+    }
+
+    result(rep, nb, index){
+        if(rep.data["code"]){
+            this.setState ({statut: "error", textError: rep.data["message"]});
+            window.confirm(this.state.textError);
+        }else{
+            console.log("deleteFavoris : ok");
+            
+            if(nb === 0){
+                const newList= Object.assign([], this.state.movies);
+                newList.splice(index,1);
+                this.setState({movies: newList});
+            }else{
+                const newList= Object.assign([], this.state.series);
+                newList.splice(index,1);
+                this.setState({series: newList});
+            }
+        } 
+   }
+
+
+
+    getBox(item, index){
+        let nb = (item.number_of_seasons || 0);
+        let choix;
+        if(nb === 0){
+            choix="film";
+        }else{
+            choix=nb+" saisons";
+        }
+        return(
+            <div className="col-md-12 " key={item.id}>
+            <div className="blog-entry  col-12">
+                <div id = "leftbox">
+                    <img src={"https://image.tmdb.org/t/p/w500/"+item.backdrop_path} alt={"pic_of_"+item.title} width="100%"  />
+                </div>
+                <div id = "rightbox">
+                    <div className="text text-2 text-center pl-md-4">
+                        <h3 className="mb-2"  onClick={() => this.getSerieById(item.id)} >{(item.original_title || item.original_name)}</h3>
+                    </div>
+                    <div className="meta-wrap">
+                        <p className="meta">
+                            <span><i className="far fa-calendar-alt mr-2"></i>{this.formatDate((item.first_air_date || item.release_date))}</span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span><i className="fas fa-fire-alt mr-2"></i>{item.popularity}</span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span><i className="fas fa-tv mr-2"></i>{ choix } </span>
+                        </p>
+                    </div>
+                    <p className="mb-4">
+                        {item.overview}
+                    </p>
+                    <p>
+                    <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.deleteFavoris(item.id, nb)}>Delete Favoris</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+        );
+    }
+    
+
     render(){
         let series;
         let movies;
         
 
         if(this.state.series.length > 0){
+            let cpt=0;
             series = this.state.series.map( item => {
                 if(item.backdrop_path!==null && item.backdrop_path!==undefined){
-                    return (
-                        <div key={item.id}>
-                            <div className="affiches">
-                                <img src={"https://image.tmdb.org/t/p/w500/"+item.backdrop_path} alt={"pic_of_"+item.title} width="100%" height="150"/>
-                            </div>
-                            <div className="description">
-                                <a id= "nameF" onClick={() => this.getSerieById(item.id)} >{item.title}</a>
-                                <strong>Description : {item.overview} </strong>
-                                <button id= "addfavF" onClick={() => alert("Delete to favoris")} >Delete</button>
-                            </div>
-                            
-                        </div>
-                    
-                   )
+                    return ( this.getBox(item, cpt) );
                 }
+                cpt=cpt+1;
             });
         }
 
         if(this.state.movies.length > 0){
+            let cpt=0;
             movies = this.state.movies.map( item => {
                 if(item.backdrop_path!==null && item.backdrop_path!==undefined){
-                    return (
-                    <div key={item.id}>
-                        <div className="affiches">
-                            <img src={"https://image.tmdb.org/t/p/w500/"+item.backdrop_path} alt={"pic_of_"+item.title} width="100%" height="150"/>
-                        </div>
-                        <div className="description">
-                            <a id= "nameF" onClick={() => this.getSerieById(item.id)} >{item.title}</a>
-                            <strong>Description : {item.overview} </strong>
-                            <button id= "addfavF" onClick={() => alert("Delete to favoris")} >Delete</button>
-                        </div>
-                        
-                    </div>)
+                    return (this.getBox(item, cpt));
                 }
+                cpt=cpt+1;
             });
         }
 
         return(
-            <div className="ListFavoris">
-                {series}
-                {movies}
+            <div className="ListFavoris col">
+                <div className="row pt-md-3">
+                    {series}
+                    {movies}
+
+                </div>
             </div>
         );
     }

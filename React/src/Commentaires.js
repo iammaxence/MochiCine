@@ -1,18 +1,19 @@
 import React from 'react';
 import axios from "axios";
+import EcrireMessage from "./EcrireMessage";
 
 
 
-class Commentaires extends React.Component {
+class Message extends React.Component {
 	constructor(props){
     	super(props); //login, titre
-    	this.state={comments:[], statut:"", textError:""};
-    	this.deleteCommment=this.deleteCommment.bind(this);
+    	this.state={messages:[], statut:"", textError:""};
+    	this.deleteMessage=this.deleteMessage.bind(this);
 	}
 
 	//Mettre a jour s'il y a un changement dans la liste de commentaire
 	componentDidMount(){
-		this.setState({comments: this.props.commentaires});
+		this.setState({messages: this.props.message});
 	}
 
 	//Gestion Commentaire:
@@ -38,7 +39,7 @@ class Commentaires extends React.Component {
 	}
 
 
-	deleteCommment(id_commentaire, index){
+	deleteMessage(id_commentaire, index){
 		if(window.confirm("Voulez-vous supprimer ce commentaire ?")){
 			const url = new URLSearchParams();
             url.append('user',this.props.login);
@@ -64,7 +65,7 @@ class Commentaires extends React.Component {
 
 	render(){
 		return(<div className="liste_com">
-			<EcrireCommentaire addComment={this.addComment.bind(this)} /> 
+			<EcrireMessage addComment={this.addComment.bind(this)} /> 
 			<span></span>
 			<ul className="list-group">
 				{this.state.comments.map((item, index) => <div key={item.key} ></div>)}

@@ -34,12 +34,12 @@ public class TestFavoris {
 		filter.append("_id", "bob");
 		
 		//Ajout d'un id serie
-//	
-//		Document update = new Document();
-//		update.append("$push", new Document("series", 63247));
-//
-//			
-//		coll.updateOne(filter, update); 
+	
+		Document update = new Document();
+		update.append("$push", new Document("movies", 457335));
+
+			
+		coll.updateOne(filter, update); 
 		
 		MongoCursor<Document> cursor = coll.find(filter).iterator();
         JSONObject res= new JSONObject();
@@ -55,7 +55,8 @@ public class TestFavoris {
         }
         System.out.println(res);
 		Database.MongoClose();
-//		
+		
+		//Recup series and movies
 //		ArrayList<Object> series;
 //		ArrayList<Object> movies;
 //		JSONObject resultat = null;
@@ -63,21 +64,25 @@ public class TestFavoris {
 //		try {
 //			series = (ArrayList<Object>) res.get("series");
 //			movies = (ArrayList<Object>) res.get("movies");
-//			
 //			ArrayList<Integer> ids = new ArrayList<Integer>();
-//			for(Object va : series) {
-//				ids.add((Integer) va);
-//			}
-//			resultat = ApiTools.getIDs(ids, "tv");
-//			 
-//			ids.clear();
-//			for(Object va : movies) {
-//				ids.add((Integer) va);
-//			}
-//			JSONObject resultat2 = ApiTools.getIDs(ids, "movie");
+//			resultat = new JSONObject();
+//			//AJout des series sous le nom de data
+//
 //			
-//			resultat.append("movie", resultat2.get("data"));
-//			System.out.println(resultat);
+//			//Ajout des movies sous le nom de movie
+//			if(movies.size() == 0) {
+//				resultat.append("movie", new ArrayList<>());
+//			}else {
+//				ids.clear();
+//				for(Object va : movies) {
+//					ids.add((Integer) va);
+//				}
+//				
+//				JSONObject resultat2 = ApiTools.getIDs(ids, "movie");
+//				resultat.append("movie", resultat2);
+//				System.out.println(resultat);
+//			}
+//			
 //			
 //		} catch (JSONException e) {
 //			e.printStackTrace();

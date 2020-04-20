@@ -74,7 +74,7 @@ class Calendrier extends Component{
                             </StarRatings>
                         </div>
                         <div className="titre">
-                            <a id= "nameS" onClick={() => this.getSerieById(ex.id)} >{ex.name}</a>
+                            <a id={ex.id} onClick={() => this.getSerieById(ex.id)} >{ex.name}</a>
                             <div>
                                 <button id= "addfavS" onClick={() => alert("Add to favoris")} >add</button>
                             </div>
@@ -99,7 +99,7 @@ class Calendrier extends Component{
                             </StarRatings>
                         </div>
                         <div className="titre">
-                            <a id= "nameF" onClick={() => this.getSerieById(ex.id)} >{ex.title}</a>
+                            <a id={ex.id} onClick={() => this.getSerieById(ex.id)} >{ex.title}</a>
                             <div>
                                 <button id= "addfavF" onClick={() => alert("Add to favoris")} >add</button>
                             </div>

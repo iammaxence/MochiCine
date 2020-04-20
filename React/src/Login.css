@@ -19,7 +19,7 @@ html, body, #root{
     flex-direction: column;
 }
 
-.container_page, .row, .col-3{
+.container_page{
     height: 100%;
     padding-top: 0.5%;
     overflow: auto;
@@ -30,6 +30,18 @@ html, body, #root{
 ul {
     margin: 5%;
     width: 95%;
+}
+
+#leftbox {
+    float: left;
+}
+
+.text{
+    padding: 25px;
+}
+
+.col-md-12{
+    padding:10px;
 }
 
 
