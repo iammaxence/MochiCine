@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+/**
+ * servlet gerant l'acces aux messages
+ * @author
+ *
+ */
 public class ListMessages extends HttpServlet{
 	
 	/**
@@ -17,6 +22,10 @@ public class ListMessages extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * appelle le Service Messages pour rendre la liste des messages a partir
+	 * des information de la requete http
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
 	        String titre= request.getParameter("titre");
 	        

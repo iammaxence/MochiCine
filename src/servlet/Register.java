@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+/**
+ * servlet gerant la creation d'un compte
+ * @author
+ *
+ */
 public class Register extends HttpServlet{
 	
 /**
@@ -17,6 +22,10 @@ public class Register extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * appelle le Service Enregistrement pour cree un compte utilisateur a partir
+	 * des information de la requete http
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
 			
 			String login = request.getParameter("login");

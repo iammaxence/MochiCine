@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+/**
+ * servlet gerant la suppression de favoris
+ * @author
+ *
+ */
 public class DeleteFavoris extends HttpServlet {
 	
 	/**
@@ -17,6 +22,10 @@ public class DeleteFavoris extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * appelle le Service Favoris pour la suppression d'un favoris a partir
+	 * des information de la requete http
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
 		
 		String login = request.getParameter("login");

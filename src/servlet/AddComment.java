@@ -10,13 +10,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+/**
+ * servlet gerant l'ajout de commentaire
+ * @author
+ *
+ */
 public class AddComment extends HttpServlet {
 	
-/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * appelle le Service Commentaire pour l'ajout d'un commentaire a partir
+	 * des information de la requete http
+	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
 			
 			String user = request.getParameter("user");

@@ -10,8 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+/**
+ * servlet gerant la suppression des Messages
+ * @author
+ *
+ */
 @SuppressWarnings("serial")
 public class DeleteMessage extends HttpServlet{
+	
+	/**
+	 * appelle le Service Messages pour la suppression d'un message a partir
+	 * des information de la requete http
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse reponse) throws IOException, ServletException {
 		String id_message = request.getParameter("id_message");
 		

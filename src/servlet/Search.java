@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+/**
+ * servlet gerant la recherche d'un film ou d'une serie
+ * @author
+ *
+ */
 public class Search extends HttpServlet {
 	
 	/**
@@ -17,6 +22,10 @@ public class Search extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * appelle le Service ApiService pour realiser une recherche de film ou de serie a partir
+	 * des information de la requete http
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
 		String key = request.getParameter("key");
         String keyword = request.getParameter("keyword");

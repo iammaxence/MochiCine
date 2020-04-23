@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
-
+/**
+ * servlet gerant l'ajout de favoris
+ * @author
+ *
+ */
 public class AddFavoris extends HttpServlet{
 	
 	/**
@@ -17,6 +21,10 @@ public class AddFavoris extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * appelle le Service Favoris pour l'ajout d'un favoris a partir
+	 * des information de la requete http
+	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
 			
 			String login = request.getParameter("login");

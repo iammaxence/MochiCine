@@ -10,8 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+/**
+ * servlet gerant l'acces aux serie de la semaine
+ * @author
+ *
+ */
 public class SerieOfTheWeek extends HttpServlet{
 	
+	
+	/**
+	 * appelle le Service ApiService pour recuperer les serie de la semaine a partir
+	 * des information de la requete http
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
 			
 	        
