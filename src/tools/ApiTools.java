@@ -183,7 +183,7 @@ public class ApiTools {
 					//Parsing de la date du dernier épisode qui va sortir cette semaine
 					//A faire peut-être
 
-					if(isDayOfTheWeek(LocalDate.of(date[0], date[1], date[2]))) //Check si la date de sortie est compris dans la semaine
+					if(isLast7Days(LocalDate.of(date[0], date[1], date[2]))) //Check si la date de sortie est compris dans la semaine
 						listeseries.put(laserie);
 
 				} catch (JSONException e) {
@@ -372,6 +372,22 @@ public class ApiTools {
 		}
 
 		if(d.compareTo(monday)>=0 && d.compareTo(sunday)<=0)
+			return true;
+		return false;
+	}
+	
+	/**
+	 * Renvoie true si la date est comprise entre les 7 derniers jours et aujourd'hui sinon false
+	 * 
+	 * @param d
+	 * @return boolean 
+	 */
+	private static boolean isLast7Days(LocalDate d) {
+		LocalDate today = LocalDate.now(); //date d'aujourd'hui
+		LocalDate begin = today.of(today.getYear(), today.getMonth(), today.getDayOfMonth()-7); //debut de l'année
+		
+		
+		if(d.compareTo(begin)>=0 && d.compareTo(today)<=0)
 			return true;
 		return false;
 	}

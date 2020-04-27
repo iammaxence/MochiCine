@@ -43,6 +43,8 @@ public class TestApiExterne {
 //		
 //		JSONObject res = ApiTools.getIDs(ids, "tv");
 //		System.out.println(res);
+		//LocalDate today = LocalDate.of(2020,04,28);
+		//System.out.println(ApiTools.isLast7Days(today));
 
 	}
 
