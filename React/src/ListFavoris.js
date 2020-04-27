@@ -16,13 +16,15 @@ class ListFavoris extends React.Component {
     }
 
     lister(rep){
-        if(rep.data["code"]){
-            this.setState ({statut: "error", textError: rep.data["message"]});
-            window.confirm(this.state.textError);
-        }else{
-            let films =rep.data["movie"];
-            this.setState({series: rep.data["data"], movies: films[0]});
-        } 
+        if(rep.data != null){
+            if(rep.data["code"]){
+                this.setState ({statut: "error", textError: rep.data["message"]});
+                window.confirm(this.state.textError);
+            }else{
+                let films =rep.data["movie"];
+                this.setState({series: rep.data["data"], movies: films[0]});
+            } 
+        }
     }
 
     getSerieById(id){
@@ -71,35 +73,42 @@ class ListFavoris extends React.Component {
         }else{
             choix=nb+" saisons";
         }
+        if(this.state.taille == 0){
+            return(
+                <h2> List of your Favorite </h2>
+            );
+        }else{
+
         return(
-            <div className="col-md-12 " key={item.id}>
-            <div className="blog-entry  col-12">
-                <div id = "leftbox">
-                    <img src={"https://image.tmdb.org/t/p/w500/"+item.backdrop_path} alt={"pic_of_"+item.title} width="100%"  />
-                </div>
-                <div id = "rightbox">
-                    <div className="text text-2 text-center pl-md-4">
-                        <h3 className="mb-2"  onClick={() => this.getSerieById(item.id)} >{(item.original_title || item.original_name)}</h3>
+                <div className="col-md-12 " key={item.id}>
+                <div className="blog-entry  col-12">
+                    <div id = "leftbox">
+                        <img src={"https://image.tmdb.org/t/p/w500/"+item.backdrop_path} alt={"pic_of_"+item.title} width="100%"  />
                     </div>
-                    <div className="meta-wrap">
-                        <p className="meta">
-                            <span><i className="far fa-calendar-alt mr-2"></i>{this.formatDate((item.first_air_date || item.release_date))}</span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <span><i className="fas fa-fire-alt mr-2"></i>{item.popularity}</span>
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                            <span><i className="fas fa-tv mr-2"></i>{ choix } </span>
+                    <div id = "rightbox">
+                        <div className="text text-2 text-center pl-md-4">
+                            <h3 className="mb-2"  onClick={() => this.getSerieById(item.id)} >{(item.original_title || item.original_name)}</h3>
+                        </div>
+                        <div className="meta-wrap">
+                            <p className="meta">
+                                <span><i className="far fa-calendar-alt mr-2"></i>{this.formatDate((item.first_air_date || item.release_date))}</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <span><i className="fas fa-fire-alt mr-2"></i>{item.popularity}</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <span><i className="fas fa-tv mr-2"></i>{ choix } </span>
+                            </p>
+                        </div>
+                        <p className="mb-4">
+                            {item.overview}
+                        </p>
+                        <p>
+                        <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.deleteFavoris(item.id, nb)}>Delete Favoris</button>
                         </p>
                     </div>
-                    <p className="mb-4">
-                        {item.overview}
-                    </p>
-                    <p>
-                    <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.deleteFavoris(item.id, nb)}>Delete Favoris</button>
-                    </p>
                 </div>
             </div>
-        </div>
-        );
+            );
+        }
     }
     
 

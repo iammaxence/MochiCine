@@ -44,6 +44,13 @@ ul {
     padding:10px;
 }
 
+.PageProfil{
+    min-height: 100%;
+    background-image: url(favorite.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 
 
 .user_card {

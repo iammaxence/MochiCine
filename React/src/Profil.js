@@ -15,7 +15,7 @@ class Profil extends React.Component {
                 getProfilPage={this.props.getProfilPage}
                 getAccueilPage={this.props.getAccueilPage} />
 
-
+              
               <ListFavoris  login={this.props.login} />
 
               
