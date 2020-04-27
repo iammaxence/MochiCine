@@ -8,7 +8,6 @@ class Calendrier extends Component{
     constructor(props){
         super(props);
         this.state={seriesListe : [], filmsListe: []};
-        this.getSerieById=this.getSerieById.bind(this);
     }
 
     componentDidMount(){
@@ -50,12 +49,6 @@ class Calendrier extends Component{
         */
 	}
 
-
-    getSerieById(id){
-        alert("Ici on affiche la description OU on renvoie vers une page html");
-    }
-
-    
     
     render(){
 
@@ -74,7 +67,7 @@ class Calendrier extends Component{
                             </StarRatings>
                         </div>
                         <div className="titre">
-                            <a id={ex.id} onClick={() => this.getSerieById(ex.id)} >{ex.name}</a>
+                            <a id={ex.id} onClick={() => this.props.getDescriptionPage(ex)} >{ex.name}</a>
                             <div>
                                 <button id= "addfavS" onClick={() => alert("Add to favoris")} >add</button>
                             </div>
@@ -99,7 +92,7 @@ class Calendrier extends Component{
                             </StarRatings>
                         </div>
                         <div className="titre">
-                            <a id={ex.id} onClick={() => this.getSerieById(ex.id)} >{ex.title}</a>
+                            <a id={ex.id} onClick={() => this.props.getDescriptionPage(ex)} >{ex.title}</a>
                             <div>
                                 <button id= "addfavF" onClick={() => alert("Add to favoris")} >add</button>
                             </div>

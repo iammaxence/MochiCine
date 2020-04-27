@@ -27,10 +27,6 @@ class ListFavoris extends React.Component {
         }
     }
 
-    getSerieById(id){
-        alert("Ici on affiche la description OU on renvoie vers une page html");
-    }
-
     formatDate(string){
         var options = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Date(string).toLocaleDateString([],options);
@@ -73,21 +69,16 @@ class ListFavoris extends React.Component {
         }else{
             choix=nb+" saisons";
         }
-        if(this.state.taille == 0){
-            return(
-                <h2> List of your Favorite </h2>
-            );
-        }else{
 
         return(
-                <div className="col-md-12 " key={item.id}>
+                <div className="col-md-12 bg-white text-dark" key={item.id}>
                 <div className="blog-entry  col-12">
                     <div id = "leftbox">
                         <img src={"https://image.tmdb.org/t/p/w500/"+item.backdrop_path} alt={"pic_of_"+item.title} width="100%"  />
                     </div>
                     <div id = "rightbox">
                         <div className="text text-2 text-center pl-md-4">
-                            <h3 className="mb-2"  onClick={() => this.getSerieById(item.id)} >{(item.original_title || item.original_name)}</h3>
+                            <h3 className="mb-2"  onClick={() => this.props.getDescriptionPage(item)} >{(item.original_title || item.original_name)}</h3>
                         </div>
                         <div className="meta-wrap">
                             <p className="meta">
@@ -108,7 +99,7 @@ class ListFavoris extends React.Component {
                 </div>
             </div>
             );
-        }
+        
     }
     
 
@@ -121,9 +112,10 @@ class ListFavoris extends React.Component {
             let cpt=0;
             series = this.state.series.map( item => {
                 if(item.backdrop_path!==null && item.backdrop_path!==undefined){
-                    return ( this.getBox(item, cpt) );
+                    let box = (this.getBox(item, cpt));
+                    cpt=cpt+1;
+                    return box;
                 }
-                cpt=cpt+1;
             });
         }
 
@@ -131,9 +123,10 @@ class ListFavoris extends React.Component {
             let cpt=0;
             movies = this.state.movies.map( item => {
                 if(item.backdrop_path!==null && item.backdrop_path!==undefined){
-                    return (this.getBox(item, cpt));
+                    let box = (this.getBox(item, cpt));
+                    cpt=cpt+1;
+                    return box;
                 }
-                cpt=cpt+1;
             });
         }
 

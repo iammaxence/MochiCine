@@ -123,15 +123,17 @@ public class MessagesTools {
 		MongoCursor<Document> cursor = coll.find(q).iterator();
 		
 		while(cursor.hasNext()) {
-			messages.add(cursor.next());
+			Document doc = cursor.next();
+			if(!doc.isEmpty())
+				messages.add(doc);
 		}
 		
 		try {
-			resultat.append("data", messages);
+			resultat.put("data", messages);
 		} catch (JSONException e) {
 			e.printStackTrace();
+			return ErrorJSON.serviceRefused("GetMessages: Fail", -2);
 		}
-		
 		return resultat;
 	}
 }

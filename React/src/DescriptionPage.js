@@ -1,28 +1,94 @@
 import React from 'react';
 import NavBar from './NavBar';
+import ListMessages from './ListMessages'
 
 class DescriptionPage extends React.Component {
 
+    formatDate(string){
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(string).toLocaleDateString([],options);
+    }
+
+    getInfo(type){
+        if(this.props.data[type]){
+            let info = this.props.data[type];
+            let result = info.map( item => {
+                return <p key={item.id}>{item.name}</p>;
+            });
+            return result;
+        }else{
+            return <div></div>;
+        }
+    }
   
     render(){
+        let item = this.props.data;
+        let nb = (item.number_of_seasons || 0);
+        let choix;
+        if(nb === 0){
+            choix="film";
+        }else{
+            choix=nb+" saisons";
+        }
+        let add=<div></div>;
+        if(this.props.isConnected === true){
+            add = <button className="btn btn-sm btn-outline-success" >Add Favoris</button>
+        }
+
           return(
             <div className= "DescriptionPage">
-                <NavBar isConnected={this.props.isConnected} />
+                <NavBar
+                    isConnected={this.props.isConnected} 
+                    getLoginPage={this.props.getLoginPage}
+                    setLogout={this.props.setLogout}
+                    getProfilPage={this.props.getProfilPage}
+                    getAccueilPage={this.props.getAccueilPage} 
+                    getSearchPage={this.props.getSearchPage}/>
                 &nbsp;
-                <div class="container-fluid text-center">    
-                <div class="row content">
-                    <div class="col-sm-2 sidenav">
-                        <p>Realisateurs : </p>
-                        <p><a href="#">A</a></p>
-                        <p>Genre : </p>
-                        <p><a href="#">Action</a></p>
+
+                <div className="container-fluid text-left">    
+                <div className="row content">
+                    
+                    <div className="col-sm-4 sidenav">
+                    <img src={"https://image.tmdb.org/t/p/w500/"+item.backdrop_path} alt={"pic_of_"+(item.original_title || item.original_name)} width="100%"  />
+                    
+                    &nbsp;&nbsp;
+                        <div>
+                            <strong>Realisateur(s) : </strong>
+                            <div className="text-center" >
+                                {this.getInfo("created_by") || this.getInfo("production_companies")}
+                            </div>
+                            <hr/>
+
+                            <strong>Genre(s) : </strong>
+                            <div className="text-center" >
+                                {this.getInfo("genres")}
+                            </div>
+                            <hr/>
+                            <strong>Status :</strong> <p className="text-center" >{item.status}</p>
+                        </div>
                     </div>
-                    <div class="col-sm-8 text-left"> 
-                        <h1>Nom du Film</h1>
-                        <p>Ceci est le résumé du film... gcqucgbhjqvhjajzdcghjdbc gqsxgbjcbhq cqkjcbqkshcqa</p>
+                    <div className="col-sm-8 text-left"> 
+                        <h1>{(item.original_title || item.original_name)}</h1>
+
+
+                        <p className="meta">
+                                <span><i className="far fa-calendar-alt mr-2"></i>{this.formatDate((item.first_air_date || this.props.data.release_date))}</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <span><i className="fas fa-fire-alt mr-2"></i>{item.popularity}</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <span><i className="fas fa-tv mr-2"></i>{ choix } </span>
+                        </p>
+
+                        <p>{item.overview}</p>
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        {add}
+                        &nbsp;&nbsp;&nbsp;&nbsp;
                         <hr/>
+                        
                         <h3>Commentaires </h3>
-                        <p>A faire</p>
+                        <ListMessages title={(item.original_title || item.original_name)} login={this.props.login} isConnected={this.props.isConnected}/>
                     </div>
                 </div>
                 </div>

@@ -3,7 +3,7 @@ import EcrireMessage from './EcrireMessage';
 import axios from "axios";
 
 
-class ListMessage extends React.Component {
+class ListMessages extends React.Component {
 	constructor(props){
     	super(props); //titre, login
     	this.state={messages:[], statut: "", textError: "", taille : 0};
@@ -11,7 +11,6 @@ class ListMessage extends React.Component {
     	this.supprimerMessage = this.supprimerMessage.bind(this);
 
 	}
-
 	componentDidMount(){
 		const url = new URLSearchParams();
  		url.append('titre', this.props.titre);
@@ -19,14 +18,15 @@ class ListMessage extends React.Component {
 	}
 
 	lister(rep){
-	  	console.log(rep.data);
-	  	if(rep.data["code"]){
-	  		this.setState ({statut: "error", textError: rep.data["message"]});
-	  		window.confirm(this.state.textError);
-	  	}else{
-	  	  	this.setState({messages: rep.data["message_profil"]});
-	  	  	this.setState({taille : this.state.messages.length})
-	  	} 
+		  console.log(rep.data);
+		  if(rep.data != null){
+			if(rep.data["code"]){
+				this.setState ({statut: "error", textError: rep.data["message"]});
+				window.confirm(this.state.textError);
+			}else{
+				this.setState({messages: rep.data["data"], taille : rep.data["data"].length});
+			} 
+		}
  	}
 
 
@@ -77,19 +77,29 @@ class ListMessage extends React.Component {
 	}
 
 
+	getListMessage(){
+		if(this.state.taille != 0){
+			return(this.state.messages.map((item, index) => 
+					<div key={item.key}>
+						<p>index</p>
+					</div>));
+		}
+	}
+
 	render(){
+		let box = <div></div>;
+        if(this.props.isConnected === true){
+            box =<EcrireMessage  addMessage={this.addMessage} />
+        }
+
 		return(
-        <div className="liste_message">
-			<EcrireMessage addMessage={this.addMessage} /> 
+			<div className="liste_message">
+				{box}
+				{this.getListMessage()}
 
-			{this.state.messages.map((item, index) => 
-                <div>
-
-                </div>)}
-
-        </div>
+			</div>	
         );
 	}
 }
 
-export default ListMessage;
+export default ListMessages;

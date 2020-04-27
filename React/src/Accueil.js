@@ -17,7 +17,12 @@ class Accueil extends React.Component {
                 getAccueilPage={this.props.getAccueilPage} 
                 getSearchPage={this.props.getSearchPage}/>        
 
-              <Calendrier/>
+              <Calendrier 
+                getDescriptionPage={this.props.getDescriptionPage}
+                addFavoris={this.props.addFavoris}
+                deleteFavoris={this.props.deleteFavoris}  />
+
+
               <div className="container_page container-fluid text-center">    
                 <div className="row">
                     <div className="col-3 sidenav text-dark" >

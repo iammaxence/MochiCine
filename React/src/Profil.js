@@ -15,9 +15,11 @@ class Profil extends React.Component {
                 getProfilPage={this.props.getProfilPage}
                 getAccueilPage={this.props.getAccueilPage} />
 
-              
-              <ListFavoris  login={this.props.login} />
-
+              <div className="list-favorite">
+                <ListFavoris  
+                  login={this.props.login} 
+                  getDescriptionPage={this.props.getDescriptionPage}/>
+              </div>
               
             </div>
             

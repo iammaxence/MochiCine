@@ -10,7 +10,7 @@ import SearchPage from './SearchPage';
 class MainPage extends React.Component {
   constructor(props){
     super(props);
-    this.state= {pagecourante: "Profil", isConnected: true, login: "bob", keyword: ""};
+    this.state= {pagecourante: "Profil", isConnected: true, login: "bob", keyword: "", data: null};
     
     //all the bind
     this.setLogin = this.setLogin.bind(this);
@@ -19,7 +19,9 @@ class MainPage extends React.Component {
     this.getAccueilPage = this.getAccueilPage.bind(this);
     this.getProfilPage = this.getProfilPage.bind(this);
     this.getSearchPage= this.getSearchPage.bind(this);
-    
+    this.getDescriptionPage= this.getDescriptionPage.bind(this);
+    this.addFavoris= this.addFavoris.bind(this);
+    this.deleteFavoris= this.deleteFavoris.bind(this);
   }
 
   
@@ -55,12 +57,12 @@ class MainPage extends React.Component {
 
   //Envoie la page d'accueil
   getAccueilPage(){
-    this.setState({pagecourante: "Accueil"});
+    this.setState({pagecourante: "Accueil", data: null});
   }
 
   //Envoie la page de profil
   getProfilPage(){
-    this.setState({pagecourante: "Profil"});
+    this.setState({pagecourante: "Profil", data: null});
   }
   
   getSearchPage(keywordvalue){
@@ -69,10 +71,34 @@ class MainPage extends React.Component {
   }
 
   getDescriptionPage(data){
-    //this.setState({pagecourante})
+    this.setState({pagecourante: "DescriptionPage", data: data});
+  }
+
+  addFavoris(titre, isSerie){
+    const url = new URLSearchParams();
+       url.append('titre', titre);
+       url.append('isSerie', isSerie);
+       url.append('login', this.state.login);
+ 			axios.get('http://localhost:8080/MochiCine/Favoris/Add?' + url).then(response => this.handleRep(response));
+  }
+
+  deleteFavoris(titre, isSerie){
+    const url = new URLSearchParams();
+       url.append('id_message', titre);
+       url.append('isSerie', isSerie);
+       url.append('login', this.state.login);
+ 			axios.get('http://localhost:8080/MochiCine/Favoris/Delete?' + url).then(response => this.handleRep(response));
+  }
+
+  handleRep(rep){
+    console.log(rep.data);
+    if(rep.data["code"]){
+        window.confirm(this.state.textError);
+      }
   }
 
 
+//--------------------------------------------------------
 
   render(){
     let page = <div><h2>Page not found</h2></div> ;  
@@ -86,7 +112,8 @@ class MainPage extends React.Component {
         getProfilPage={this.getProfilPage}
         getAccueilPage={this.getAccueilPage} 
         setLogout={this.setLogout}
-        getSearchPage={this.props.getSearchPage}/>;
+        getSearchPage={this.props.getSearchPage}
+        getDescriptionPage={this.getDescriptionPage} />;
 
 
     }else if(this.state.pagecourante === "Accueil"){
@@ -98,7 +125,10 @@ class MainPage extends React.Component {
         getProfilPage={this.getProfilPage}
         getAccueilPage={this.getAccueilPage} 
         setLogout={this.setLogout}
-        getSearchPage={this.getSearchPage}/> ;
+        getSearchPage={this.getSearchPage} 
+        getDescriptionPage={this.getDescriptionPage}
+        addFavoris={this.addFavoris}
+        deleteFavoris={this.deleteFavoris}  /> ;
 
 
     }else if(this.state.pagecourante === "Login"){
@@ -110,7 +140,18 @@ class MainPage extends React.Component {
 
     }else if(this.state.pagecourante === "DescriptionPage"){
       page = 
-        <DescriptionPage  isConnected={this.state.isConnected} />;
+        <DescriptionPage  
+          isConnected={this.state.isConnected} 
+          data={this.state.data}
+          login={this.state.login}
+          getLoginPage={this.getLoginPage}
+          getProfilPage={this.getProfilPage}
+          getAccueilPage={this.getAccueilPage} 
+          setLogout={this.setLogout}
+          addFavoris={this.addFavoris}
+          deleteFavoris={this.deleteFavoris}  />;
+
+
     }
     else if(this.state.pagecourante === "SearchPage"){
       page=
@@ -122,8 +163,12 @@ class MainPage extends React.Component {
           getAccueilPage={this.getAccueilPage} 
           setLogout={this.setLogout}
           getSearchPage={this.getSearchPage}
-          keyword={this.state.keyword} />
+          keyword={this.state.keyword} 
+          getDescriptionPage={this.getDescriptionPage}
+          addFavoris={this.addFavoris}
+          deleteFavoris={this.deleteFavoris}  />
     }
+    
 
     return(page);
   }
