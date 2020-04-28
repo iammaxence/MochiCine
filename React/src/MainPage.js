@@ -112,7 +112,7 @@ class MainPage extends React.Component {
         getProfilPage={this.getProfilPage}
         getAccueilPage={this.getAccueilPage} 
         setLogout={this.setLogout}
-        getSearchPage={this.props.getSearchPage}
+        getSearchPage={this.getSearchPage}
         getDescriptionPage={this.getDescriptionPage} />;
 
 
@@ -149,7 +149,8 @@ class MainPage extends React.Component {
           getAccueilPage={this.getAccueilPage} 
           setLogout={this.setLogout}
           addFavoris={this.addFavoris}
-          deleteFavoris={this.deleteFavoris}  />;
+          deleteFavoris={this.deleteFavoris} 
+          getSearchPage={this.getSearchPage} />;
 
 
     }

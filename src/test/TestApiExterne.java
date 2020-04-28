@@ -46,6 +46,13 @@ public class TestApiExterne {
 		//LocalDate today = LocalDate.of(2020,04,28);
 		//System.out.println(ApiTools.isLast7Days(today));
 
+		try {
+			System.out.println(ApiTools.tendances("a3be1be132d237a0716cc27bdae1b2f0"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

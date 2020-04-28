@@ -46,7 +46,7 @@ class SearchPage extends React.Component{
         let tmp;
         console.log(this.state.listeRecherche);
         
-        if (this.state.listeRecherche.length === 0 ){
+        if (this.state.listeRecherche === undefined || this.state.listeRecherche.length === 0 ){
             tmp= <div><strong>Nothing found..</strong></div>
         }
         else if (!Array.isArray(this.state.listeRecherche)) { //Cette condition est obligatoire car lorsque la navbar appel ce composant, il est démonté puis remonté. Il n'est pas monté assez rapidement pour laisser le temps à la requête d'être terminé

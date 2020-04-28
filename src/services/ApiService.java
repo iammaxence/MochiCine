@@ -27,4 +27,10 @@ public class ApiService {
 			return ErrorJSON.serviceRefused("Invalid key", -2);
 		return tools.ApiTools.recherche(key,keyword);
 	}
+
+	public static JSONObject tendances(String key) throws IOException {
+		if(key.equals("")) 
+			return ErrorJSON.serviceRefused("Invalid key", -3);
+		return tools.ApiTools.tendances(key);
+	}
 }

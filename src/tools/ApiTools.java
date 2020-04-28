@@ -297,7 +297,7 @@ public class ApiTools {
 		JSONArray myarray=new JSONArray();
 		
 		//On effectue un appel à l'API externe
-		URL url = new URL("https://api.themoviedb.org/3/search/multi?api_key="+key+"&language=fr-FR&query="+keyword+"&page=1&include_adult=false"); 
+		URL url = new URL("https://api.themoviedb.org/3/search/multi?api_key="+key+"&language=en-US&query="+keyword+"&page=1&include_adult=false"); 
 		HttpURLConnection con = (HttpURLConnection)url.openConnection();
 		con.setRequestMethod("GET");
 		con.setRequestProperty("Content-Type", "application/json");
@@ -406,5 +406,62 @@ public class ApiTools {
 		if(d.compareTo(begin)>=0 && d.compareTo(today)<=0)
 			return true;
 		return false;
+	}
+
+
+	public static JSONObject tendances(String key) throws IOException {
+		JSONObject retour= new JSONObject();
+		JSONArray myarray=new JSONArray();
+		
+		//On effectue un appel à l'API externe
+		URL url = new URL("https://api.themoviedb.org/3/trending/all/day?api_key="+key); 
+		HttpURLConnection con = (HttpURLConnection)url.openConnection();
+		con.setRequestMethod("GET");
+		con.setRequestProperty("Content-Type", "application/json");
+
+		//On récupère la réponse, si le status est valide, on continue
+		int status = con.getResponseCode();
+		if(status != 200)
+			return ErrorJSON.serviceRefused("Can't find search associate to tendances", -1);
+		
+		//On récupère la réponse envoyé par l'API
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		JSONObject listetendance= new JSONObject();
+		
+		while ((inputLine = in.readLine()) != null) {
+			try {
+				listetendance=new JSONObject(inputLine);
+			} catch (JSONException e) {
+				System.out.println("Error: Readline tendance (ApiTools.java)");
+			}
+
+		}
+		in.close();
+		
+		// La réponse retourné est un String. On cast notre réponse String -> JSONArray (On obtiens un JSONArray contenant des objets)
+		try {
+			myarray=(JSONArray) listetendance.get("results");
+		} catch (JSONException e1) {
+			System.out.println("Error: Cast JSONArray listedelarecherche (ApiTools.java)");
+		}
+		
+		JSONArray newArray=new JSONArray();
+		for(int i=0;i<myarray.length();i++) {
+			try {
+				JSONObject jo=(JSONObject)myarray.get(i); //String -> JSONObject
+				newArray.put(jo);
+			} catch (JSONException e) {
+				System.out.println("Error: cast JSONObject recherche (ApiTools.java)");
+			}
+			
+		}
+		
+		try {
+			retour.put("data",newArray);
+		} catch (JSONException e) {
+			System.out.println("Error: Ajout resultat de recherche (ApiTools.java)");
+		}
+		return retour;
 	}
 }

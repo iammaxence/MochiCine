@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import './Calendrier.css';
 import axios from 'axios';
 import StarRatings from '../node_modules/react-star-ratings';
+import favEmpty from './icons/favEmpty.png';
+import favFull from './icons/favFull.png';
 
 class Calendrier extends Component{
 
     constructor(props){
         super(props);
-        this.state={seriesListe : [], filmsListe: []};
+        this.state={seriesListe : [], filmsListe: [], UserFavs: []};
+        //this.addToFavoris=this.addToFavoris.bind();
     }
 
     componentDidMount(){
@@ -47,7 +50,21 @@ class Calendrier extends Component{
         //console.log(this.state.lundiListe);
         //this.setState({lundiListe: mo});
         */
-	}
+    }
+
+    
+    //Si series dans les favoris d'une utilisateur, coeur rempli sinon vide
+    addToFavoris(res){
+        //AddToFavs
+        console.log(this.state.UserFavs)
+        if (Array.isArray(this.state.UserFavs) && this.state.UserFavs.includes(res.id)){ // S'il est dedans, on le retire des favs dans mongodb
+            this.setState({UserFavs: []});
+        }
+        else{ // On l'ajoute aux favs dans mongodb
+            this.setState({UserFavs: [...this.state.UserFavs,res.id]});
+        }
+            
+    }
 
     
     render(){
@@ -57,19 +74,33 @@ class Calendrier extends Component{
         let series = this.state.seriesListe.map(ex => {
             //console.log(ex);
             //console.log(ex.id);
+
+            // Pour la mise a jour fav : Si pas un favoris de l'utilisateur favEmpty logo sinon favFull
+            let favImg=<img src={favEmpty} alt="favEmpty" width="20%" height="20%" />;
+            if (Array.isArray(this.state.UserFavs) && this.state.UserFavs.includes(ex.id)){
+                favImg=<img src={favFull} alt="favFull" width="20%" height="20%" />;
+            }
+
+            //Pour les nom de plus de 20 caractere (Evite de surcharger l'écran d'informations)
+            let nomRestreint=ex.name;
+             if (ex.name.length>20){
+                nomRestreint=ex.name.substring(0,15)+"...";
+            }
+
             const note=(ex.vote_average*5)/10;
                 return(
                     
                     <div className="bloc rounded-lg" key={ex.id} > 
-                        <img src={"https://image.tmdb.org/t/p/w500/"+ex.backdrop_path} alt={"pic_of_"+ex.name} width="100%" height="150"/>
+                        <img src={"https://image.tmdb.org/t/p/w500/"+ex.backdrop_path} alt={"pic_of_"+ex.name}  onClick={() => this.props.getDescriptionPage(ex)}  width="100%" height="150"/>
                         <div className="stars">
                             <StarRatings rating={note} starRatedColor="yellow" numberOfStars={5} name='rating' starDimension="20px"starSpacing="1px">
                             </StarRatings>
                         </div>
                         <div className="titre">
-                            <a id={ex.id} onClick={() => this.props.getDescriptionPage(ex)} >{ex.name}</a>
+                            <a id={ex.id} onClick={() => this.props.getDescriptionPage(ex)} >{nomRestreint}</a>
                             <div>
-                                <button id= "addfavS" onClick={() => alert("Add to favoris")} >add</button>
+                                {favImg}
+                                <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.addToFavoris(ex)} >Ajouter</button>
                             </div>
                         </div>
                     </div>
@@ -79,6 +110,18 @@ class Calendrier extends Component{
         })
         //On affiche les films
         let films = this.state.filmsListe.map(ex => {
+
+            // Pour la mise a jour fav : Si pas un favoris de l'utilisateur favEmpty logo sinon favFull
+            let favImg=<img src={favEmpty} alt="favEmpty" width="20%" height="20%" />;
+            if (Array.isArray(this.state.UserFavs) && this.state.UserFavs.includes(ex.id)){
+                favImg=<img src={favFull} alt="favFull" width="20%" height="20%" />;
+            }
+
+            //Pour les nom de plus de 20 caractere (Evite de surcharger l'écran d'informations)
+            let nomRestreint=ex.title;
+             if (ex.title.length>20){
+                nomRestreint=ex.title.substring(0,15)+"...";
+            }
 
             const note= (ex.vote_average*5)/10;
 
@@ -92,9 +135,10 @@ class Calendrier extends Component{
                             </StarRatings>
                         </div>
                         <div className="titre">
-                            <a id={ex.id} onClick={() => this.props.getDescriptionPage(ex)} >{ex.title}</a>
+                            <a id={ex.id} onClick={() => this.props.getDescriptionPage(ex)} >{nomRestreint}</a>
                             <div>
-                                <button id= "addfavF" onClick={() => alert("Add to favoris")} >add</button>
+                                {favImg}
+                                <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.addToFavoris(ex)} >Ajouter</button>
                             </div>
                         </div>
                     </div>
@@ -110,7 +154,7 @@ class Calendrier extends Component{
         return (
             <div className="Rectangle">
                 <div className="Jours">
-                    <strong> Sortie des series de la semaine </strong>
+                    <strong> Sortie des series des 7 derniers jours</strong>
                 </div>
                {series}
                 <div className="Jours">

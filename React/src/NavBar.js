@@ -21,8 +21,9 @@ class NavBar extends React.Component {
         this.props.getLoginPage();
     }
 
-    //---------Ajout-----------
+    //---------Ajout-----------//
     sendSearch = () => {
+        console.log(document.getElementById("recherche").value);
         this.props.getSearchPage(document.getElementById("recherche").value);
     }
     
@@ -44,8 +45,10 @@ class NavBar extends React.Component {
             <nav className="navbar navbar-light bg-dark justify-content-between">
                 <a className="navbar-brand text-light" onClick={this.sendaccueil} > MochiCine </a>
                 <form className="form-inline">
-                    <input className="form-control mr-sm-2" type="search" placeholder="Search" id="recherche" aria-label="Search"/>
-                    <button className="btn btn-outline-success my-2 my-sm-0" onClick={this.sendSearch} type="button" >Search</button>
+                    <div onKeyPress={(e) => {if(e.key === 'Enter'){this.props.getSearchPage(document.getElementById("recherche").value);}}} >
+                        <input className="form-control mr-sm-2" type="search" placeholder="Search" id="recherche" aria-label="Search"/>
+                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={this.sendSearch} type="button" >Search</button>
+                    </div>
                 </form>
                 {option}
             </nav>

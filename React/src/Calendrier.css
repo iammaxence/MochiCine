@@ -53,3 +53,9 @@
     display: flex;
     flex: 0 1 auto;
 }
+
+.btnfav{
+    background-color: rgb(201, 201, 182);
+    font-size: 90%;
+    border-radius: 10px;
+}
