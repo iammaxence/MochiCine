@@ -66,8 +66,28 @@ class Calendrier extends Component{
             
     }
 
+    // GESTION DESCRIPTION PAGE
+    handleDescriptionPage(id, isMovie){
+        const url = new URLSearchParams();
+        url.append('id',id);
+        url.append('isMovie',isMovie);
+        axios.get('http://localhost:8080/MochiCine/GetDescription?'+url).then(response => this.getDescription(response));
+    
+    }
+
+    getDescription(rep){
+        if(rep.data != null){
+            if(rep.data["code"]){
+                window.confirm(this.state.textError);
+            }else{
+                this.props.getDescriptionPage(rep.data["info"]);
+            } 
+        }
+    }
+
     
     render(){
+
 
         
         //On affiche les séries
@@ -87,6 +107,16 @@ class Calendrier extends Component{
                 nomRestreint=ex.name.substring(0,15)+"...";
             }
 
+            let boxFav=<div></div>
+            if(this.props.isConnected === true){
+               boxFav = <div>
+                           {favImg}
+                           <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.addToFavoris(ex)} >Ajouter</button>
+                       </div>
+            } 
+        
+
+
             const note=(ex.vote_average*5)/10;
                 return(
                     
@@ -97,11 +127,8 @@ class Calendrier extends Component{
                             </StarRatings>
                         </div>
                         <div className="titre">
-                            <a id={ex.id} onClick={() => this.props.getDescriptionPage(ex)} >{nomRestreint}</a>
-                            <div>
-                                {favImg}
-                                <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.addToFavoris(ex)} >Ajouter</button>
-                            </div>
+                            <a id={ex.id} onClick={() => this.handleDescriptionPage(ex.id, "false")} >{nomRestreint}</a>
+                            {boxFav}
                         </div>
                     </div>
                    
@@ -123,6 +150,14 @@ class Calendrier extends Component{
                 nomRestreint=ex.title.substring(0,15)+"...";
             }
 
+            let boxFav=<div></div>
+            if(this.props.isConnected === true){
+               boxFav = <div>
+                           {favImg}
+                           <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.addToFavoris(ex)} >Ajouter</button>
+                       </div>
+            } 
+
             const note= (ex.vote_average*5)/10;
 
             if(ex.backdrop_path!==null && ex.backdrop_path!==undefined){
@@ -135,11 +170,8 @@ class Calendrier extends Component{
                             </StarRatings>
                         </div>
                         <div className="titre">
-                            <a id={ex.id} onClick={() => this.props.getDescriptionPage(ex)} >{nomRestreint}</a>
-                            <div>
-                                {favImg}
-                                <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.addToFavoris(ex)} >Ajouter</button>
-                            </div>
+                            <a id={ex.id} onClick={() => this.handleDescriptionPage(ex.id, "true")} >{nomRestreint}</a>
+                            {boxFav}
                         </div>
                     </div>
                    

@@ -1,6 +1,7 @@
 import React from 'react';
 import EcrireMessage from './EcrireMessage';
 import axios from "axios";
+import Commentaires from './Commentaires';
 
 
 class ListMessages extends React.Component {
@@ -33,12 +34,15 @@ class ListMessages extends React.Component {
  	//Ajout d'un message:
 	addMessage(msg){
 		if(msg.length >0){
-			const url = new URLSearchParams();
- 			url.append('login',this.props.login);
- 			url.append('titre', this.props.titre);
- 			url.append('text', msg);
- 			axios.get('http://localhost:8080/MochiCine/Message/Add?' + url).then(response => this.updateMessage(response));
-		
+			try{
+				const url = new URLSearchParams();
+				url.append('login',this.props.login);
+				url.append('titre', this.props.titre);
+				url.append('text', msg);
+				axios.get('http://localhost:8080/MochiCine/Message/Add?' + url).then(response => this.updateMessage(response));
+			}catch(error){
+				console.log("Axios Ajout de message")
+			}
 		}
 	}
 	updateMessage(rep){
@@ -47,11 +51,8 @@ class ListMessages extends React.Component {
 	  		this.setState ({statut: "error", textError: rep.data["message"]});
 	  		window.confirm(this.state.textError);
 	  	}else{
-	  		//Ajout en tete de liste
-	  		let newList = [];
-	  		newList.push(rep.data["message"])
-	  		this.state.messages.map((item) => newList.push(item));
-			this.setState({messages: newList});
+			this.state.messages.unshift(rep.data["message"]);
+			this.setState({ taille : (this.state.taille+1)});		
 	  	}
 
 	}
@@ -79,18 +80,25 @@ class ListMessages extends React.Component {
 
 	getListMessage(){
 		if(this.state.taille != 0){
-			return(this.state.messages.map((item, index) => 
-					<div key={item.key}>
-						<p>index</p>
+			return(
+				this.state.messages.map((item, index) => 
+					<div className="col-md-13 container divmes" key={item._id}>
+						<p>
+					    	<span className="pseudo"> {item.login}</span>
+					    </p>
+				        <span>{item.text}</span>
+						<p/>
+				        <span className="datemess">{item.date}</span>
+				        {(this.props.login === item.login)? <button className="btn" onClick={()=> this.supprimerMessage(item._id, index)}><i className="fas fa-trash-alt"></i></button> : <p>NOTHING</p>}
+						<Commentaires login={this.props.login} id_message={item._id} comments={item.comments} />
+
 					</div>));
 		}
 	}
 
 	render(){
-		let box = <div></div>;
-        if(this.props.isConnected === true){
-            box =<EcrireMessage  addMessage={this.addMessage} />
-        }
+		let box;
+        (this.props.isConnected === true)? box =<EcrireMessage  addMessage={this.addMessage} /> : box = <div></div>;
 
 		return(
 			<div className="liste_message">

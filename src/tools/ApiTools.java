@@ -24,7 +24,7 @@ public class ApiTools {
 	 */
 	public static JSONObject getIDs(ArrayList<Integer> ids, String type) {
 		//Pour chaque id (represantant une serie), on récupère les informations qui nous intéressent
-		JSONArray listeseries=new JSONArray();
+		JSONArray list=new JSONArray();
 		for(Integer id : ids) {
 			try {
 				//On effectue un appel à l'API externe
@@ -37,17 +37,17 @@ public class ApiTools {
 				//On récupère la réponse, si le status est valide, on continue
 				int status = con.getResponseCode();
 				if(status != 200)
-					return ErrorJSON.serviceRefused("Can't find tv show with id", -2);
+					return ErrorJSON.serviceRefused("getIDs : Can't find tv show with id", -2);
 				
 				//On récupère la réponse envoyé par l'API
 				BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 				String inputLine;
-				JSONObject laserie= new JSONObject();
+				JSONObject result= new JSONObject();
 				
 				while ((inputLine = in.readLine()) != null) {
 					try {
-						laserie=new JSONObject(inputLine);
-						listeseries.put(laserie);
+						result=new JSONObject(inputLine);
+						list.put(result);
 
 					} catch (JSONException e) {
 						System.out.println("Error: readline id series (ApiTools.java");
@@ -62,7 +62,7 @@ public class ApiTools {
 
 
 		try {
-			return new JSONObject().put("data", listeseries);
+			return new JSONObject().put("data", list);
 		} catch (JSONException e) {
 			
 			System.out.println("Error: Ajout listeseries à échoué (ApiTools.java)");
@@ -354,6 +354,7 @@ public class ApiTools {
 	 * @param d
 	 * @return boolean 
 	 */
+	@SuppressWarnings("unused")
 	private static boolean isDayOfTheWeek(LocalDate d) {
 		LocalDate today = LocalDate.now();
 
@@ -463,5 +464,56 @@ public class ApiTools {
 			System.out.println("Error: Ajout resultat de recherche (ApiTools.java)");
 		}
 		return retour;
+	}
+
+	
+	/**
+	 * Requete a l'api externe pour recuperer la description
+	 * @param id du film ou de la serie
+	 * @param type : "movie" pour les films et "tv" pour les series
+	 * @return JSONObject avec le resultat ou ErrorJSON
+	 */
+	public static JSONObject getDescription(String id, String type) {
+		JSONObject result= new JSONObject();
+		JSONObject info= new JSONObject();
+		try {
+			//On effectue un appel à l'API externe
+			URL url = new URL("https://api.themoviedb.org/3/"+type+"/"+id+"?api_key=a3be1be132d237a0716cc27bdae1b2f0&language=en-US");
+			HttpURLConnection con = (HttpURLConnection)url.openConnection();
+			con.setRequestMethod("GET");
+			con.setRequestProperty("Content-Type", "application/json");
+
+			//On récupère la réponse, si le status est valide, on continue
+			int status = con.getResponseCode();
+			if(status != 200)
+				return ErrorJSON.serviceRefused("getDescription : Can't find tv show with id", -2);
+
+			//On récupère la réponse envoyé par l'API
+			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			String inputLine;
+
+			while ((inputLine = in.readLine()) != null) {
+				try {
+					info = new JSONObject(inputLine);
+				} catch (JSONException e) {
+					System.out.println("getDescription : readline id series (ApiTools.java");
+				}
+			}
+			in.close();
+			
+		}catch(IOException e) {
+			return ErrorJSON.serviceRefused("getDescription : Problème HttpURLConnection ApiTools", -4);
+		}
+		
+		
+		try {
+			result.put("info", info);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return ErrorJSON.serviceRefused("getDescription : Json put error ", -4);
+		}
+		
+		return result;
+					
 	}
 }

@@ -10,7 +10,7 @@ import SearchPage from './SearchPage';
 class MainPage extends React.Component {
   constructor(props){
     super(props);
-    this.state= {pagecourante: "Profil", isConnected: true, login: "bob", keyword: "", data: null};
+    this.state= {pagecourante: "Profil", isConnected: true, login: "bob", keyword: "", data: null, isFavoris: []};
     
     //all the bind
     this.setLogin = this.setLogin.bind(this);
@@ -22,8 +22,8 @@ class MainPage extends React.Component {
     this.getDescriptionPage= this.getDescriptionPage.bind(this);
     this.addFavoris= this.addFavoris.bind(this);
     this.deleteFavoris= this.deleteFavoris.bind(this);
+    this.setListFavoris=this.setListFavoris.bind(this);
   }
-
   
 
   setLogout(){
@@ -74,27 +74,44 @@ class MainPage extends React.Component {
     this.setState({pagecourante: "DescriptionPage", data: data});
   }
 
+
+  //--------- GESTION DES FAVORIS---------------
+  setListFavoris(list){
+    this.setState({isFavoris: list});
+  }
+
   addFavoris(titre, isSerie){
-    const url = new URLSearchParams();
-       url.append('titre', titre);
-       url.append('isSerie', isSerie);
-       url.append('login', this.state.login);
- 			axios.get('http://localhost:8080/MochiCine/Favoris/Add?' + url).then(response => this.handleRep(response));
+    this.state.isFavoris.push(titre);
+    console.log("isFavoris : ", this.state.isFavoris);
+    try{
+      const url = new URLSearchParams();
+      url.append('titre', titre);
+      url.append('isSerie', isSerie);
+      url.append('login', this.state.login);
+      axios.get('http://localhost:8080/MochiCine/Favoris/Add?' + url).then(response => this.handleRep(response));
+    }catch(error){
+      console.log("Error addFavoris")
+    }
   }
 
   deleteFavoris(titre, isSerie){
+    const list = Object.assign([], this.state.isFavoris);
+    list.filter(item => item !== titre);
+    this.setState({isFavoris: list})
+
     const url = new URLSearchParams();
-       url.append('id_message', titre);
-       url.append('isSerie', isSerie);
-       url.append('login', this.state.login);
- 			axios.get('http://localhost:8080/MochiCine/Favoris/Delete?' + url).then(response => this.handleRep(response));
+    url.append('id_message', titre);
+    url.append('isSerie', isSerie);
+    url.append('login', this.state.login);
+ 		axios.get('http://localhost:8080/MochiCine/Favoris/Delete?' + url).then(response => this.handleRep(response));
   }
 
   handleRep(rep){
-    console.log(rep.data);
     if(rep.data["code"]){
         window.confirm(this.state.textError);
-      }
+    }else{
+      console.log(rep.data);
+    }
   }
 
 
@@ -113,7 +130,8 @@ class MainPage extends React.Component {
         getAccueilPage={this.getAccueilPage} 
         setLogout={this.setLogout}
         getSearchPage={this.getSearchPage}
-        getDescriptionPage={this.getDescriptionPage} />;
+        getDescriptionPage={this.getDescriptionPage} 
+        setListFavoris={this.setListFavoris} />;
 
 
     }else if(this.state.pagecourante === "Accueil"){
@@ -128,7 +146,8 @@ class MainPage extends React.Component {
         getSearchPage={this.getSearchPage} 
         getDescriptionPage={this.getDescriptionPage}
         addFavoris={this.addFavoris}
-        deleteFavoris={this.deleteFavoris}  /> ;
+        deleteFavoris={this.deleteFavoris}
+        listFavoris={this.state.isFavoris}  /> ;
 
 
     }else if(this.state.pagecourante === "Login"){
@@ -150,7 +169,8 @@ class MainPage extends React.Component {
           setLogout={this.setLogout}
           addFavoris={this.addFavoris}
           deleteFavoris={this.deleteFavoris} 
-          getSearchPage={this.getSearchPage} />;
+          getSearchPage={this.getSearchPage}
+          listFavoris={this.state.isFavoris} />;
 
 
     }
@@ -167,7 +187,8 @@ class MainPage extends React.Component {
           keyword={this.state.keyword} 
           getDescriptionPage={this.getDescriptionPage}
           addFavoris={this.addFavoris}
-          deleteFavoris={this.deleteFavoris}  />
+          deleteFavoris={this.deleteFavoris}
+          listFavoris={this.state.isFavoris}  />
     }
     
 

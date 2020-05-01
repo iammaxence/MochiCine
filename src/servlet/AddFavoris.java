@@ -25,7 +25,7 @@ public class AddFavoris extends HttpServlet{
 	 * appelle le Service Favoris pour l'ajout d'un favoris a partir
 	 * des information de la requete http
 	 */
-	protected void doPut(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
 			
 			String login = request.getParameter("login");
 	        String id_favoris = request.getParameter("titre");

@@ -23,6 +23,7 @@ class ListFavoris extends React.Component {
             }else{
                 let films =rep.data["movie"];
                 this.setState({series: rep.data["data"], movies: films[0]});
+                this.updateMain();
             } 
         }
     }
@@ -56,7 +57,24 @@ class ListFavoris extends React.Component {
                 newList.splice(index,1);
                 this.setState({series: newList});
             }
+            this.updateMain();
         } 
+   }
+
+   updateMain(){
+    const list = [];
+
+    this.state.movies.forEach(function(item, index, array){
+        list.push(item.original_title);
+    });
+    this.state.series.forEach(function(item, index, array){
+        list.push(item.original_name);
+    });
+
+    //console.log(list);
+
+    this.props.setListFavoris(list);
+
    }
 
 
@@ -93,7 +111,7 @@ class ListFavoris extends React.Component {
                             {item.overview}
                         </p>
                         <p>
-                        <button className="btn btn-sm btn-outline-secondary" type="button" onClick={() => this.deleteFavoris(item.id, nb)}>Delete Favoris</button>
+                        <button className="btn btn-sm btn-outline-danger" type="button" onClick={() => this.deleteFavoris(item.id, nb)}>Delete Favoris</button>
                         </p>
                     </div>
                 </div>

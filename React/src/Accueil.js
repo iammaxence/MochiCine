@@ -20,7 +20,8 @@ class Accueil extends React.Component {
               <Calendrier 
                 getDescriptionPage={this.props.getDescriptionPage}
                 addFavoris={this.props.addFavoris}
-                deleteFavoris={this.props.deleteFavoris}  />
+                deleteFavoris={this.props.deleteFavoris}
+                isConnected={this.props.isConnected}   />
 
 
               <div className="container_page container-fluid text-center">    

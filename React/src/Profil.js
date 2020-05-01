@@ -19,7 +19,8 @@ class Profil extends React.Component {
               <div className="list-favorite">
                 <ListFavoris  
                   login={this.props.login} 
-                  getDescriptionPage={this.props.getDescriptionPage}/>
+                  getDescriptionPage={this.props.getDescriptionPage}
+                  setListFavoris={this.props.setListFavoris} />
               </div>
               
             </div>

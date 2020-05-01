@@ -16,8 +16,8 @@ import org.json.JSONObject;
  *
  */
 public class SerieOfTheWeek extends HttpServlet{
-	
-	
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * appelle le Service ApiService pour recuperer les serie de la semaine a partir
 	 * des information de la requete http

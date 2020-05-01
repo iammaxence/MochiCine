@@ -23,10 +23,13 @@ public class Authentification {
 		if (login.equals("") || mdp.equals(""))
 			return ErrorJSON.serviceRefused("Login: Argument Null", -1);
 		
+		if(!CheckTools.checkUser(login))
+			return ErrorJSON.serviceRefused("Login : "+login+" doesn't exist", -3); 
+		
 		if(CheckTools.checkPasswd(login, mdp)) 
 			return Auth.login(login,mdp);
 		else
-			return ErrorJSON.serviceRefused("Login : "+login+" is not register", -2); 
+			return ErrorJSON.serviceRefused("Login : "+login+" wrong password", -2); 
 	}
 	
 	/**

@@ -4,16 +4,16 @@ import EcrireMessage from "./EcrireMessage";
 
 
 
-class Message extends React.Component {
+class Commentaires extends React.Component {
 	constructor(props){
-    	super(props); //login, titre
-    	this.state={messages:[], statut:"", textError:""};
+    	super(props); //login, id_message
+    	this.state={comments:[], statut:"", textError:""};
     	this.deleteMessage=this.deleteMessage.bind(this);
 	}
 
 	//Mettre a jour s'il y a un changement dans la liste de commentaire
 	componentDidMount(){
-		this.setState({messages: this.props.message});
+		this.setState({comments: this.props.comments});
 	}
 
 	//Gestion Commentaire:
@@ -21,7 +21,7 @@ class Message extends React.Component {
 		if(comment.length >0){
 			const url = new URLSearchParams();
  			url.append('user',this.props.login);
- 			url.append('titre', this.props.titre);
+ 			url.append('id_message', this.props.id_message);
  			url.append('comment', comment);
  			axios.get('http://localhost:8080/MochiCine/Comment/Add?' + url).then(response => this.updateComment(response));
 		}
@@ -32,9 +32,7 @@ class Message extends React.Component {
 	  		this.setState ({statut: "error", textError: rep.data["commentaire"]});
 	  		window.confirm(this.state.textError);
 	  	}else{
-	  		let newList = this.state.comments;
-	  		newList.push(rep.data["commentaire"])
-			this.setState({comments: newList});
+	  		this.state.comments.unshift(rep.data["comment"]);
 	  	}
 	}
 
@@ -42,9 +40,8 @@ class Message extends React.Component {
 	deleteMessage(id_commentaire, index){
 		if(window.confirm("Voulez-vous supprimer ce commentaire ?")){
 			const url = new URLSearchParams();
-            url.append('user',this.props.login);
-            url.append('titre', this.props.titre);
-            url.append('comId', comment);
+            url.append('id_message', this.props.id_message);
+            url.append('comId', id_commentaire);
  			axios.get('http://localhost:8080/MochiCine/Comment/Delete?' + url).then(response => this.delete(response, index));
 		}
 	}
@@ -64,11 +61,13 @@ class Message extends React.Component {
 
 
 	render(){
+		let box;
+		(this.props.isConnected === true)? box = <EcrireMessage addComment={this.addComment.bind(this)} /> : box = <div></div>;
 		return(<div className="liste_com">
-			<EcrireMessage addComment={this.addComment.bind(this)} /> 
+			{box}
 			<span></span>
 			<ul className="list-group">
-				{this.state.comments.map((item, index) => <div key={item.key} ></div>)}
+				{this.state.comments.map((item, index) => <div key={item._id} ></div>)}
 			</ul>
 		</div>);
 	}

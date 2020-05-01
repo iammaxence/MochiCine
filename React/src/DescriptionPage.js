@@ -31,8 +31,17 @@ class DescriptionPage extends React.Component {
             choix=nb+" saisons";
         }
         let add=<div></div>;
+        let title = (item.original_name || item.original_title);
         if(this.props.isConnected === true){
-            add = <button className="btn btn-sm btn-outline-success" >Add Favoris</button>
+            let isSerie;
+            (choix === "film")? isSerie = "false" : isSerie = "true";
+
+            if(this.props.listFavoris.includes(title))
+                add = <button className="btn btn-sm btn-outline-danger" type="button" onClick={() => this.props.deleteFavoris(title, isSerie)}>Delete Favoris</button>;
+            else
+                add = <button className="btn btn-sm btn-outline-success" type="button" onClick={() => this.props.addFavoris(title, isSerie)} >Add Favoris</button>;
+
+
         }
 
           return(
@@ -88,7 +97,7 @@ class DescriptionPage extends React.Component {
                         <hr/>
                         
                         <h3>Commentaires </h3>
-                        <ListMessages title={(item.original_title || item.original_name)} login={this.props.login} isConnected={this.props.isConnected}/>
+                        <ListMessages titre={title} login={this.props.login} isConnected={this.props.isConnected}/>
                     </div>
                 </div>
                 </div>

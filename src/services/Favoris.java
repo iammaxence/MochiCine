@@ -83,6 +83,7 @@ public class Favoris {
 	 * @param fav
 	 * @return JSONObject final
 	 */
+	@SuppressWarnings("unchecked")
 	private static JSONObject getFavoris(JSONObject fav) {
 		ArrayList<Object> series;
 		ArrayList<Object> movies;
