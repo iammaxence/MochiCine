@@ -188,7 +188,8 @@ class MainPage extends React.Component {
           getDescriptionPage={this.getDescriptionPage}
           addFavoris={this.addFavoris}
           deleteFavoris={this.deleteFavoris}
-          listFavoris={this.state.isFavoris}  />
+          listFavoris={this.state.isFavoris}
+           />
     }
     
 

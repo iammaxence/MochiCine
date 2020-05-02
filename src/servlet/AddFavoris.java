@@ -31,7 +31,7 @@ public class AddFavoris extends HttpServlet{
 	        String id_favoris = request.getParameter("titre");
 	        String isSerie = request.getParameter("isSerie");
 	        
-	        JSONObject res = services.Favoris.addFavoris(login, Integer.parseInt(id_favoris) ,isSerie);
+	        JSONObject res = services.Favoris.addFavoris(login, Integer.parseInt(id_favoris) ,Boolean.parseBoolean(isSerie));
 	        reponse.setContentType("text/json");
 	        PrintWriter out = reponse.getWriter();
 	        out.println(res);

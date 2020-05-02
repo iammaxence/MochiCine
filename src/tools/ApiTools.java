@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 
 
@@ -383,11 +384,19 @@ public class ApiTools {
 	 * @param d
 	 * @return boolean 
 	 */
-	private static boolean isLast7Days(LocalDate d) {
+	public static boolean isLast7Days(LocalDate d) {
 		LocalDate today = LocalDate.now(); //date d'aujourd'hui
-		LocalDate begin = today.of(today.getYear(), today.getMonth(), today.getDayOfMonth()-7); //debut de l'année
+		int day=today.getDayOfMonth()-7; //Les 7 derniers jours
+		LocalDate begin = today.of(today.getYear(), today.getMonth(), Math.abs(day));// Math.abs pour éviter les erreur de date negative (Car si negative, la valeur de begin est changer dans le if)
 		
-		
+		//Si le jour du mois est compris entre 1 et 7, on récupère le jour du mois précédent (ex: on est le 2mai donc (31avril+2mai)-7derniersjours)
+		if (today.getDayOfMonth()-7 <=0) {
+			LocalDate previousMonth= today.withMonth(today.getMonthValue()-1); //Le mois précédent
+			day= (previousMonth.lengthOfMonth()+today.getDayOfMonth())-7; //Jour du mois dernier
+			begin=today.of(today.getYear(), previousMonth.getMonth(), day);
+			
+		}
+
 		if(d.compareTo(begin)>=0 && d.compareTo(today)<=0)
 			return true;
 		return false;

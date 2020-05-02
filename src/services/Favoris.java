@@ -24,8 +24,8 @@ public class Favoris {
 	 * @param isSerie
 	 * @return
 	 */
-	public static JSONObject addFavoris(String login, Integer id_favoris, String isSerie) {
-		if(login.equals("") || id_favoris < 0) {
+	public static JSONObject addFavoris(String login, Integer id_favoris, Boolean isSerie) {
+		if(login.equals("") || id_favoris.equals("")) {
 			return ErrorJSON.serviceRefused("deleteFavoris: Argument Null", -1);
 		}
 		
@@ -33,7 +33,7 @@ public class Favoris {
 			return ErrorJSON.serviceRefused("deleteFavoris: Pseudo "+login+" do not exist", -2);
 		}
 		
-		return FavorisTools.addFavoris(login, id_favoris, new Boolean(isSerie));
+		return FavorisTools.addFavoris(login, id_favoris, isSerie);
 	}
 	
 	/**

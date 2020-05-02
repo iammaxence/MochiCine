@@ -1,16 +1,17 @@
 .searchPage{
-    background-color: beige;
     height: 100%;
     width: 100%;
 }
 
 .affiches{
     display: inline-block;
-    height: 25%;
-    width: 15%;
     border-style: solid;
-    margin: 5% auto 5% 5%;
-    background-color: darkred;
+    margin: 4% 4% auto 2%;
+
+}
+
+.backimage{
+    
 }
 
 .description{

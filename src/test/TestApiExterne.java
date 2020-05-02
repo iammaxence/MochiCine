@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
+import services.Favoris;
 import tools.ApiTools;
+import tools.FavorisTools;
 
 public class TestApiExterne {
 
@@ -53,8 +55,11 @@ public class TestApiExterne {
 //			e.printStackTrace();
 //		}
 		
-		System.out.println(ApiTools.getDescription("522627", "movie"));
-
+//		LocalDate today = LocalDate.now();
+//		LocalDate nbDaysPreviousMonth=today.of(today.getYear(),05, 03);
+//		
+//		System.out.println(ApiTools.isLast7Days(nbDaysPreviousMonth));
+		Favoris.addFavoris("bob", 6500, true);
 	}
 
 }
