@@ -9,7 +9,7 @@ class Calendrier extends Component{
 
     constructor(props){
         super(props);
-        this.state={seriesListe : [], filmsListe: [], UserFavs: []};
+        this.state={seriesListe : [], filmsListe: [], UserFavs:this.props.listFavoris};
         //this.addToFavoris=this.addToFavoris.bind();
     }
 
@@ -54,7 +54,7 @@ class Calendrier extends Component{
 
     
     //Si series dans les favoris d'une utilisateur, coeur rempli sinon vide
-   deleteToFavoris(res){
+   addToFavoris(res){
         //AddToFavs
 
         /*
@@ -111,6 +111,7 @@ class Calendrier extends Component{
                 // Pour la mise a jour fav : Si pas un favoris de l'utilisateur favEmpty logo sinon favFull
                 let favImg=<img src={favEmpty} alt="favEmpty" width="20%" height="20%" />;
 
+                //Array.isArray(this.state.UserFavs) && this.state.UserFavs.includes(ex.id)
                 if (this.props.listFavoris.includes(ex.original_name)){
                     favImg=<img src={favFull} alt="favFull" width="20%" height="20%" />;
                     boxFav = <div> {favImg}
