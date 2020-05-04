@@ -21,7 +21,8 @@ class Accueil extends React.Component {
                 getDescriptionPage={this.props.getDescriptionPage}
                 addFavoris={this.props.addFavoris}
                 deleteFavoris={this.props.deleteFavoris}
-                isConnected={this.props.isConnected}   />
+                isConnected={this.props.isConnected} 
+                listFavoris={this.props.listFavoris} />
 
 
               <div className="container_page container-fluid text-center">    

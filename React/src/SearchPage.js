@@ -79,14 +79,17 @@ class SearchPage extends React.Component{
                     Bon courage :poucelevé:
                 */
                 let btn;
-                if(false){
+                let isSerie;
+                (choix === "film")? isSerie = "false" : isSerie = "true";
+                let titre = (ex.original_title || ex.original_name);
+                if(this.props.listFavoris.includes(titre)){
                     btn =<p>
-                            <button className="btn btn-sm btn-outline-danger" type="button" onClick={() => alert("deletefav")}>Delete Favoris</button>
+                            <button className="btn btn-sm btn-outline-danger" type="button" onClick={() => this.props.deleteFavoris(ex.id, titre, isSerie)}>Delete Favoris</button>
                         </p>
                 }
                 else{
                     btn =<p>
-                            <button className="btn btn-sm btn-outline-success" type="button" onClick={() => alert("addfav")}>Add Favoris</button>
+                            <button className="btn btn-sm btn-outline-success" type="button" onClick={() => this.props.addFavoris(ex.id, titre, isSerie)}>Add Favoris</button>
                         </p>
                 }
                 // Parfois c'est title parfois c'est name pour chaque séries/films

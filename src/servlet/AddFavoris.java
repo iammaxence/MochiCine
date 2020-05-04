@@ -28,7 +28,7 @@ public class AddFavoris extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
 			
 			String login = request.getParameter("login");
-	        String id_favoris = request.getParameter("titre");
+	        String id_favoris = request.getParameter("id");
 	        String isSerie = request.getParameter("isSerie");
 	        
 	        JSONObject res = services.Favoris.addFavoris(login, Integer.parseInt(id_favoris) ,Boolean.parseBoolean(isSerie));

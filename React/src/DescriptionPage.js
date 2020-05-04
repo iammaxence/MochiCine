@@ -37,9 +37,9 @@ class DescriptionPage extends React.Component {
             (choix === "film")? isSerie = "false" : isSerie = "true";
 
             if(this.props.listFavoris.includes(title))
-                add = <button className="btn btn-sm btn-outline-danger" type="button" onClick={() => this.props.deleteFavoris(title, isSerie)}>Delete Favoris</button>;
+                add = <button className="btn btn-sm btn-outline-danger" type="button" onClick={() => this.props.deleteFavoris(item.id, title, isSerie)}>Delete Favoris</button>;
             else
-                add = <button className="btn btn-sm btn-outline-success" type="button" onClick={() => this.props.addFavoris(title, isSerie)} >Add Favoris</button>;
+                add = <button className="btn btn-sm btn-outline-success" type="button" onClick={() => this.props.addFavoris(item.id, title, isSerie)} >Add Favoris</button>;
 
 
         }

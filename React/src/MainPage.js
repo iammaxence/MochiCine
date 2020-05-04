@@ -80,12 +80,12 @@ class MainPage extends React.Component {
     this.setState({isFavoris: list});
   }
 
-  addFavoris(titre, isSerie){
+  addFavoris(id, titre, isSerie){
     this.state.isFavoris.push(titre);
     console.log("isFavoris : ", this.state.isFavoris);
     try{
       const url = new URLSearchParams();
-      url.append('titre', titre);
+      url.append('id', id);
       url.append('isSerie', isSerie);
       url.append('login', this.state.login);
       axios.get('http://localhost:8080/MochiCine/Favoris/Add?' + url).then(response => this.handleRep(response));
@@ -94,13 +94,13 @@ class MainPage extends React.Component {
     }
   }
 
-  deleteFavoris(titre, isSerie){
+  deleteFavoris(id, titre, isSerie){
     const list = Object.assign([], this.state.isFavoris);
     list.filter(item => item !== titre);
     this.setState({isFavoris: list})
 
     const url = new URLSearchParams();
-    url.append('id_message', titre);
+    url.append('id', id);
     url.append('isSerie', isSerie);
     url.append('login', this.state.login);
  		axios.get('http://localhost:8080/MochiCine/Favoris/Delete?' + url).then(response => this.handleRep(response));

@@ -29,7 +29,7 @@ public class DeleteFavoris extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
 		
 		String login = request.getParameter("login");
-		String id_favoris = request.getParameter("titre");
+		String id_favoris = request.getParameter("id");
         String isSerie = request.getParameter("isSerie");
         
         JSONObject res = services.Favoris.deleteFavoris(login, Integer.parseInt(id_favoris) ,isSerie);
