@@ -55,18 +55,21 @@ class Calendrier extends Component{
     
     //Si series dans les favoris d'une utilisateur, coeur rempli sinon vide
     handleAddFav(id, title, isSerie){
-        this.state.UserFavs.push(title);
-        console.log("addCalendrier", this.state.UserFavs);
         this.props.addFavoris(id, title, isSerie)
+        this.setState({UserFavs: this.props.listFavoris});
+        //console.log("addCalendrier", this.state.UserFavs);
     }
 
-    handleDeleteFav(id, title, isSerie){
-        /*
-        const list = Object.assign([], this.state.isFavoris);
-        list.filter(item => item !== title);
-        this.setState({UserFavs: list})*/
+    handleDeleteFav(id, title, isSerie){   
+        const list = Object.assign([], this.state.UserFavs);
+        var index = list.indexOf(title);
+        if (index !== -1) {
+            list.splice(index, 1);
+            this.setState({UserFavs: list});
+        }
 
-        this.props.addFavoris(id, title, isSerie)
+        this.props.deleteFavoris(id, title, isSerie)
+        //console.log("deleteCalendrier", list);
     }
 
     // GESTION DESCRIPTION PAGE
@@ -113,14 +116,14 @@ class Calendrier extends Component{
                 let favImg=<img src={favEmpty} alt="favEmpty" width="20%" height="20%" />;
 
                 //Array.isArray(this.state.UserFavs) && this.state.UserFavs.includes(ex.id)
-                if (this.state.UserFavs.includes(ex.original_name)){
+                if (Array.isArray(this.state.UserFavs) && this.state.UserFavs.includes(ex.original_name)){
                     favImg=<img src={favFull} alt="favFull" width="20%" height="20%" />;
                     boxFav = <div> {favImg}
-                                <button id= "deletefavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.handleDeleteFav(ex.id, ex.original_name, "true")} >Ajouter</button>
+                                <button id= "deletefavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.handleDeleteFav(ex.id, ex.original_name, "true")} >Delete</button>
                             </div>
                 }else{
                     boxFav = <div> {favImg}
-                                <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.handleAddFav(ex.id,ex.original_name, "true")} >Ajouter</button>
+                                <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.handleAddFav(ex.id,ex.original_name, "true")} >Add</button>
                             </div>
                 }
              } 
@@ -164,15 +167,15 @@ class Calendrier extends Component{
             if(this.props.isConnected === true){
                 // Pour la mise a jour fav : Si pas un favoris de l'utilisateur favEmpty logo sinon favFull
                 let favImg=<img src={favEmpty} alt="favEmpty" width="20%" height="20%" />;
-                if (this.state.UserFavs.includes(ex.original_title)){
+                if (Array.isArray(this.state.UserFavs) && this.state.UserFavs.includes(ex.original_title)){
                     favImg=<img src={favFull} alt="favFull" width="20%" height="20%" />;
 
                     boxFav = <div>{favImg}
-                                <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.handleDeleteFav(ex.id, ex.original_title, "false")} >Ajouter</button>
+                                <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.handleDeleteFav(ex.id, ex.original_title, "false")} >Delete</button>
                             </div>
                 }else{
                     boxFav = <div>{favImg}
-                                <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.handleAddFav(ex.id, ex.original_title, "false")} >Ajouter</button>
+                                <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.handleAddFav(ex.id, ex.original_title, "false")} >Add</button>
                             </div>
                 }
 

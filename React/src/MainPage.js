@@ -82,8 +82,8 @@ class MainPage extends React.Component {
   }
 
   addFavoris(id, titre, isSerie){
-    //this.state.listFavoris.push(titre);
-    console.log("Main add listFavoris : ", this.state.listFavoris);
+    this.state.listFavoris.push(titre);
+    //console.log("Main add listFavoris : ", this.state.listFavoris);
     try{
       const url = new URLSearchParams();
       url.append('id', id);
@@ -97,9 +97,13 @@ class MainPage extends React.Component {
 
   deleteFavoris(id, titre, isSerie){
     const list = Object.assign([], this.state.listFavoris);
-    list.filter(item => item !== titre);
-    this.setState({listFavoris: list})
-    console.log("Main delete listFavoris : ", this.state.listFavoris);
+    var index = list.indexOf(titre);
+    if (index !== -1) {
+      list.splice(index, 1);
+      this.setState({listFavoris: list})
+    }
+    //console.log("Main delete listFavoris : ", list);
+    
 
     const url = new URLSearchParams();
     url.append('id', id);
