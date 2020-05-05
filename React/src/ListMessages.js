@@ -20,7 +20,7 @@ class ListMessages extends React.Component {
 
 	lister(rep){
 		  console.log(rep.data);
-		  if(rep.data != null){
+		  if(rep.data !== null){
 			if(rep.data["code"]){
 				this.setState ({statut: "error", textError: rep.data["message"]});
 				window.confirm(this.state.textError);

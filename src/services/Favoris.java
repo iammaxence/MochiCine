@@ -33,6 +33,10 @@ public class Favoris {
 			return ErrorJSON.serviceRefused("deleteFavoris: Pseudo "+login+" do not exist", -2);
 		}
 		
+		if(FavorisTools.isFavoris(login, id_favoris, isSerie)) {
+			return ErrorJSON.serviceAccepted(); //Deja ajouter
+		}
+		
 		return FavorisTools.addFavoris(login, id_favoris, isSerie);
 	}
 	

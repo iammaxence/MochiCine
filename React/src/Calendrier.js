@@ -14,7 +14,7 @@ class Calendrier extends Component{
     }
 
     componentDidMount(){
-
+        console.log("Amount Calendrier", this.state.UserFavs);
         
         //Today release
         //axios.get("https://api.themoviedb.org/3/tv/airing_today?api_key=a3be1be132d237a0716cc27bdae1b2f0&language=en-US&page=1").then(res=> this.constr(res));
@@ -54,18 +54,19 @@ class Calendrier extends Component{
 
     
     //Si series dans les favoris d'une utilisateur, coeur rempli sinon vide
-   addToFavoris(res){
-        //AddToFavs
+    handleAddFav(id, title, isSerie){
+        this.state.UserFavs.push(title);
+        console.log("addCalendrier", this.state.UserFavs);
+        this.props.addFavoris(id, title, isSerie)
+    }
 
+    handleDeleteFav(id, title, isSerie){
         /*
-        console.log(this.state.UserFavs)
-        if (Array.isArray(this.state.UserFavs) && this.state.UserFavs.includes(res.id)){ // S'il est dedans, on le retire des favs dans mongodb
-            this.setState({UserFavs: []});
-        }
-        else{ // On l'ajoute aux favs dans mongodb
-            this.setState({UserFavs: [...this.state.UserFavs,res.id]});
-        }
-            */
+        const list = Object.assign([], this.state.isFavoris);
+        list.filter(item => item !== title);
+        this.setState({UserFavs: list})*/
+
+        this.props.addFavoris(id, title, isSerie)
     }
 
     // GESTION DESCRIPTION PAGE
@@ -112,14 +113,14 @@ class Calendrier extends Component{
                 let favImg=<img src={favEmpty} alt="favEmpty" width="20%" height="20%" />;
 
                 //Array.isArray(this.state.UserFavs) && this.state.UserFavs.includes(ex.id)
-                if (this.props.listFavoris.includes(ex.original_name)){
+                if (this.state.UserFavs.includes(ex.original_name)){
                     favImg=<img src={favFull} alt="favFull" width="20%" height="20%" />;
                     boxFav = <div> {favImg}
-                                <button id= "deletefavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.props.deleteFavoris(ex.id, ex.original_name, "true")} >Ajouter</button>
+                                <button id= "deletefavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.handleDeleteFav(ex.id, ex.original_name, "true")} >Ajouter</button>
                             </div>
                 }else{
                     boxFav = <div> {favImg}
-                                <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.props.addFavoris(ex.id,ex.original_name, "true")} >Ajouter</button>
+                                <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.handleAddFav(ex.id,ex.original_name, "true")} >Ajouter</button>
                             </div>
                 }
              } 
@@ -163,15 +164,15 @@ class Calendrier extends Component{
             if(this.props.isConnected === true){
                 // Pour la mise a jour fav : Si pas un favoris de l'utilisateur favEmpty logo sinon favFull
                 let favImg=<img src={favEmpty} alt="favEmpty" width="20%" height="20%" />;
-                if (this.props.listFavoris.includes(ex.original_title)){
+                if (this.state.UserFavs.includes(ex.original_title)){
                     favImg=<img src={favFull} alt="favFull" width="20%" height="20%" />;
 
                     boxFav = <div>{favImg}
-                                <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.props.deleteFavoris(ex.id, ex.original_title, "false")} >Ajouter</button>
+                                <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.handleDeleteFav(ex.id, ex.original_title, "false")} >Ajouter</button>
                             </div>
                 }else{
                     boxFav = <div>{favImg}
-                                <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.props.addFavoris(ex.id, ex.original_title, "false")} >Ajouter</button>
+                                <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.handleAddFav(ex.id, ex.original_title, "false")} >Ajouter</button>
                             </div>
                 }
 
@@ -216,13 +217,14 @@ class Calendrier extends Component{
         return (
             <div className="Rectangle">
                 <div className="Jours">
-                    <strong> Sortie des series des 7 derniers jours</strong>
-                </div>
-               {series}
-                <div className="Jours">
                     <strong> Films sorties en 2020 </strong>
                 </div>
                 {films}
+                <div className="Jours">
+                    <strong> Sortie des series des 7 derniers jours</strong>
+                </div>
+               {series}
+
             </div>  
         )
     }

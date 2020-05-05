@@ -104,4 +104,33 @@ public class FavorisTools {
 		}
         
     }
+	
+	public static boolean isFavoris(String login, Integer id_favoris, boolean isSerie) {
+		boolean result = false;
+		MongoDatabase c = Database.getMongoConnection();
+		MongoCollection <Document> coll = c.getCollection("Favoris");
+		
+		Document filter = new Document("_id", login);
+        MongoCursor<Document> cursor = coll.find(filter).iterator();        
+        if(cursor.hasNext()) {
+        	Document o = cursor.next();
+        	if(!isSerie) {
+    			ArrayList<Object> list = (ArrayList<Object>) o.get("movies");
+    			for(Object obj : list) {
+    				if(obj.toString().equals(id_favoris)){
+    					result=true;
+    				}
+    			}
+        	}else {
+    			ArrayList<Object> list = (ArrayList<Object>) o.get("series");
+    			for(Object obj : list) {
+    				if(obj.toString().equals(id_favoris)){
+    					result=true;
+    				}
+    			}
+        	}
+        }
+        Database.MongoClose();
+        return result;
+	}
 }

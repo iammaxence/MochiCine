@@ -36,7 +36,7 @@ class ListFavoris extends React.Component {
     deleteFavoris(id, nb, index){
         const url = new URLSearchParams();
         url.append('login', this.props.login);
-        url.append('titre', id);
+        url.append('id', id);
         (nb === 0)? url.append('isSerie', "false"): url.append('isSerie', 'true');
         axios.get('http://localhost:8080/MochiCine/Favoris/Delete?'+url).then(response => this.result(response, nb, index));
     }
@@ -49,9 +49,10 @@ class ListFavoris extends React.Component {
             console.log("deleteFavoris : ok");
             
             if(nb === 0){
-                const newList= Object.assign([], this.state.movies);
-                newList.splice(index,1);
-                this.setState({movies: newList});
+                const list= Object.assign([], this.state.movies);
+                list.splice(index,1);
+                this.setState({movies: list});
+                console.log("movies : ", this.state.movies );
             }else{
                 const newList= Object.assign([], this.state.series);
                 newList.splice(index,1);
@@ -111,7 +112,7 @@ class ListFavoris extends React.Component {
                             {item.overview}
                         </p>
                         <p>
-                        <button className="btn btn-sm btn-outline-danger" type="button" onClick={() => this.deleteFavoris(item.id, nb)}>Delete Favoris</button>
+                        <button className="btn btn-sm btn-outline-danger" type="button" onClick={() => this.deleteFavoris(item.id, nb, index)}>Delete Favoris</button>
                         </p>
                     </div>
                 </div>
@@ -138,11 +139,11 @@ class ListFavoris extends React.Component {
         }
 
         if(this.state.movies.length > 0){
-            let cpt=0;
+            let cpt2=0;
             movies = this.state.movies.map( item => {
                 if(item.backdrop_path!==null && item.backdrop_path!==undefined){
-                    let box = (this.getBox(item, cpt));
-                    cpt=cpt+1;
+                    let box = (this.getBox(item, cpt2));
+                    cpt2=cpt2+1;
                     return box;
                 }
             });

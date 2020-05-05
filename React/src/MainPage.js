@@ -10,7 +10,7 @@ import SearchPage from './SearchPage';
 class MainPage extends React.Component {
   constructor(props){
     super(props);
-    this.state= {pagecourante: "Profil", isConnected: true, login: "bob", keyword: "", data: null, isFavoris: []};
+    this.state= {pagecourante: "Profil", isConnected: true, login: "bob", keyword: "", data: null, listFavoris: []};
     
     //all the bind
     this.setLogin = this.setLogin.bind(this);
@@ -77,12 +77,13 @@ class MainPage extends React.Component {
 
   //--------- GESTION DES FAVORIS---------------
   setListFavoris(list){
-    this.setState({isFavoris: list});
+    this.setState({listFavoris: list});
+    console.log("Main set listFavoris : ", this.state.listFavoris);
   }
 
   addFavoris(id, titre, isSerie){
-    this.state.isFavoris.push(titre);
-    console.log("isFavoris : ", this.state.isFavoris);
+    //this.state.listFavoris.push(titre);
+    console.log("Main add listFavoris : ", this.state.listFavoris);
     try{
       const url = new URLSearchParams();
       url.append('id', id);
@@ -95,9 +96,10 @@ class MainPage extends React.Component {
   }
 
   deleteFavoris(id, titre, isSerie){
-    const list = Object.assign([], this.state.isFavoris);
+    const list = Object.assign([], this.state.listFavoris);
     list.filter(item => item !== titre);
-    this.setState({isFavoris: list})
+    this.setState({listFavoris: list})
+    console.log("Main delete listFavoris : ", this.state.listFavoris);
 
     const url = new URLSearchParams();
     url.append('id', id);
@@ -147,7 +149,7 @@ class MainPage extends React.Component {
         getDescriptionPage={this.getDescriptionPage}
         addFavoris={this.addFavoris}
         deleteFavoris={this.deleteFavoris}
-        listFavoris={this.state.isFavoris}  /> ;
+        listFavoris={this.state.listFavoris}  /> ;
 
 
     }else if(this.state.pagecourante === "Login"){
@@ -170,7 +172,7 @@ class MainPage extends React.Component {
           addFavoris={this.addFavoris}
           deleteFavoris={this.deleteFavoris} 
           getSearchPage={this.getSearchPage}
-          listFavoris={this.state.isFavoris} />;
+          listFavoris={this.state.listFavoris} />;
 
 
     }
@@ -188,7 +190,7 @@ class MainPage extends React.Component {
           getDescriptionPage={this.getDescriptionPage}
           addFavoris={this.addFavoris}
           deleteFavoris={this.deleteFavoris}
-          listFavoris={this.state.isFavoris}
+          listFavoris={this.state.listFavoris}
            />
     }
     

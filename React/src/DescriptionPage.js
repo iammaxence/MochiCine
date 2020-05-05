@@ -3,6 +3,11 @@ import NavBar from './NavBar';
 import ListMessages from './ListMessages'
 
 class DescriptionPage extends React.Component {
+    constructor(props){
+        super(props);
+        let title = (this.props.data.original_name || this.props.data.original_title);
+        this.state = {titre: title, isFavoris: this.props.listFavoris.includes(title)};
+    }
 
     formatDate(string){
         var options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -20,7 +25,17 @@ class DescriptionPage extends React.Component {
             return <div></div>;
         }
     }
-  
+
+    handleAddFav(id, title, isSerie){
+        this.setState({isFavoris: true});
+        this.props.addFavoris(id, title, isSerie)
+    }
+
+    handleDeleteFav(id, title, isSerie){
+        this.setState({isFavoris: false});
+        this.props.deleteFavoris(id, title, isSerie)
+    }
+
     render(){
         let item = this.props.data;
         let nb = (item.number_of_seasons || 0);
@@ -31,16 +46,15 @@ class DescriptionPage extends React.Component {
             choix=nb+" saisons";
         }
         let add=<div></div>;
-        let title = (item.original_name || item.original_title);
         if(this.props.isConnected === true){
             let isSerie;
             (choix === "film")? isSerie = "false" : isSerie = "true";
 
-            if(this.props.listFavoris.includes(title))
-                add = <button className="btn btn-sm btn-outline-danger" type="button" onClick={() => this.props.deleteFavoris(item.id, title, isSerie)}>Delete Favoris</button>;
-            else
-                add = <button className="btn btn-sm btn-outline-success" type="button" onClick={() => this.props.addFavoris(item.id, title, isSerie)} >Add Favoris</button>;
-
+            if(this.state.isFavoris){
+                add = <button className="btn btn-sm btn-outline-danger" type="button" onClick={() =>  this.handleDeleteFav(item.id, this.state.titre, isSerie)}>Delete Favoris</button>;
+            }else{
+                add = <button className="btn btn-sm btn-outline-success" type="button" onClick={() =>  this.handleAddFav(item.id, this.state.titre, isSerie)} >Add Favoris</button>;
+            }
 
         }
 
@@ -97,7 +111,7 @@ class DescriptionPage extends React.Component {
                         <hr/>
                         
                         <h3>Commentaires </h3>
-                        <ListMessages titre={title} login={this.props.login} isConnected={this.props.isConnected}/>
+                        <ListMessages titre={this.state.titre} login={this.props.login} isConnected={this.props.isConnected}/>
                     </div>
                 </div>
                 </div>
