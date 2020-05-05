@@ -38,7 +38,7 @@ public class ApiTools {
 				//On récupère la réponse, si le status est valide, on continue
 				int status = con.getResponseCode();
 				if(status != 200)
-					return ErrorJSON.serviceRefused("getIDs : Can't find tv show with id", -2);
+					return ErrorJSON.serviceRefused("getIDs : Can't find "+type+" show with this id "+id, -2);
 				
 				//On récupère la réponse envoyé par l'API
 				BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));

@@ -65,7 +65,6 @@ public class FavorisTools {
 				res.put("series", o.get("series"));
 				res.put("movies", o.get("movies"));
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         }

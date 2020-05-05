@@ -16,13 +16,13 @@ class ListFavoris extends React.Component {
     }
 
     lister(rep){
+        console.log(rep.data);
         if(rep.data != null){
             if(rep.data["code"]){
                 this.setState ({statut: "error", textError: rep.data["message"]});
                 window.confirm(this.state.textError);
             }else{
-                let films =rep.data["movie"];
-                this.setState({series: rep.data["data"], movies: films[0]});
+                this.setState({series: rep.data["data"], movies: rep.data["movie"]});
                 this.updateMain();
             } 
         }
@@ -90,7 +90,7 @@ class ListFavoris extends React.Component {
         }
 
         return(
-                <div className="col-md-12 bg-white text-dark" key={item.id}>
+                <div className="favorisBox col-md-12 bg-white text-dark" key={item.id}>
                 <div className="blog-entry  col-12">
                     <div id = "leftbox">
                         <img src={"https://image.tmdb.org/t/p/w500/"+item.backdrop_path} alt={"pic_of_"+item.title} width="100%"  />

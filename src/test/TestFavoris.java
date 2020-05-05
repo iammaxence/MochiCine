@@ -35,6 +35,7 @@ public class TestFavoris {
 			}
         }
 		Database.MongoClose();
+		System.out.println(res);
 		assertEquals("{}", res.toString());
 	}
 	

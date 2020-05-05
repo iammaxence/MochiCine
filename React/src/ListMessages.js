@@ -79,7 +79,7 @@ class ListMessages extends React.Component {
 
 
 	getListMessage(){
-		if(this.state.taille != 0){
+		if(this.state.taille !== 0){
 			return(
 				this.state.messages.map((item, index) => 
 					<div className="col-md-13 container divmes" key={item._id}>

@@ -4,20 +4,17 @@
 }
 
 .affiches{
-    display: inline-block;
     border-style: solid;
     margin: 4% 4% auto 2%;
-
+    padding: 2%;
 }
 
-.backimage{
-    
-}
+
 
 .description{
-    display: inline-block;
     margin: auto auto auto 2%;
-    width: 40%;
+    width: 60%;
     text-align: center;
+    float: right;
 
 }

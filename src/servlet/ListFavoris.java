@@ -31,7 +31,7 @@ public class ListFavoris extends HttpServlet {
 			String login = request.getParameter("login");
 	        
 	        
-	        JSONObject res = services.Favoris.ListFavoris(login);
+	        JSONObject res = services.Favoris.listFavoris(login);
 	        reponse.setContentType("text/json");
 	        PrintWriter out = reponse.getWriter();
 	        out.println(res);

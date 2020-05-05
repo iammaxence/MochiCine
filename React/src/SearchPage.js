@@ -8,7 +8,7 @@ class SearchPage extends React.Component{
 
     constructor(props){
         super(props);
-        this.state={listeRecherche: []};
+        this.state={listeRecherche: [], UserFavs: this.props.listFavoris};
         this.addToList=this.addToList.bind(this);
     }
 
@@ -46,6 +46,45 @@ class SearchPage extends React.Component{
             alert("nope");
     }
 
+    // GESTION DESCRIPTION PAGE
+    handleDescriptionPage(id, isMovie){
+        const url = new URLSearchParams();
+        url.append('id',id);
+        url.append('isMovie',isMovie);
+        axios.get('http://localhost:8080/MochiCine/GetDescription?'+url).then(response => this.getDescription(response));
+    
+    }
+
+    getDescription(rep){
+        console.log("data of Description: ", rep.data);
+        if(rep.data != null){
+            if(rep.data["code"]){
+                window.confirm(this.state.textError);
+            }else{
+                this.props.getDescriptionPage(rep.data["info"]);
+            } 
+        }
+    }
+
+    //FAVORIS
+    handleAddFav(id, title, isSerie){
+        this.props.addFavoris(id, title, isSerie)
+        this.setState({UserFavs: this.props.listFavoris});
+    }
+
+    handleDeleteFav(id, title, isSerie){   
+        const list = Object.assign([], this.state.UserFavs);
+        var index = list.indexOf(title);
+        if (index !== -1) {
+            list.splice(index, 1);
+            this.setState({UserFavs: list});
+        }
+
+        this.props.deleteFavoris(id, title, isSerie)
+    }
+
+
+
     render(){
         //console.log(document.getElementById("recherche").value);
         let tmp;
@@ -61,49 +100,34 @@ class SearchPage extends React.Component{
             tmp= this.state.listeRecherche.map(ex => {
                 //console.log(ex);
                 
-                let nb = (ex.number_of_seasons || 0);
-                let choix;
-                if(nb === 0){
-                    choix="film";
-                }else{
-                    choix=nb+" saisons";
-                }
+                let choix = ex.media_type;
 
                 // Favoris button
-
-                /* /!\ POUR LAETITIA 
-                    Bonjour Laeti (ou bonsoir), j'ai mit en place le bouton favoris juste en dessous de ce texte. Le onClick est juste une alert,
-                    tu peux le retirer pour y mettre les fonctions dont tu as besoin pour l'ajout ou la supression de favoris. La condition du if 
-                    est à false (C'était pour des test). La vrai condition serait quelque chose du genre : if (this.props.isFavoris.includes (ex.id)).
-                    Ca verfie que l'id est présent (ou non) dans la liste des favoris.
-                    Bon courage :poucelevé:
-                */
                 let btn;
                 let isSerie;
-                (choix === "film")? isSerie = "false" : isSerie = "true";
+                (choix === "movie")? isSerie = "false" : isSerie = "true";
                 let titre = (ex.original_title || ex.original_name);
-                if(this.props.listFavoris.includes(titre)){
+                if(this.state.UserFavs.includes(titre)){
                     btn =<p>
-                            <button className="btn btn-sm btn-outline-danger" type="button" onClick={() => this.props.deleteFavoris(ex.id, titre, isSerie)}>Delete Favoris</button>
+                            <button className="btn btn-sm btn-outline-danger" type="button" onClick={() => this.handleDeleteFav(ex.id, titre, isSerie)}>Delete Favoris</button>
                         </p>
                 }
                 else{
                     btn =<p>
-                            <button className="btn btn-sm btn-outline-success" type="button" onClick={() => this.props.addFavoris(ex.id, titre, isSerie)}>Add Favoris</button>
+                            <button className="btn btn-sm btn-outline-success" type="button" onClick={() => this.handleAddFav(ex.id, titre, isSerie)}>Add Favoris</button>
                         </p>
                 }
                 // Parfois c'est title parfois c'est name pour chaque séries/films
                 if(ex.backdrop_path!==null && ex.backdrop_path!==undefined){
                     return (
-                        <div className="affiches">
-                            <div className="col-md-12 bg-white text-dark" key={ex.id}>
+                            <div className="affiches col-md-11 bg-white text-dark" key={ex.id}>
                             <div className="blog-entry  col-12">
                                 <div id = "leftbox" >
                                     <img src={"https://image.tmdb.org/t/p/w500/"+ex.backdrop_path} alt={"pic_of_"+ex.title}   />
                                 </div>
                                 <div className= "description">
                                     <div className="text text-2 text-center pl-md-4">
-                                        <h3 className="mb-2"  onClick={() => this.props.getDescriptionPage(ex)} >{(ex.original_title || ex.original_name)}</h3>
+                                        <h3 className="mb-2"  onClick={() => this.handleDescriptionPage(ex.id, !isSerie)} >{(ex.original_title || ex.original_name)}</h3>
                                     </div>
                                     <div className="meta-wrap">
                                         <p className="meta">
@@ -121,7 +145,6 @@ class SearchPage extends React.Component{
                                 </div>
                             </div>
                             </div>
-                        </div>
                     )
                 }
             })
@@ -136,8 +159,10 @@ class SearchPage extends React.Component{
                     getProfilPage={this.props.getProfilPage}
                     getAccueilPage={this.props.getAccueilPage} 
                     getSearchPage={this.props.getSearchPage}/>
-                <div className="searchPage">
-                    {tmp}
+                <div className="searchPage col">
+                    <div className="row pt-md-3">
+                        {tmp}
+                    </div>
                 </div>
             </div>
         )

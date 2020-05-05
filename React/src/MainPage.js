@@ -78,7 +78,7 @@ class MainPage extends React.Component {
   //--------- GESTION DES FAVORIS---------------
   setListFavoris(list){
     this.setState({listFavoris: list});
-    console.log("Main set listFavoris : ", this.state.listFavoris);
+    //console.log("Main set listFavoris : ", this.state.listFavoris);
   }
 
   addFavoris(id, titre, isSerie){

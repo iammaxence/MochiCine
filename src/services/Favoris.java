@@ -66,7 +66,7 @@ public class Favoris {
 	 * @param login
 	 * @return
 	 */
-	public static JSONObject ListFavoris(String login) {
+	public static JSONObject listFavoris(String login) {
 		if(login.equals("")) {
 			return ErrorJSON.serviceRefused("ListFavoris: Argument Null", -1);
 		}
@@ -101,7 +101,7 @@ public class Favoris {
 			//AJout des series sous le nom de data
 			if(series.size() == 0) {
 				resultat = new JSONObject();
-				resultat.append("data", new ArrayList<>());
+				resultat.put("data", new ArrayList<>());
 			}else {
 				for(Object va : series) {
 					ids.add((Integer) va);
@@ -111,7 +111,7 @@ public class Favoris {
 			
 			//Ajout des movies sous le nom de movie
 			if(movies.size() == 0) {
-				resultat.append("movie", new ArrayList<>());
+				resultat.put("movie", new ArrayList<>());
 			}else {
 				ids.clear();
 				for(Object va : movies) {
@@ -119,7 +119,7 @@ public class Favoris {
 				}
 				
 				JSONObject resultat2 = ApiTools.getIDs(ids, "movie");
-				resultat.append("movie", resultat2.get("data"));
+				resultat.put("movie", resultat2.get("data"));
 			}
 			
 			
