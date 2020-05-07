@@ -387,6 +387,8 @@ public class ApiTools {
 	public static boolean isLast7Days(LocalDate d) {
 		LocalDate today = LocalDate.now(); //date d'aujourd'hui
 		int day=today.getDayOfMonth()-7; //Les 7 derniers jours
+		if(day==0)
+			day=1;
 		LocalDate begin = today.of(today.getYear(), today.getMonth(), Math.abs(day));// Math.abs pour éviter les erreur de date negative (Car si negative, la valeur de begin est changer dans le if)
 		
 		//Si le jour du mois est compris entre 1 et 7, on récupère le jour du mois précédent (ex: on est le 2mai donc (31avril+2mai)-7derniersjours)
@@ -419,12 +421,12 @@ public class ApiTools {
 	}
 
 
-	public static JSONObject tendances(String key) throws IOException {
+	public static JSONObject tendanceFilms(String key,int count) throws IOException {
 		JSONObject retour= new JSONObject();
 		JSONArray myarray=new JSONArray();
 		
 		//On effectue un appel à l'API externe
-		URL url = new URL("https://api.themoviedb.org/3/trending/all/day?api_key="+key); 
+		URL url = new URL("https://api.themoviedb.org/3/trending/movie/day?api_key="+key); 
 		HttpURLConnection con = (HttpURLConnection)url.openConnection();
 		con.setRequestMethod("GET");
 		con.setRequestProperty("Content-Type", "application/json");
@@ -445,7 +447,6 @@ public class ApiTools {
 			} catch (JSONException e) {
 				System.out.println("Error: Readline tendance (ApiTools.java)");
 			}
-
 		}
 		in.close();
 		
@@ -457,7 +458,7 @@ public class ApiTools {
 		}
 		
 		JSONArray newArray=new JSONArray();
-		for(int i=0;i<myarray.length();i++) {
+		for(int i=0;i<count;i++) {
 			try {
 				JSONObject jo=(JSONObject)myarray.get(i); //String -> JSONObject
 				newArray.put(jo);

@@ -1,6 +1,7 @@
 import React from 'react';
 import NavBar from './NavBar';
 import Calendrier from './Calendrier';
+import Actualite from './Actualite';
 
 class Accueil extends React.Component {
 
@@ -24,11 +25,13 @@ class Accueil extends React.Component {
                 isConnected={this.props.isConnected} 
                 listFavoris={this.props.listFavoris} />
 
+              <Actualite
+
+              />
 
               <div className="container_page container-fluid text-center">    
                 <div className="row">
                     <div className="col-3 sidenav text-dark" >
-                      <h2>Actualité</h2>
                       </div>
                     
                 </div>

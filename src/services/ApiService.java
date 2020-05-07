@@ -31,10 +31,10 @@ public class ApiService {
 	}
 
 	
-	public static JSONObject tendances(String key) throws IOException {
+	public static JSONObject tendanceFilms(String key,int count) throws IOException {
 		if(key.equals("")) 
 			return ErrorJSON.serviceRefused("Invalid key", -3);
-		return tools.ApiTools.tendances(key);
+		return tools.ApiTools.tendanceFilms(key,count);
 	}
 
 	

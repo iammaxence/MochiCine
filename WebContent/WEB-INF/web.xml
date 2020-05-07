@@ -73,9 +73,13 @@
       <servlet-class>servlet.Search</servlet-class>
   </servlet>
   
-    <servlet>
+   <servlet>
       <servlet-name>Description</servlet-name>
       <servlet-class>servlet.GetDescription</servlet-class>
+  </servlet>
+  <servlet>
+      <servlet-name>TendanceFilms</servlet-name>
+      <servlet-class>servlet.TendanceFilms</servlet-class>
   </servlet>
   
   
@@ -149,9 +153,14 @@
     <url-pattern>/Search</url-pattern>
   </servlet-mapping>
   
-   <servlet-mapping>
+  <servlet-mapping>
     <servlet-name>Description</servlet-name>
     <url-pattern>/GetDescription</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>TendanceFilms</servlet-name>
+    <url-pattern>/TendanceFilms</url-pattern>
   </servlet-mapping>
 
   <filter>
