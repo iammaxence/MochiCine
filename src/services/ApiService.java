@@ -23,18 +23,24 @@ public class ApiService {
 	
 	public static JSONObject recherche(String key,String keyword) throws IOException{
 		if(keyword.equals("")) 
-			return ErrorJSON.serviceRefused("Keyword is empty", -1);
+			return ErrorJSON.serviceRefused("Keyword is empty in recherche", -1);
 		
 		if(key.equals(""))
-			return ErrorJSON.serviceRefused("Invalid key", -2);
+			return ErrorJSON.serviceRefused("Invalid key in recherche", -2);
 		return tools.ApiTools.recherche(key,keyword);
 	}
 
 	
-	public static JSONObject tendanceFilms(String key,int count) throws IOException {
+	public static JSONObject tendances(String key,int count,String type) throws IOException {
 		if(key.equals("")) 
-			return ErrorJSON.serviceRefused("Invalid key", -3);
-		return tools.ApiTools.tendanceFilms(key,count);
+			return ErrorJSON.serviceRefused("Invalid key in tendances", -3);
+		if(count<0)
+			return ErrorJSON.serviceRefused("Invalid counter in tendances", -4);
+		if(type.equals("tv") || type.equals("movie")) {
+			return tools.ApiTools.tendances(key,count,type);
+		}
+		return ErrorJSON.serviceRefused("Invalid type in tendances", -4);
+		
 	}
 
 	

@@ -59,12 +59,12 @@ public class TestApiExterne {
 //		LocalDate nbDaysPreviousMonth=today.of(today.getYear(),05, 03);
 //		
 //		System.out.println(ApiTools.isLast7Days(nbDaysPreviousMonth));
-//		try {
-//			System.out.println(ApiTools.tendanceFilms("a3be1be132d237a0716cc27bdae1b2f0"));
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			System.out.println(ApiTools.tendances("a3be1be132d237a0716cc27bdae1b2f0", 6, "movie"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

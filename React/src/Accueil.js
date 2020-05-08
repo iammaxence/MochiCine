@@ -26,7 +26,7 @@ class Accueil extends React.Component {
                 listFavoris={this.props.listFavoris} />
 
               <Actualite
-
+                getDescriptionPage={this.props.getDescriptionPage}
               />
 
               <div className="container_page container-fluid text-center">    

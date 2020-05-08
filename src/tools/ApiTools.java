@@ -421,12 +421,12 @@ public class ApiTools {
 	}
 
 
-	public static JSONObject tendanceFilms(String key,int count) throws IOException {
+	public static JSONObject tendances(String key,int count,String type) throws IOException {
 		JSONObject retour= new JSONObject();
 		JSONArray myarray=new JSONArray();
 		
 		//On effectue un appel à l'API externe
-		URL url = new URL("https://api.themoviedb.org/3/trending/movie/day?api_key="+key); 
+		URL url = new URL("https://api.themoviedb.org/3/trending/"+type+"/day?api_key="+key); 
 		HttpURLConnection con = (HttpURLConnection)url.openConnection();
 		con.setRequestMethod("GET");
 		con.setRequestProperty("Content-Type", "application/json");

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-public class TendanceFilms extends HttpServlet{
+public class Tendances extends HttpServlet{
 	
 /**
 	 * 
@@ -20,9 +20,10 @@ public class TendanceFilms extends HttpServlet{
 protected void doGet(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
 		
 		String key = request.getParameter("key");
+		String type = request.getParameter("type"); // movie or tv
 		String nbfilms = request.getParameter("count");
         int count= Integer.parseInt(nbfilms);
-        JSONObject res = services.ApiService.tendanceFilms(key,count);
+        JSONObject res = services.ApiService.tendances(key,count,type);
         reponse.setContentType("text/json");
         //reponse.addHeader("Access-Control-Allow-Origin", "*"); // Permet de faire des appel via les naviagteur qui bloque l'accès à une requete du client
         PrintWriter out = reponse.getWriter();

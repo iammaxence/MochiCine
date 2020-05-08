@@ -78,8 +78,8 @@
       <servlet-class>servlet.GetDescription</servlet-class>
   </servlet>
   <servlet>
-      <servlet-name>TendanceFilms</servlet-name>
-      <servlet-class>servlet.TendanceFilms</servlet-class>
+      <servlet-name>Tendances</servlet-name>
+      <servlet-class>servlet.Tendances</servlet-class>
   </servlet>
   
   
@@ -159,8 +159,8 @@
   </servlet-mapping>
   
   <servlet-mapping>
-    <servlet-name>TendanceFilms</servlet-name>
-    <url-pattern>/TendanceFilms</url-pattern>
+    <servlet-name>Tendances</servlet-name>
+    <url-pattern>/Tendances</url-pattern>
   </servlet-mapping>
 
   <filter>
