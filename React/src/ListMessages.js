@@ -51,7 +51,7 @@ class ListMessages extends React.Component {
 	  		this.setState ({statut: "error", textError: rep.data["message"]});
 	  		window.confirm(this.state.textError);
 	  	}else{
-			this.state.messages.unshift(rep.data["message"]);
+			this.state.messages.push(rep.data["message"]);
 			this.setState({ taille : (this.state.taille+1)});		
 	  	}
 
@@ -73,7 +73,7 @@ class ListMessages extends React.Component {
 	  	}else{
 	  		const newList = Object.assign([], this.state.messages);
 	  		newList.splice(index,1);
-	  		this.setState({messages: newList});
+	  		this.setState({messages: newList, taille : (this.state.taille-1)});
 	  	}
 	}
 
@@ -82,17 +82,20 @@ class ListMessages extends React.Component {
 		if(this.state.taille !== 0){
 			return(
 				this.state.messages.map((item, index) => 
-					<div className="col-md-13 container divmes" key={item._id}>
-						<p>
-					    	<span className="pseudo"> {item.login}</span>
-					    </p>
-				        <span>{item.text}</span>
-						<p/>
-				        <span className="datemess">{item.date}</span>
-				        {(this.props.login === item.login)? <button className="btn" onClick={()=> this.supprimerMessage(item._id, index)}><i className="fas fa-trash-alt"></i></button> : <p>NOTHING</p>}
-						<Commentaires login={this.props.login} id_message={item._id} comments={item.comments} />
+				<li className="list-group-item" key={item._id}>
+            		<small className="date text-muted">{item.date}</small>
+					<div>
+						<small className="list-group-item-heading text-primary">{item.login}</small>
+						<p className="list-group-item-text">
+							{item.text}
+						</p>
+						{(this.props.login === item.login)? <button className="btn btn-sm corbeille" onClick={()=> this.supprimerMessage(item._id, index)}><i className="fas fa-trash-alt"></i></button> : <p></p>}
+						
+						<Commentaires login={this.props.login} id_message={item._id} comments={item.comments} isConnected={this.props.isConnected} />
+					</div>
 
-					</div>));
+				</li>
+					));
 		}
 	}
 
@@ -103,7 +106,10 @@ class ListMessages extends React.Component {
 		return(
 			<div className="liste_message">
 				{box}
-				{this.getListMessage()}
+				<ul className="list-group">
+					{this.getListMessage()}
+				</ul>
+				
 
 			</div>	
         );

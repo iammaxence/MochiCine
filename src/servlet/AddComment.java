@@ -24,7 +24,7 @@ public class AddComment extends HttpServlet {
 	 * appelle le Service Commentaire pour l'ajout d'un commentaire a partir
 	 * des information de la requete http
 	 */
-	protected void doPut(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
 			
 			String user = request.getParameter("user");
 			String id_message = request.getParameter("id_message");

@@ -52,6 +52,18 @@ ul {
     background-size: 14%;
 }
 
+.new_message{
+    float: top;
+    margin: 5%;
+}
+.comment{
+    float: right;
+    margin: 1%;
+}
+
+.date, .corbeille{
+    float: right;
+}
 
 
 .user_card {

@@ -21,7 +21,8 @@ class EcrireMessage extends React.Component {
 		return(
 		<div className="new_message">
 				<textarea className="form-control" rows="2" autoComplete="off" placeholder=' Add a Comment..' value={this.state.newMsg} onChange={(e) => this.handleMessage(e)} ></textarea>
-		      	<button className="btn btn-sm btn-outline-info" onClick={(e) => this.sendMessage(e)}>Comment</button>
+				&nbsp;
+				<button className="comment btn btn-sm btn-outline-info" onClick={(e) => this.sendMessage(e)}>Comment</button>
 		</div>);
 	}
 }

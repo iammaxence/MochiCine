@@ -6,8 +6,8 @@ import EcrireMessage from "./EcrireMessage";
 
 class Commentaires extends React.Component {
 	constructor(props){
-    	super(props); //login, id_message
-    	this.state={comments:[], statut:"", textError:""};
+    	super(props); //login, id_message, comments, isconnected
+    	this.state={comments:[], statut:"", textError:"", taille: 0};
     	this.deleteMessage=this.deleteMessage.bind(this);
 	}
 
@@ -32,16 +32,16 @@ class Commentaires extends React.Component {
 	  		this.setState ({statut: "error", textError: rep.data["commentaire"]});
 	  		window.confirm(this.state.textError);
 	  	}else{
-	  		this.state.comments.unshift(rep.data["comment"]);
+	  		this.state.comments.push(rep.data["comment"]);
 	  	}
 	}
 
-
+	//String id_commentaire, String id_message
 	deleteMessage(id_commentaire, index){
 		if(window.confirm("Voulez-vous supprimer ce commentaire ?")){
 			const url = new URLSearchParams();
             url.append('id_message', this.props.id_message);
-            url.append('comId', id_commentaire);
+            url.append('idCom', id_commentaire);
  			axios.get('http://localhost:8080/MochiCine/Comment/Delete?' + url).then(response => this.delete(response, index));
 		}
 	}
@@ -58,18 +58,39 @@ class Commentaires extends React.Component {
 	  	}
 	}
 
+	getListCommentaires(){
+			return(
+				this.state.comments.map((item, index) => 
+				<li className="list-group-item" key={item._id}>
+            		<small className="date text-muted">{item.date}</small>
+					<div>
+						<small className="list-group-item-heading text-primary">{item.login}</small>
+						<p className="list-group-item-text">
+							{item.commentaire}
+						</p>
+						{(this.props.login === item.login)? <button className="btn btn-sm corbeille" onClick={()=> this.deleteMessage(item._id, index)}><i className="fas fa-trash-alt"></i></button> : <p></p>}
+					</div>
+
+				</li>
+					));
+	}
+
 
 
 	render(){
+		let name = "collapseCom"+this.props.id_message;
 		let box;
-		(this.props.isConnected === true)? box = <EcrireMessage addComment={this.addComment.bind(this)} /> : box = <div></div>;
-		return(<div className="liste_com">
-			{box}
-			<span></span>
-			<ul className="list-group">
-				{this.state.comments.map((item, index) => <div key={item._id} ></div>)}
-			</ul>
-		</div>);
+		(this.props.isConnected === true)? box = <EcrireMessage addMessage={this.addComment.bind(this)} /> : box = <div></div>;
+		return(
+		<div className="comments-group" >
+			<button className="btn fas fa-comment" data-toggle="collapse" data-target={"#"+name} aria-expanded="false">
+			</button>
+			<div className="collapse" id={name}>
+				{this.getListCommentaires()}
+				{box}
+			</div>
+		</div>
+);
 	}
 }
 
