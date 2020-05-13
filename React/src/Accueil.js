@@ -18,24 +18,25 @@ class Accueil extends React.Component {
                 getAccueilPage={this.props.getAccueilPage} 
                 getSearchPage={this.props.getSearchPage}/>        
 
-              <Calendrier 
-                getDescriptionPage={this.props.getDescriptionPage}
-                addFavoris={this.props.addFavoris}
-                deleteFavoris={this.props.deleteFavoris}
-                isConnected={this.props.isConnected} 
-                listFavoris={this.props.listFavoris} />
+              
 
-              <Actualite
-                getDescriptionPage={this.props.getDescriptionPage}
-              />
-
-              <div className="container_page container-fluid text-center">    
-                <div className="row">
-                    <div className="col-3 sidenav text-dark" >
-                      </div>
-                    
+              
+              <div className="container-fluid text-center">    
+                <div className="row content">
+                    <div className="actu col-sm-3 bg-warning">
+                      <Actualite
+                          getDescriptionPage={this.props.getDescriptionPage} />
+                    </div>
+                    <div className="col-sm-8 text-left"> 
+                      <Calendrier 
+                        getDescriptionPage={this.props.getDescriptionPage}
+                        addFavoris={this.props.addFavoris}
+                        deleteFavoris={this.props.deleteFavoris}
+                        isConnected={this.props.isConnected} 
+                        listFavoris={this.props.listFavoris} />
+                    </div>
                 </div>
-                </div>
+              </div>
              
             </div>
           );

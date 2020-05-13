@@ -1,6 +1,7 @@
 package tools;
 
 import org.bson.Document;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.mongodb.client.MongoCollection;
@@ -32,7 +33,14 @@ public class CommentsTools {
 		
 		Database.MongoClose();
 		
-		return ErrorJSON.serviceAccepted();
+		JSONObject res= new JSONObject();
+		try {
+			res.put("comment", commentaire);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return ErrorJSON.serviceRefused("addComment: erreur", 100);
+		}
+		return res;
 	}
 	
 	public static JSONObject deleteComment(String id_message, String idCom) {   

@@ -61,7 +61,7 @@ class Login extends React.Component {
             <div className="container">
                 <div className="d-flex justify-content-center h-100">
                     <div className="user_card">
-                        <h1 className="text-center" onClick={this.sendaccueil} >MochiCine</h1>
+                        <h1 className="text-center text-light" onClick={this.sendaccueil} >MochiCine</h1>
                         <div className="d-flex justify-content-center form_container">
                             <form method="POST">
                                 <div className="input-group mb-3">

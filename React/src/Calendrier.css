@@ -1,36 +1,37 @@
 .Rectangle{
-    display: block;
-    margin: 5% auto auto 30%;
-    width: 60%;
-    height: 100%;
-    
-
-}
-
-.Jours{
-    display: inline-block;
     width: 100%;
-    height:5%;
-    margin: auto;
-    margin-top: 10%;
-    background-color: darkslategrey;
-    color: honeydew;
-    border-style: solid;
-    border-color: black;
-    text-align: center;
+    height: 100%;
+    margin-left: 6%;
 }
-
 
 
 .bloc{
     display: inline-block;
-    margin: 1% 1% 1% auto;
-    width: 15%;
+    margin: 1% 3% 2% auto;
+    width: 30%;
     border-style: groove;
-    border-color: rgb(163, 143, 143);
-
+    border-color: rgb(48, 43, 43);
 }
 
+.filmSortie{
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    border-style: dashed solid;
+    padding: 2%;
+    width: 96%;
+    background-color: rgb(219, 219, 219);
+}
+
+.serieSortie{
+    text-align: center;
+    margin-top: 7%;
+    margin-bottom: 2%;
+    border-style: dashed solid;
+    padding: 2%;
+    width: 99%;
+    background-color: rgb(219, 219, 219);
+}
 
 .stars{
     margin: auto;

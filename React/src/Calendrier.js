@@ -14,10 +14,7 @@ class Calendrier extends Component{
     }
 
     componentDidMount(){
-        console.log("Amount Calendrier", this.state.UserFavs);
-        
-        //Today release
-        //axios.get("https://api.themoviedb.org/3/tv/airing_today?api_key=a3be1be132d237a0716cc27bdae1b2f0&language=en-US&page=1").then(res=> this.constr(res));
+        //console.log("Amount Calendrier", this.state.UserFavs);
         
         //Future release
         axios.get("http://localhost:8080/MochiCine/SerieOfTheWeek").then(res=> this.setState({seriesListe: res.data.data}));
@@ -94,16 +91,6 @@ class Calendrier extends Component{
 
     
     render(){
-
-     
-               /* /!\ POUR LAETITIA 
-                    Re bonjour Laeti (ou re bonsoir), j'ai mit en place le bouton favoris ligne 123 et ligne 167. Le onClick est juste une alert,
-                    tu peux le retirer pour y mettre les fonctions dont tu as besoin pour l'ajout ou la supression de favoris. La condition du if 
-                    est à false (C'était pour des test). La vrai condition pour ligne 152 serait quelque chose du genre : if (this.props.isFavoris.includes (ex.id)).
-                    Ca verfie que l'id est présent (ou non) dans la liste des favoris.
-                    Bon courage :doublepoucelevé:
-                */
-        
         //On affiche les séries
         let series = this.state.seriesListe.map(ex => {
             //console.log(ex);
@@ -113,11 +100,11 @@ class Calendrier extends Component{
             let boxFav=<div></div>
             if(this.props.isConnected === true){
                 // Pour la mise a jour fav : Si pas un favoris de l'utilisateur favEmpty logo sinon favFull
-                let favImg=<img src={favEmpty} alt="favEmpty" width="20%" height="20%" />;
+                let favImg=<img src={favEmpty} alt="favEmpty" width="10%" height="10%" />;
 
                 //Array.isArray(this.state.UserFavs) && this.state.UserFavs.includes(ex.id)
                 if (Array.isArray(this.state.UserFavs) && this.state.UserFavs.includes(ex.original_name)){
-                    favImg=<img src={favFull} alt="favFull" width="20%" height="20%" />;
+                    favImg=<img src={favFull} alt="favFull" width="10%" height="10%" />;
                     boxFav = <div> {favImg}
                                 <button id= "deletefavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.handleDeleteFav(ex.id, ex.original_name, "true")} >Delete</button>
                             </div>
@@ -129,24 +116,20 @@ class Calendrier extends Component{
              } 
 
 
-
-
-
             //Pour les nom de plus de 20 caractere (Evite de surcharger l'écran d'informations)
             let nomRestreint=ex.original_name;
              if (ex.original_name.length>20){
                 nomRestreint=ex.original_name.substring(0,15)+"...";
             }
 
-
-        
+ 
 
 
             const note=(ex.vote_average*5)/10;
                 return(
                     
                     <div className="bloc rounded-lg" key={ex.id} > 
-                        <img src={"https://image.tmdb.org/t/p/w500/"+ex.backdrop_path} alt={"pic_of_"+ex.name}  onClick={() =>  this.handleDescriptionPage(ex.id, "false")}  width="100%" height="150"/>
+                        <img src={"https://image.tmdb.org/t/p/w500/"+ex.backdrop_path} alt={"picture_of_"+ex.name}  onClick={() =>  this.handleDescriptionPage(ex.id, "false")}  width="100%" height="150"/>
                         <div className="stars">
                             <StarRatings rating={note} starRatedColor="yellow" numberOfStars={5} name='rating' starDimension="20px"starSpacing="1px">
                             </StarRatings>
@@ -166,9 +149,9 @@ class Calendrier extends Component{
             let boxFav=<div></div>
             if(this.props.isConnected === true){
                 // Pour la mise a jour fav : Si pas un favoris de l'utilisateur favEmpty logo sinon favFull
-                let favImg=<img src={favEmpty} alt="favEmpty" width="20%" height="20%" />;
+                let favImg=<img src={favEmpty} alt="favEmpty" width="10%" height="10%" />;
                 if (Array.isArray(this.state.UserFavs) && this.state.UserFavs.includes(ex.original_title)){
-                    favImg=<img src={favFull} alt="favFull" width="20%" height="20%" />;
+                    favImg=<img src={favFull} alt="favFull" width="10%" height="10%" />;
 
                     boxFav = <div>{favImg}
                                 <button id= "addfavS" className=" btnfav btn btn-rounded waves-effect" onClick={() => this.handleDeleteFav(ex.id, ex.original_title, "false")} >Delete</button>
@@ -198,7 +181,7 @@ class Calendrier extends Component{
                 return(
                     
                     <div className="bloc rounded-lg" key={ex.id}> 
-                        <img src={"https://image.tmdb.org/t/p/w500/"+ex.backdrop_path} alt={"pic_of_"+ex.title} width="100%" height="150" onClick={() => this.handleDescriptionPage(ex.id, "true")}/>
+                        <img src={"https://image.tmdb.org/t/p/w500/"+ex.backdrop_path} alt={"picture_of_"+ex.title} width="100%" height="150" onClick={() => this.handleDescriptionPage(ex.id, "true")}/>
                         <div className="stars">
                             <StarRatings rating={note} starRatedColor="yellow" numberOfStars={5} name='rating' starDimension="20px"starSpacing="1px">
                             </StarRatings>
@@ -219,12 +202,12 @@ class Calendrier extends Component{
         //axios.get("https://api.themoviedb.org/3/tv/airing_today?api_key=a3be1be132d237a0716cc27bdae1b2f0&language=en-US&page=1").then(res=> this.constr(res));
         return (
             <div className="Rectangle">
-                <div className="Jours">
-                    <strong> Films sorties en 2020 </strong>
+                <div className="filmSortie">
+                    <h2> Films sorties en 2020 </h2>
                 </div>
                 {films}
-                <div className="Jours">
-                    <strong> Sortie des series des 7 derniers jours</strong>
+                <div className="serieSortie">
+                    <h2> Sortie des series des 7 derniers jours</h2>
                 </div>
                {series}
 

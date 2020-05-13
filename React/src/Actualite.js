@@ -59,8 +59,8 @@ class Actualite extends React.Component {
 
             //Pour les nom de plus de 20 caractere (Evite de surcharger l'écran d'informations)
             let nomRestreint=ex.original_title;
-             if (ex.original_title.length>13){
-                nomRestreint=ex.original_title.substring(0,13)+"...";
+             if (ex.original_title.length>25){
+                nomRestreint=ex.original_title.substring(0,25)+"...";
             }
 
 
@@ -100,8 +100,8 @@ class Actualite extends React.Component {
 
             //Pour les nom de plus de 20 caractere (Evite de surcharger l'écran d'informations)
             let nomRestreint=ex.original_name;
-             if (ex.original_name.length>13){
-                nomRestreint=ex.original_name.substring(0,13)+"...";
+            if (ex.original_name.length > 25){
+                nomRestreint=ex.original_name.substring(0,25)+"...";
             }
 
 
@@ -113,7 +113,7 @@ class Actualite extends React.Component {
                 return(
                     
                     <div className="bloctop rounded-lg" key={ex.id}> 
-                        <img src={"https://image.tmdb.org/t/p/w500/"+ex.backdrop_path} alt={"pic_of_"+ex.name} width="100%" height="150" onClick={() => this.handleDescriptionPage(ex.id, "false")}/>
+                        <img src={"https://image.tmdb.org/t/p/w500/"+ex.backdrop_path} alt={"picture_of_"+ex.name} width="100%" height="150" onClick={() => this.handleDescriptionPage(ex.id, "false")}/>
                         <div className="stars">
                             <StarRatings rating={note} starRatedColor="yellow" numberOfStars={5} name='rating' starDimension="20px"starSpacing="1px">
                             </StarRatings>

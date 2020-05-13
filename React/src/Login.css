@@ -4,14 +4,7 @@ html, body, #root{
     height: 100%;
 }
 
-.PageLogin{
-    min-height: 100%;
-	overflow: hidden;
-	display: flex;
-	flex-direction: column;
-    background: #f39c12 !important;
-}
-
+/************** ACCUEIL **************/
 .PageAccueil{
     min-height: 100%;
 	overflow: hidden;
@@ -23,13 +16,17 @@ html, body, #root{
     height: 100%;
     padding-top: 0.5%;
     overflow: auto;
-    margin-bottom: -9999px;
-	padding-bottom: 9999px;
 }
 
-ul {
-    margin: 5%;
-    width: 95%;
+
+
+/************* PROFIL **************/
+.PageProfil{
+    min-height: 100%;
+    background-image: url(favorite.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 14%;
 }
 
 #leftbox {
@@ -44,17 +41,12 @@ ul {
     padding:2%;
 }
 
-.PageProfil{
-    min-height: 100%;
-    background-image: url(favorite.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 14%;
-}
+
+/************* MESSAGES *************/
 
 .new_message{
     float: top;
-    margin: 5%;
+    margin: 3%;
 }
 .comment{
     float: right;
@@ -65,13 +57,26 @@ ul {
     float: right;
 }
 
+.comments-group{
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+/************** LOGIN ****************/
+.PageLogin{
+    min-height: 100%;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+    background: #f39c12 !important;
+}
 
 .user_card {
     height: 400px;
     width: 350px;
     margin-top: 20%;
     margin-bottom: auto;
-    background:#868379;
+    background:#272623;
     position: relative;
     display: flex;
     justify-content: center;
@@ -81,7 +86,7 @@ ul {
     -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 5px;
-
+    
 }
 
 .form_container {

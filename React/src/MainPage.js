@@ -10,7 +10,7 @@ import SearchPage from './SearchPage';
 class MainPage extends React.Component {
   constructor(props){
     super(props);
-    this.state= {pagecourante: "Profil", isConnected: true, login: "bob", keyword: "", data: null, listFavoris: []};
+    this.state= {pagecourante: "Accueil", isConnected: false, login: "", keyword: "", data: null, listFavoris: []};
     
     //all the bind
     this.setLogin = this.setLogin.bind(this);

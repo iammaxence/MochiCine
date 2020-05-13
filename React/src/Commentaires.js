@@ -13,7 +13,7 @@ class Commentaires extends React.Component {
 
 	//Mettre a jour s'il y a un changement dans la liste de commentaire
 	componentDidMount(){
-		this.setState({comments: this.props.comments});
+		this.setState({comments: this.props.comments, taille: this.props.comments.length});
 	}
 
 	//Gestion Commentaire:
@@ -27,12 +27,13 @@ class Commentaires extends React.Component {
 		}
 	}
 	updateComment(rep){
-		//console.log(rep.data)
+		console.log("addComment",rep.data)
 		if(rep.data["code"]){
 	  		this.setState ({statut: "error", textError: rep.data["commentaire"]});
 	  		window.confirm(this.state.textError);
 	  	}else{
-	  		this.state.comments.push(rep.data["comment"]);
+			  this.state.comments.push(rep.data["comment"]);
+			  this.setState({taille: (this.state.taille + 1)});
 	  	}
 	}
 
@@ -59,20 +60,22 @@ class Commentaires extends React.Component {
 	}
 
 	getListCommentaires(){
+		if(this.state.taille !== 0){
 			return(
 				this.state.comments.map((item, index) => 
-				<li className="list-group-item" key={item._id}>
+				<div  className="list-group-item" key={item._id}>
             		<small className="date text-muted">{item.date}</small>
 					<div>
 						<small className="list-group-item-heading text-primary">{item.login}</small>
 						<p className="list-group-item-text">
 							{item.commentaire}
 						</p>
-						{(this.props.login === item.login)? <button className="btn btn-sm corbeille" onClick={()=> this.deleteMessage(item._id, index)}><i className="fas fa-trash-alt"></i></button> : <p></p>}
+						{(this.props.login === item.login)? <button className="btn btn-sm " onClick={()=> this.deleteMessage(item._id, index)}><i className="fas fa-trash-alt"></i></button> : <p></p>}
 					</div>
 
-				</li>
+				</div>
 					));
+			}
 	}
 
 
@@ -85,6 +88,7 @@ class Commentaires extends React.Component {
 		<div className="comments-group" >
 			<button className="btn fas fa-comment" data-toggle="collapse" data-target={"#"+name} aria-expanded="false">
 			</button>
+			&nbsp;&nbsp;&nbsp;&nbsp;
 			<div className="collapse" id={name}>
 				{this.getListCommentaires()}
 				{box}
