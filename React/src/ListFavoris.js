@@ -93,7 +93,7 @@ class ListFavoris extends React.Component {
                 <div className="favorisBox col-md-12 bg-white text-dark" key={item.id}>
                 <div className="blog-entry  col-12">
                     <div id = "leftbox">
-                        <img src={"https://image.tmdb.org/t/p/w500/"+item.backdrop_path} alt={"pic_of_"+item.original_title} width="100%"  />
+                        <img src={"https://image.tmdb.org/t/p/w500/"+(item.backdrop_path || item.poster_path)} alt={"pic_of_"+item.original_title} width="100%"  />
                     </div>
                     <div id = "rightbox">
                         <div className="text text-2 text-center pl-md-4">

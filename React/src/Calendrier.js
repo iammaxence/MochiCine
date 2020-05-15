@@ -129,7 +129,7 @@ class Calendrier extends Component{
                 return(
                     
                     <div className="bloc rounded-lg" key={ex.id} > 
-                        <img src={"https://image.tmdb.org/t/p/w500/"+ex.backdrop_path} alt={"picture_of_"+ex.name}  onClick={() =>  this.handleDescriptionPage(ex.id, "false")}  width="100%" height="150"/>
+                        <img src={"https://image.tmdb.org/t/p/w500/"+(ex.backdrop_path || ex.poster_path)} alt={"picture_of_"+ex.name}  onClick={() =>  this.handleDescriptionPage(ex.id, "false")}  width="100%" height="150"/>
                         <div className="stars">
                             <StarRatings rating={note} starRatedColor="yellow" numberOfStars={5} name='rating' starDimension="20px"starSpacing="1px">
                             </StarRatings>
@@ -181,7 +181,7 @@ class Calendrier extends Component{
                 return(
                     
                     <div className="bloc rounded-lg" key={ex.id}> 
-                        <img src={"https://image.tmdb.org/t/p/w500/"+ex.backdrop_path} alt={"picture_of_"+ex.title} width="100%" height="150" onClick={() => this.handleDescriptionPage(ex.id, "true")}/>
+                        <img src={"https://image.tmdb.org/t/p/w500/"+(ex.backdrop_path || ex.poster_path)} alt={"picture_of_"+ex.title} width="100%" height="150" onClick={() => this.handleDescriptionPage(ex.id, "true")}/>
                         <div className="stars">
                             <StarRatings rating={note} starRatedColor="yellow" numberOfStars={5} name='rating' starDimension="20px"starSpacing="1px">
                             </StarRatings>

@@ -127,7 +127,7 @@ class SearchPage extends React.Component{
                                 </div>
                                 <div className= "description">
                                     <div className="text text-2 text-center pl-md-4">
-                                        <h3 className="mb-2"  onClick={() => this.handleDescriptionPage(ex.id, !isSerie)} >{(ex.original_title || ex.original_name)}</h3>
+                                        <h3 className="mb-2"  onClick={() => this.handleDescriptionPage(ex.id, (isSerie? "true": "false"))} >{(ex.original_title || ex.original_name)}</h3>
                                     </div>
                                     <div className="meta-wrap">
                                         <p className="meta">

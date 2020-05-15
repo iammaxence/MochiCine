@@ -73,7 +73,7 @@ class DescriptionPage extends React.Component {
                 <div className="row content">
                     
                     <div className="col-sm-4 sidenav">
-                    <img src={"https://image.tmdb.org/t/p/w500/"+item.backdrop_path} alt={"picture_of_"+(item.original_title || item.original_name)} width="100%"  />
+                    <img src={"https://image.tmdb.org/t/p/w500/"+(item.backdrop_path || item.poster_path)} alt={"picture_of_"+(item.original_title || item.original_name)} width="100%"  />
                     
                     &nbsp;&nbsp;
                         <div>
