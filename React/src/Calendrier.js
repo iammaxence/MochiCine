@@ -14,12 +14,12 @@ class Calendrier extends Component{
     }
 
     componentDidMount(){
-        //console.log("Amount Calendrier", this.state.UserFavs);
-        
+       
+        let key = "a3be1be132d237a0716cc27bdae1b2f0";
         //Future release
-        axios.get("http://localhost:8080/MochiCine/SerieOfTheWeek").then(res=> this.setState({seriesListe: res.data.data}));
+        axios.get("http://localhost:8080/MochiCine/SerieOfTheWeek?key="+key).then(res=> this.setState({seriesListe: res.data.data}));
 
-        axios.get("http://localhost:8080/MochiCine/FilmsOnAir").then(res=> this.setState({filmsListe: res.data.data}));
+        axios.get("http://localhost:8080/MochiCine/FilmsOnAir?key="+key).then(res=> this.setState({filmsListe: res.data.data}));
         /*
         axios.get("https://api.themoviedb.org/3/tv/on_the_air?api_key=a3be1be132d237a0716cc27bdae1b2f0&language=en-US&page=1").then(res=> res.data.results).then(
             ex => {

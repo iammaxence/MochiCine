@@ -24,8 +24,9 @@ public class SerieOfTheWeek extends HttpServlet{
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse reponse) throws ServletException,IOException {
 			
-	        
-	        JSONObject res = services.ApiService.weeklySeries();
+			String key = request.getParameter("key");
+			
+	        JSONObject res = services.ApiService.weeklySeries(key);
 	        reponse.setContentType("text/json");
 	        //reponse.addHeader("Access-Control-Allow-Origin", "*"); // Permet de faire des appel via les naviagteur qui bloque l'accès à une requete du client
 	        PrintWriter out = reponse.getWriter();

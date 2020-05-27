@@ -18,13 +18,14 @@ import org.json.JSONObject;
 public class ApiTools {
 	
 	/**
-	 *  Recupere les descriptifs des ids pour les movies ou les series
-	 * @param ids Arraylist of id
-	 * @param type soit tv ou movie
-	 * @return
+	 *  Recupere la page de description (des id fournis en parametre) pour des films ou des series
+	 * @param ids : Liste des id représentant des films et/ou des series
+	 * @param type : "tv" ou "movie"
+	 * @return JSONObject
 	 */
 	public static JSONObject getIDs(ArrayList<Integer> ids, String type) {
-		//Pour chaque id (represantant une serie), on récupère les informations qui nous intéressent
+		
+		//Pour chaque id, on récupère les informations qui nous intéressent (description, dates de sorties etc..)
 		JSONArray list=new JSONArray();
 		for(Integer id : ids) {
 			try {
@@ -73,16 +74,16 @@ public class ApiTools {
 	
 	
 	/**
-	 * Renvoie la liste des séries de la semaine
-	 * 
+	 * Renvoie la liste des séries des 7 derniers jours
+	 * @param key :  La clée d'identification (fournis par l'API externe)
 	 * @return JSONObject
 	 * @throws IOException
 	 */
-	public static JSONObject weeklySeries() throws IOException {
+	public static JSONObject weeklySeries(String key) throws IOException {
 		
 		//On effectue un appel à l'API externe
-		//On récupère seulement une partie pour l'affichage (Les nouvelles sorties se situes sur la première page, on verra mieux le dynamisme)
-		URL url = new URL("https://api.themoviedb.org/3/tv/on_the_air?api_key=a3be1be132d237a0716cc27bdae1b2f0&language=en-US&page=1"); 
+		
+		URL url = new URL("https://api.themoviedb.org/3/tv/on_the_air?api_key="+key+"&language=en-US&page=1"); 
 		HttpURLConnection con = (HttpURLConnection)url.openConnection();
 		con.setRequestMethod("GET");
 		con.setRequestProperty("Content-Type", "application/json");
@@ -131,20 +132,20 @@ public class ApiTools {
 
 		}
 
-		// 2nd requête pour récuperer les informations de chaques series (On peut obtenir la date de sortie du dernier épisode sur la fiche technique de la série uniquement)
+		// 2nd requête pour récuperer les informations de chaques series (On veux uniquement obtenir la date de sortie du dernier épisode sur la fiche technique de la série )
 
 		return moreInfosSeries(ids);
 	}
 	
 	/**
-	 * Renvoie la liste des séries de la semaine
+	 * Renvoie la liste des séries (plus détaillé de la semaine)
 	 * 
-	 * @param ids
+	 * @param ids : Liste des id représentant des films et/ou des series
 	 * @return JSONObject
 	 * @throws IOException
 	 */
 
-	public static JSONObject moreInfosSeries(ArrayList<Integer> ids) throws IOException {
+	private static JSONObject moreInfosSeries(ArrayList<Integer> ids) throws IOException {
 
 
 		//Pour chaque id (represantant une serie), on récupère les informations qui nous intéressent
@@ -174,16 +175,13 @@ public class ApiTools {
 
 					//Parsing de la date du dernier épisode sortie cette semaine
 					String s = laserie.getString("last_air_date");
-					if(s.equals("null")) { //Cas où les admins ont oublié de mettre une date
+					if(s.equals("null")) { //Cas où les admins de l'API ont oublié de mettre une date
                         continue;
                     }
-					//System.out.println("--- "+s+" ---");
+					
 					String[] sep = s.split("-");
 					Integer[] date= {Integer.parseInt(sep[0]),Integer.parseInt(sep[1]),Integer.parseInt(sep[2])};
 					
-					//Parsing de la date du dernier épisode qui va sortir cette semaine
-					//A faire peut-être
-
 					if(isLast7Days(LocalDate.of(date[0], date[1], date[2]))) //Check si la date de sortie est compris dans la semaine
 						listeseries.put(laserie);
 
@@ -206,12 +204,12 @@ public class ApiTools {
 	
 	/**
 	 * Renvoie les films sortie depuis le début de l'année, jusqu'à aujourd'hui
-	 * 
+	 * @param key :  La clée d'identification (fournis par l'API externe)
 	 * @return JSONObject
 	 * @throws IOException
 	 */
 	
-	public static JSONObject filmsOnAir() throws IOException {
+	public static JSONObject filmsOnAir(String key) throws IOException {
 		
 		JSONObject retour=new JSONObject();
 		JSONArray listefilms=new JSONArray();
@@ -219,7 +217,7 @@ public class ApiTools {
 		for(int i=1;i<4;i++) { // On récupère les 3 première pages (On peux récupérer toutes les pages avec la valeur renvoyer par l'api "total_pages"
 			
 			//On effectue un appel à l'api externe (On récupère les pages françaises uniquement)
-			URL url = new URL("https://api.themoviedb.org/3/movie/upcoming?api_key=a3be1be132d237a0716cc27bdae1b2f0&language=en-US&page="+i);
+			URL url = new URL("https://api.themoviedb.org/3/movie/upcoming?api_key="+key+"&language=en-US&page="+i);
 			HttpURLConnection con = (HttpURLConnection)url.openConnection();
 			con.setRequestMethod("GET");
 			con.setRequestProperty("Content-Type", "application/json");
@@ -288,8 +286,8 @@ public class ApiTools {
 	/**
 	 * Renvoie le resultat de la recherche pour le mot "Keyword"
 	 * 
-	 * @param key
-	 * @param keyword
+	 * @param key : La clée d'identification (fournis par l'API externe)
+	 * @param keyword : Le mot clée recherché (ex: Avengers)
 	 * @return JSONObject
 	 * @throws IOException
 	 */
@@ -384,7 +382,7 @@ public class ApiTools {
 	 * @param d
 	 * @return boolean 
 	 */
-	public static boolean isLast7Days(LocalDate d) {
+	private static boolean isLast7Days(LocalDate d) {
 		LocalDate today = LocalDate.now(); //date d'aujourd'hui
 		int day=today.getDayOfMonth()-7; //Les 7 derniers jours
 		if(day==0)
@@ -479,7 +477,7 @@ public class ApiTools {
 	
 	/**
 	 * Requete a l'api externe pour recuperer la description
-	 * @param id du film ou de la serie
+	 * @param id : id du film ou de la serie
 	 * @param type : "movie" pour les films et "tv" pour les series
 	 * @return JSONObject avec le resultat ou ErrorJSON
 	 */
